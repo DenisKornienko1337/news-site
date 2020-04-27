@@ -47,8 +47,7 @@
         this.posts = response.data.posts
       },
       async deletePosts () {
-
-        await PostsService.deletePosts()
+        //await PostsService.deletePosts()
       }
     },
     mounted () {
