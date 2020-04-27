@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const postController = require('../models/post')
+const postController = require('../controllers/post')
 
 router.post('/', postController.getIndex)
 
