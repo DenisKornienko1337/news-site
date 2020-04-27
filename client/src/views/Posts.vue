@@ -24,9 +24,6 @@
           div
             router-link( :to="{ name: 'NewPost' }" )
               | add news
-        div
-            router-link( :to="{ name: 'NewPost' }" )
-              | add  news
 </template>
 
 <script>
