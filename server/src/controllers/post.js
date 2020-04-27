@@ -11,7 +11,7 @@ exports.getIndex = (req, res) => {
     ).sort({ _id: -1 })
 }
 
-exports.getIndex = (req, res) => {  
+exports.getPost = (req, res) => {
     const prodId = req.params.productId;
     Post.findById(prodId, 'title description', (err, posts) => {
         if (err) {
