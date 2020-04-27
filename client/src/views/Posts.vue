@@ -1,33 +1,32 @@
 <template lang="pug">
   .container
     .row
-      .col-xs-12
+      .col-lg-12
         h1
-          | Posts
+          | News
         h3
-          | This file will list all the posts
+          | This file will list all the news
 
         section.panel.panel-success( v-if="posts.length" )
           .panel-heading
-            | list of posts
+            | list of news
           table.table.table-striped
             tr
               th Title
-              th Description
-              th Action
+              th Content
             tr( v-for="(post, index) in posts", :key="post.title" )
               td {{ post.title }}
               td {{ post.description }}
 
         section.panel.panel-danger( v-if="!posts.length" )
           p
-            | There are no posts ... Lets add one now!
+            | There are no news ... Lets add one now!
           div
             router-link( :to="{ name: 'NewPost' }" )
-              | add new post
+              | add news
         div
             router-link( :to="{ name: 'NewPost' }" )
-              | add new post
+              | add  news
 </template>
 
 <script>
