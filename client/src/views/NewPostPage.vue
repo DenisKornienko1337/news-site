@@ -2,9 +2,9 @@
 <template lang="pug">
   .container
     .row
-      .col-xs-12
-        h1
-          | Add New Post
+      .col-lg-12
+        h1.test
+          | Add News
         form
           .form-group
             input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="post.title" )
@@ -12,10 +12,10 @@
             textarea.form-control( type="text", rows="5", name="description", id="description", placeholder="Description", v-model.trim="post.description" )
           .form-group
             button.btn.btn-block.btn-primary( type="button", name="addPost", id="addPost", @click="addPost()" )
-              | add new post
+              | add news
           section
             button.btn.btn-success.btn-block( type="button", @click="goBack()" )
-              | go to posts page
+              | go to news page
 </template>
 
 <script>
@@ -48,3 +48,8 @@
     }
   }
 </script>
+<style lang="scss">
+  .container {
+    max-width: 60%;
+  }
+</style>
