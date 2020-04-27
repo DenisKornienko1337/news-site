@@ -10,10 +10,6 @@ app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
 app.use(require('./routes/posts'))
-
-console.log('Hewwlo');
-
-
 mongoose.connect(config.dbURL, config.dbOptions)
 mongoose.connection
   .once('open', () => {
