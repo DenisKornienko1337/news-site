@@ -12,15 +12,16 @@
             | list of news
           table.table.table-striped
             tr
+              th Index
               th Title
               th Content
+              th Buttons
             tr( v-for="(post, index) in posts", :key="post.title" )
+              td {{ index }}
               td {{ post.title }}
               td {{ post.description }}
               td 
-                form(@submit.prevent="deletePosts")
-                  input( type="hidden" name="id" :value="post._id")
-                  input(type="submit" value="Delete post")
+                deleteForm( :post="post" ) 
         section.panel.panel-danger( v-if="!posts.length" )
           p
             | There are no news ... Lets add one now!
@@ -34,12 +35,17 @@
 
 <script>
   import PostsService from '@/services/PostsService'
+  import deleteForm from '@/views/postsForms/delete'
   export default {
     name: 'PostsPage',
     data () {
       return {
-        posts: []
+        posts: [],
+        deletedId: false
       }
+    },
+    components: {
+      deleteForm
     },
     methods: {
       async getPosts () {
