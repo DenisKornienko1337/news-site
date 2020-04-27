@@ -6,5 +6,8 @@ export default {
   },
   addNewPost (params) {
     return api().post('posts', params)
+  },
+  deletePosts(params) {
+    return api().post('posts/delete-post', params)
   }
 }

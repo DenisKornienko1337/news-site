@@ -17,13 +17,19 @@
             tr( v-for="(post, index) in posts", :key="post.title" )
               td {{ post.title }}
               td {{ post.description }}
-
+              td 
+                form(@submit.prevent="deletePosts")
+                  input( type="hidden" name="id" :value="post._id")
+                  input(type="submit" value="Delete post")
         section.panel.panel-danger( v-if="!posts.length" )
           p
             | There are no news ... Lets add one now!
           div
             router-link( :to="{ name: 'NewPost' }" )
               | add news
+        div
+            router-link( :to="{ name: 'NewPost' }" )
+              | add  news
 </template>
 
 <script>
@@ -39,6 +45,10 @@
       async getPosts () {
         const response = await PostsService.fetchPosts()
         this.posts = response.data.posts
+      },
+      async deletePosts () {
+
+        await PostsService.deletePosts()
       }
     },
     mounted () {
