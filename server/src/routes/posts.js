@@ -1,32 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const Post = require('../models/post')
+const postController = require('../models/post')
 
-router.post('/posts', (req, res) => {
-  const post = new Post({
-    title: req.body.title,
-    description: req.body.description
-  })
-  post.save((err, data) => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.send({
-        success: true,
-        message: `Post with ID_${data._id} saved successfully!`
-      })
-    }
-  })
-})
+router.post('/', postController.getIndex)
 
-router.get('/posts', (req, res) => {
-  Post.find({}, 'title description', (err, posts) => {
-    if (err) {
-      res.sendStatus(500)
-    } else {
-      res.send({ posts: posts })
-    }
-  }).sort({ _id: -1 })
-})
+router.get('/:id', postController.getPost)
+
+router.post('/', postController.postAddPost)
+
+router.post('/edit-post/', postController.postUpdatePost)
+
+router.post('/delete-post', postController.postDestroy);
 
 module.exports = router
