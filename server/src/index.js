@@ -14,9 +14,6 @@ app.use(bodyParser.json())
 app.use(cors())
 // Set Routes
 app.use('/posts', postRoutes)
-
-console.log('dasdad');
-
 // Connect to database
 mongoose.connect(config.dbURL, config.dbOptions)
 mongoose.connection
