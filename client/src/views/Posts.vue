@@ -17,7 +17,6 @@
             tr( v-for="(post, index) in posts", :key="post.title" )
               td {{ post.title }}
               td {{ post.description }}
-
         section.panel.panel-danger( v-if="!posts.length" )
           p
             | There are no news ... Lets add one now!
