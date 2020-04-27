@@ -59,6 +59,9 @@ exports.postUpdatePost = (req, res, next) => {
 }
 
 exports.postDestroy = (req, res, next) => {
+    console.log('Delete');
+    console.log('id', req.body.id);
+    
     const id = req.body.id;
-    Post.deleteById(id)
+    Post.deleteOne({_id: id}).catch(err => console.log(err));
 }
