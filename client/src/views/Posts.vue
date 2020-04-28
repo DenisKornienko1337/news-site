@@ -21,7 +21,7 @@
               td {{ post.title }}
               td {{ post.description }}
               td 
-                deleteForm( :post="post" ) 
+                button( class="btn btn-danger" @click="deletePosts(index)") Delete
         section.panel.panel-danger( v-if="!posts.length" )
           p
             | There are no news ... Lets add one now!
@@ -35,7 +35,6 @@
 
 <script>
   import PostsService from '@/services/PostsService'
-  import deleteForm from '@/views/postsForms/delete'
   export default {
     name: 'PostsPage',
     data () {
@@ -44,17 +43,22 @@
         deletedId: false
       }
     },
-    components: {
-      deleteForm
-    },
     methods: {
       async getPosts () {
         const response = await PostsService.fetchPosts()
         this.posts = response.data.posts
       },
-      async deletePosts () {
-        //await PostsService.deletePosts()
+      async deletePosts (index) {
+        const deletedItem = this.posts[index]
+        
+        this.posts.splice(index,1)   
+
+        await PostsService.deletePosts({
+            id: deletedItem._id
+        })          
       }
+      // deletePosts(index) {   
+      // }
     },
     mounted () {
       this.getPosts()
