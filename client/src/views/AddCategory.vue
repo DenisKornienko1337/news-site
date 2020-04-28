@@ -30,6 +30,7 @@
     methods: {
       async addCategory () {
         if (this.post.title !== '') {
+          console.log(this.post.title)
           await PostsService.addCategory({
             title: this.post.title,
           })

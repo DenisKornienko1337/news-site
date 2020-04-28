@@ -10,6 +10,9 @@ export default {
   deletePosts(params) {
     return api().post('posts/delete-post', params)
   },
+  fetchCategories() {
+    return api().get('categories')
+  },
   addCategory(params) {
     return api().post('categories', params)
   }

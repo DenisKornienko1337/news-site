@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Posts from '../views/Posts'
+import Categories from '../views/Categories'
 import NewPost from '../views/NewPostPage'
 import AddCategory from '../views/AddCategory'
 
@@ -37,6 +38,11 @@ Vue.use(VueRouter)
     name: 'UpdatePost',
     component: NewPost,
     props: true
+  },
+  {
+    path: '/categories',
+    name: 'Categories',
+    component: Categories
   },
   {
     path: '/categories/add-category',
