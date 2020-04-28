@@ -57,16 +57,45 @@ exports.postUpdatePost = (req, res, next) => {
       }
     })
     console.log('categoriesTitles', categoriesTitles);
+ 
+    Post.findById(postId, 'title description categories', (err, post) => {
+      if (err) {
+        console.log(err)
+      } else {
+        if (req.body.title) {
+          post.title = req.body.title
+        }
+        if (req.body.description) {
+          post.description = req.body.description
+        }
+        if (req.body.description) {
+          post.categories = categoriesTitles
+        }
+        post.save(err => {
+          if (err) {
+            res.sendStatus(500)
+          } else {
+            res.sendStatus(200)
+          }
+        })
+      }
+    })
     
-    Post.findById(postId)
-      .then( post => {        
-        post.title = updatedTitle;
-        post.description = updatedDesc;
-        post.categories.items = categoriesTitles;
+    // Post.findById(postId)
+    //   .then( post => {        
+    //     post.title = updatedTitle;
+    //     post.description = updatedDesc;
+    //     post.categories.items = categoriesTitles;
 
-        return post.save();
-      })
-      .catch(err => console.log(err))
+    //     return post.save();
+    //   })
+    //   .catch(result => {
+    //     res.send({
+    //       success: true,
+    //       message: `Post with ID_${data._id} saved successfully!`
+    //     })
+    //   })
+    //   .catch(err => console.log(err))
 }
 
 exports.postDestroy = (req, res, next) => {

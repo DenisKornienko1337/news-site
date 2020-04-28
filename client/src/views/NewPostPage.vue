@@ -46,6 +46,9 @@
             description: this.post.description,
             categories: this.categories
           })
+          
+          console.log('Created');
+          
           this.$router.push({ name: 'Posts' })
         } else {
           alert('Empty fields!')

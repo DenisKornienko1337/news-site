@@ -51,7 +51,9 @@
             description: this.postItem.description,
             categories: this.categories
           })
+          console.log('Updated');
           this.$router.push({ name: 'Posts' })
+          
         } else {
           alert('Empty fields!')
         }
