@@ -7,17 +7,17 @@
         h3
           | This file will list all the news
 
-        section.panel.panel-success( v-if="posts.length" )
+        section.panel.panel-success( v-if="categories.length" )
           .panel-heading
             | list of categories
           table.table.table-striped
             tr
               th Index
               th Title
-            tr( v-for="(post, index) in posts", :key="post.title" )
+            tr( v-for="(post, index) in categories", :key="post.title" )
               td {{ index }}
               td {{ post.title }}
-        section.panel.panel-danger( v-if="!posts.length" )
+        section.panel.panel-danger( v-if="!categories.length" )
           p
             | There are no news ... Lets add one now!
           div
@@ -34,14 +34,14 @@
     name: 'PostsPage',
     data () {
       return {
-        posts: [],
+        categories: [],
         deletedId: false
       }
     },
     methods: {
       async fetchCategories () {
         const response = await PostsService.fetchCategories()
-        this.posts = response.data.posts
+        this.categories = response.data.categories
       },
     },
     mounted () {
