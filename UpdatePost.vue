@@ -7,8 +7,6 @@
           | Update News
         form
           .form-group
-            input.form-control( type="hidden", name="id", id="id", placeholder="Id", v-model.trim="postItem._id" )
-          .form-group
             input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="postItem.title" )
           .form-group
             textarea.form-control( type="text", rows="5", name="description", id="description", placeholder="Description", v-model.trim="postItem.description" )
@@ -45,7 +43,6 @@
       async updatePost () {
         if (this.postItem.title !== '' && this.postItem.description !== '') {
           await PostsService.updatePost({
-            id: this.postItem._id,
             title: this.postItem.title,
             description: this.postItem.description,
             categories: this.categories
