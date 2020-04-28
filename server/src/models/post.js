@@ -9,10 +9,11 @@ const postSchema = new Schema({
     type: String
   },
   categories: {
-    items: [{
+    items: [
+      {
       categoryTitle: { 
         type: String, 
-        required: true 
+        required: false 
       }
     }]
   }

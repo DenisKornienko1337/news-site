@@ -43,13 +43,21 @@ exports.postUpdatePost = (req, res, next) => {
     const postId = req.body.id;
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;
-  
+    
+    console.log('postId', postId);
+    
+    console.log('req.body.categories', req.body.categories);
+    
     const categoriesTitles = req.body.categories.map( cat => {
-      return {categoryTitle: cat.title}
+      console.log('catItem', cat);      
+      return {
+        categoryTitle: cat.title
+      }
     })
-
+    console.log('categoriesTitles', categoriesTitles);
+    
     Post.findById(postId)
-      .then( post => {
+      .then( post => {        
         post.title = updatedTitle;
         post.description = updatedDesc;
         post.categories.items = categoriesTitles;
