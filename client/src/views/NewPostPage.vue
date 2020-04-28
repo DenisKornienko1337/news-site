@@ -43,7 +43,8 @@
         if (this.post.title !== '' && this.post.description !== '') {
           await PostsService.addNewPost({
             title: this.post.title,
-            description: this.post.description
+            description: this.post.description,
+            categories: this.categories
           })
           this.$router.push({ name: 'Posts' })
         } else {
