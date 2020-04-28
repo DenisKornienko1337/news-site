@@ -27,16 +27,12 @@ exports.postAddPost = (req, res) => {
           items: categoriesTitles
         } 
     })
-    post.save((err, data) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.send({
-            success: true,
-            message: `Post with ID_${data._id} saved successfully!`
-            })
-        }
-    })
+    
+    post.save()
+      .then(result => { 
+        res.sendStatus(200)
+      })
+      .catch(err => console.log(err))
 }
 
 exports.postUpdatePost = (req, res, next) => {

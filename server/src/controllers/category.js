@@ -11,16 +11,11 @@ exports.postAddCategory = (req, res) => {
     const category = new Category({
         title: req.body.title,
     })
-    category.save((err, data) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.send({
-            success: true,
-            message: `Category with ID_${data._id} saved successfully!`
-            })
-        }
-    })
+    category.save()
+      .then(result => { 
+        res.sendStatus(200)
+      })
+      .catch(err => console.log(err))
 }
 
 exports.postUpdateCategory = (req, res, next) => {
@@ -30,7 +25,6 @@ exports.postUpdateCategory = (req, res, next) => {
     Category.findById(catId)
       .then( category => {        
         category.title = updatedTitle;
-
         return category.save()
       })
       .then(result => {
@@ -39,10 +33,7 @@ exports.postUpdateCategory = (req, res, next) => {
       .catch(err => console.log(err))
 }
 
-exports.postDestroy = (req, res, next) => {
-    console.log('Delete');
-    console.log('id', req.body.id);
-    
+exports.postDestroy = (req, res, next) => {    
     const id = req.body.id;
     Category.deleteOne({_id: id}).catch(err => console.log(err));
 }
