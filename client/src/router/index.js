@@ -39,7 +39,7 @@ Vue.use(VueRouter)
     props: true
   },
   {
-    path: '/posts/add-category',
+    path: '/categories/add-category',
     name: 'AddCategory',
     component: AddCategory,
     props: true
