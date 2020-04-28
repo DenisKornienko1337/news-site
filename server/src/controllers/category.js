@@ -23,23 +23,21 @@ exports.postAddCategory = (req, res) => {
     })
 }
 
-// exports.postUpdatePost = (req, res, next) => {
-//     const prodId = req.body.id;
-//     const updatedTitle = req.body.title;
-//     const updatedDesc = req.body.description;
-  
-//     const post = new Post(
-//       updatedTitle,
-//       updatedDesc,
-//       prodId
-//     );
-//     post
-//       .save()
-//       .then(result => {
-//         console.log('UPDATED PRODUCT!');
-//       })
-//       .catch(err => console.log(err));
-// }
+exports.postUpdateCategory = (req, res, next) => {
+    const catId = req.body.id;
+    const updatedTitle = req.body.title;
+      
+    Category.findById(catId)
+      .then( category => {        
+        category.title = updatedTitle;
+
+        return category.save()
+      })
+      .then(result => {
+        res.sendStatus(200)
+      })
+      .catch(err => console.log(err))
+}
 
 exports.postDestroy = (req, res, next) => {
     console.log('Delete');

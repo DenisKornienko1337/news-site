@@ -8,7 +8,7 @@ router.get('/', categoryController.getIndex)
 
 router.post('/', categoryController.postAddCategory)
 
-// router.post('/edit-post/', categoryController.postUpdatePost)
+router.post('/edit-post/', categoryController.postUpdateCategory)
 
 router.post('/delete-category', categoryController.postDestroy);
 
