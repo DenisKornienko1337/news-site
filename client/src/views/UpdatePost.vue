@@ -31,8 +31,8 @@
     data () {
       return {
         postItem: {
-          title: this.$props.title,
-          description: this.$props.description,
+          title: this.$props.post.title,
+          description: this.$props.post.description,
         },
         categories:[{
           title: ''
@@ -40,7 +40,7 @@
       }
     },
     methods: {
-      async addPost () {
+      async updatePost () {
         if (this.postItem.title !== '' && this.postItem.description !== '') {
           await PostsService.updatePost({
             title: this.postItem.title,
