@@ -43,65 +43,28 @@ exports.postUpdatePost = (req, res, next) => {
     const postId = req.body.id;
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;
-    
-    console.log('req.body', req.body);
-    
-    console.log('postId', postId);
-    
-    console.log('req.body.categories', req.body.categories);
-    
+        
     const categoriesTitles = req.body.categories.map( cat => {
-      console.log('catItem', cat);      
       return {
         categoryTitle: cat.title
       }
     })
-    console.log('categoriesTitles', categoriesTitles);
- 
-    Post.findById(postId, 'title description categories', (err, post) => {
-      if (err) {
-        console.log(err)
-      } else {
-        if (req.body.title) {
-          post.title = req.body.title
-        }
-        if (req.body.description) {
-          post.description = req.body.description
-        }
-        if (req.body.description) {
-          post.categories = categoriesTitles
-        }
-        post.save(err => {
-          if (err) {
-            res.sendStatus(500)
-          } else {
-            res.sendStatus(200)
-          }
-        })
-      }
-    })
     
-    // Post.findById(postId)
-    //   .then( post => {        
-    //     post.title = updatedTitle;
-    //     post.description = updatedDesc;
-    //     post.categories.items = categoriesTitles;
+    Post.findById(postId)
+      .then( post => {        
+        post.title = updatedTitle;
+        post.description = updatedDesc;
+        post.categories.items = categoriesTitles;
 
-    //     return post.save();
-    //   })
-    //   .catch(result => {
-    //     res.send({
-    //       success: true,
-    //       message: `Post with ID_${data._id} saved successfully!`
-    //     })
-    //   })
-    //   .catch(err => console.log(err))
+        return post.save()
+      })
+      .then(result => {
+        res.sendStatus(200)
+      })
+      .catch(err => console.log(err))
 }
 
-exports.postDestroy = (req, res, next) => {
-    console.log('Delete');
-    console.log('id', req.body.id);
-    
+exports.postDestroy = (req, res, next) => {    
     const id = req.body.id;
     Post.deleteOne({_id: id}).catch(err => console.log(err));
 }
