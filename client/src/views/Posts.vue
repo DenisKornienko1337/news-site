@@ -16,6 +16,7 @@
               th Title
               th Content
               th Buttons
+              th Update
             tr( v-for="(post, index) in posts", :key="post.title" )
               td {{ index }}
               td {{ post.title }}
@@ -23,7 +24,8 @@
               td 
                 button( class="btn btn-danger" @click="deletePosts(index)") Delete
               td
-                router-link(:to="{name: 'UpdatePost', }")
+                router-link(:to="{name: 'UpdatePost', params:{id: post._id, post: {}}}")
+                  | Update
         section.panel.panel-danger( v-if="!posts.length" )
           p
             | There are no news ... Lets add one now!

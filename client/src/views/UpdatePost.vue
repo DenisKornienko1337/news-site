@@ -8,7 +8,6 @@
         form
           .form-group
             input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="postItem.title" )
-            
           .form-group
             textarea.form-control( type="text", rows="5", name="description", id="description", placeholder="Description", v-model.trim="postItem.description" )
           .form-group(v-for="(category, index) in categories", :key="category.title")
