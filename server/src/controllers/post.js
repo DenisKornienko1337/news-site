@@ -40,7 +40,7 @@ exports.postAddPost = (req, res) => {
 }
 
 exports.postUpdatePost = (req, res, next) => {
-    const prodId = req.body.id;
+    const postId = req.body.id;
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;
   
@@ -48,19 +48,15 @@ exports.postUpdatePost = (req, res, next) => {
       return {categoryTitle: cat.title}
     })
 
-    const post = new Post({
-      _id: prodId,
-      title: updatedTitle,
-      description: updatedDesc,
-      categories: {items: categoriesTitles}
-    })
+    Post.findById(postId)
+      .then( post => {
+        post.title = updatedTitle;
+        post.description = updatedDesc;
+        post.categories.items = categoriesTitles;
 
-    post
-      .save()
-      .then(result => {
-        console.log('UPDATED PRODUCT!');
+        return post.save();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
 }
 
 exports.postDestroy = (req, res, next) => {
