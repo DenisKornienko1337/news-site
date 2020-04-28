@@ -1,7 +1,7 @@
 const Category = require('../models/category')
 
 exports.getIndex = (req, res) => {
-    Category.find('title')
+    Category.find({}, 'title')
         .sort({ _id: -1 })
         .then( categories => res.send({ categories: categories }))
         .catch( err => res.sendStatus(500))
