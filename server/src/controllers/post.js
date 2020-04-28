@@ -44,11 +44,17 @@ exports.postUpdatePost = (req, res, next) => {
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;
   
-    const post = new Post(
-      updatedTitle,
-      updatedDesc,
-      prodId
-    );
+    const categoriesTitles = req.body.categories.map( cat => {
+      return {categoryTitle: cat.title}
+    })
+
+    const post = new Post({
+      _id: prodId,
+      title: updatedTitle,
+      description: updatedDesc,
+      categories: {items: categoriesTitles}
+    })
+
     post
       .save()
       .then(result => {
