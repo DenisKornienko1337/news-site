@@ -10,6 +10,11 @@
             input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="post.title" )
           .form-group
             textarea.form-control( type="text", rows="5", name="description", id="description", placeholder="Description", v-model.trim="post.description" )
+          .form-group(v-for="(category, index) in categories", :key="category.title")
+            input(type="checkbox" v-model.trim="category.title")
+            label(v-model.trim="category.title")
+             | {{category.title}}
+
           .form-group
             button.btn.btn-block.btn-primary( type="button", name="addPost", id="addPost", @click="addPost()" )
               | add news
@@ -27,7 +32,10 @@
         post: {
           title: '',
           description: ''
-        }
+        },
+        categories:[{
+          title: ''
+        }]
       }
     },
     methods: {
@@ -42,9 +50,16 @@
           alert('Empty fields!')
         }
       },
+      async fetchCategories () {
+        const response = await PostsService.fetchCategories()
+        this.categories = response.data.categories
+      },
       goBack () {
         this.$router.push({ name: 'Posts' })
       }
+    },
+    mounted () {
+      this.fetchCategories()
     }
   }
 </script>
