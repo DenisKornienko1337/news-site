@@ -1,32 +1,31 @@
 const Post = require('../models/post')
 
 exports.getIndex = (req, res) => {
-    Post.find({}, 'title description', (err, posts) => {
-        if (err) {
-          res.sendStatus(500)
-        } else {
-          res.send({ posts: posts })
-        }
-      }
-    ).sort({ _id: -1 })
+    Post.find({}, 'title description categories.items.categoryTitle')
+      .sort({ _id: -1 })
+      .then(posts => res.send({ posts: posts }))
+      .catch(err => res.sendStatus(500))
 }
 
 exports.getPost = (req, res) => {
     const prodId = req.params.productId;
-    Post.findById(prodId, 'title description', (err, posts) => {
-        if (err) {
-          res.sendStatus(500)
-        } else {
-          res.send({ posts: posts })
-        }
-      }
-    ).sort({ _id: -1 })
+    Post.findById(prodId, 'title description categories.items.categoryTitle')   
+      .sort({ _id: -1 })
+      .then(posts => res.send({ posts: posts }))
+      .catch(err => res.sendStatus(500))
 }
 
 exports.postAddPost = (req, res) => {
+    const categoriesTitles = req.body.categories.map( cat => {
+      return {categoryTitle: cat.title}
+    })
+
     const post = new Post({
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        categories: {
+          items: categoriesTitles
+        } 
     })
     post.save((err, data) => {
         if (err) {

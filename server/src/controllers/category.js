@@ -1,27 +1,11 @@
 const Category = require('../models/category')
 
 exports.getIndex = (req, res) => {
-    Category.find({}, 'title', (err, categories) => {
-        if (err) {
-          res.sendStatus(500)
-        } else {
-          res.send({ categories: categories })
-        }
-      }
-    ).sort({ _id: -1 })
+    Category.find('title')
+        .sort({ _id: -1 })
+        .then( categories => res.send({ categories: categories }))
+        .catch( err => res.sendStatus(500))
 }
-
-// exports.getPost = (req, res) => {
-//     const prodId = req.params.productId;
-//     Post.findById(prodId, 'title description', (err, posts) => {
-//         if (err) {
-//           res.sendStatus(500)
-//         } else {
-//           res.send({ posts: posts })
-//         }
-//       }
-//     ).sort({ _id: -1 })
-// }
 
 exports.postAddCategory = (req, res) => {
     const category = new Category({

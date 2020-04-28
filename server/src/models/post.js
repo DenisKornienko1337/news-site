@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const PostSchema = new Schema({
+const postSchema = new Schema({
   title: {
     type: String,
     unique: true
@@ -10,10 +10,15 @@ const PostSchema = new Schema({
   },
   categories: {
     items: [{
-      category: { type: Object, required: true }
+      categoryTitle: { 
+        type: String, 
+        required: true 
+      }
     }]
   }
 })
-const PostModel = mongoose.model('Post', PostSchema)
+
+
+const PostModel = mongoose.model('Post', postSchema)
 
 module.exports = PostModel
