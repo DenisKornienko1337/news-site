@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.use(cors())
 // Set Routes
 app.use('/posts', postRoutes)
-app.use('/caterogies', categoryRoutes)
+app.use('/categories', categoryRoutes)
 // Connect to database
 mongoose.connect(config.dbURL, config.dbOptions)
 mongoose.connection
