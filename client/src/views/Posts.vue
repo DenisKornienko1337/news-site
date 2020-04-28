@@ -24,7 +24,7 @@
               td 
                 button( class="btn btn-danger" @click="deletePosts(index)") Delete
               td
-                router-link(:to="{name: 'UpdatePost', params:{id: post._id, post: {}}}")
+                router-link(:to="{name: 'UpdatePost', params:{id: post._id, post}}")
                   | Update
         section.panel.panel-danger( v-if="!posts.length" )
           p
