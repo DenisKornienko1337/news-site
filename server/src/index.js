@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const config = require('./config/config')
 // Routes
 const postRoutes = require('./routes/posts')
+const categoryRoutes = require('./routes/category')
 // Set default configs
 mongoose.Promise = global.Promise
 app.use(morgan('combined'))
@@ -14,6 +15,7 @@ app.use(bodyParser.json())
 app.use(cors())
 // Set Routes
 app.use('/posts', postRoutes)
+app.use('/caterogies', categoryRoutes)
 // Connect to database
 mongoose.connect(config.dbURL, config.dbOptions)
 mongoose.connection

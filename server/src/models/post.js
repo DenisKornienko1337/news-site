@@ -7,8 +7,13 @@ const PostSchema = new Schema({
   },
   description: {
     type: String
+  },
+  categories: {
+    items: [{
+      category: { type: Object, required: true }
+    }]
   }
 })
-const PostModel = mongoose.model('posts', PostSchema)
+const PostModel = mongoose.model('Post', PostSchema)
 
 module.exports = PostModel
