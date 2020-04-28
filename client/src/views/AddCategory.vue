@@ -34,13 +34,13 @@
           await PostsService.addCategory({
             title: this.post.title,
           })
-          this.$router.push({ name: 'Posts' })
+          this.$router.push({ name: 'Categories' })
         } else {
           alert('Empty fields!')
         }
       },
       goBack () {
-        this.$router.push({ name: 'Posts' })
+        this.$router.push({ name: 'Categories' })
       }
     }
   }

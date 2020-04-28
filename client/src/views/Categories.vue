@@ -17,6 +17,8 @@
             tr( v-for="(post, index) in categories", :key="post.title" )
               td {{ index }}
               td {{ post.title }}
+              td 
+                button( class="btn btn-danger" @click="deleteCategory(index)") Delete
         section.panel.panel-danger( v-if="!categories.length" )
           p
             | There are no news ... Lets add one now!
@@ -43,6 +45,15 @@
         const response = await PostsService.fetchCategories()
         this.categories = response.data.categories
       },
+      async deleteCategory(index) {
+        const deletedItem = this.categories[index]
+        
+        this.categories.splice(index,1)   
+
+        await PostsService.deleteCategories({
+            id: deletedItem._id
+        })          
+      }
     },
     mounted () {
       this.fetchCategories()

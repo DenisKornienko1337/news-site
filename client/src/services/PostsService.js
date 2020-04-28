@@ -15,5 +15,8 @@ export default {
   },
   addCategory(params) {
     return api().post('categories', params)
-  }
+  },
+  deleteCategories(params) {
+    return api().post('categories/delete-category', params)
+  },
 }
