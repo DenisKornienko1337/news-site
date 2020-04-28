@@ -33,6 +33,7 @@
     data () {
       return {
         postItem: {
+          id: this.$props.post._id,
           title: this.$props.post.title,
           description: this.$props.post.description,
         },
