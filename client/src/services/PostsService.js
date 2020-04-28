@@ -9,5 +9,8 @@ export default {
   },
   deletePosts(params) {
     return api().post('posts/delete-post', params)
+  },
+  addCategory(params) {
+    return api().post('posts/categories', params)
   }
 }

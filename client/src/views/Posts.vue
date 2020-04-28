@@ -22,11 +22,13 @@
               td {{ post.description }}
               td 
                 button( class="btn btn-danger" @click="deletePosts(index)") Delete
+              td
+                router-link(:to="{name: 'UpdatePost', }")
         section.panel.panel-danger( v-if="!posts.length" )
           p
             | There are no news ... Lets add one now!
           div
-            router-link( :to="{ name: 'NewPost' }" )
+            router-link( :to="{ name: 'NewPost'}" )
               | add news
         div
             router-link( :to="{ name: 'NewPost' }" )
