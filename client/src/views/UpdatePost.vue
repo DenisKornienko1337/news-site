@@ -46,7 +46,7 @@
       async updatePost () {
         if (this.postItem.title !== '' && this.postItem.description !== '') {
           await PostsService.updatePost({
-            id: this.postItem._id,
+            id: this.postItem.id,
             title: this.postItem.title,
             description: this.postItem.description,
             categories: this.categories

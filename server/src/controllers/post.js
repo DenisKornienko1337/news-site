@@ -44,6 +44,8 @@ exports.postUpdatePost = (req, res, next) => {
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;
     
+    console.log('req.body', req.body);
+    
     console.log('postId', postId);
     
     console.log('req.body.categories', req.body.categories);
