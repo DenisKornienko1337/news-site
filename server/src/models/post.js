@@ -7,18 +7,18 @@ const postSchema = new Schema({
   },
   description: {
     type: String
-  },
+  },    
   categories: {
-    items: [
-      {
-      categoryTitle: { 
-        type: String, 
-        required: false 
-      }
+    items: [{
+      categoryId: {type : mongoose.Schema.ObjectId, ref : 'Category'}
     }]
   }
 })
 
+postSchema.methods.addCategories = function(categories) {  
+  categories.map(c => this.categories.items.push({'categoryId': c._id}))
+  return this.save()  
+}
 
 const PostModel = mongoose.model('Post', postSchema)
 
