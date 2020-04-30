@@ -1,4 +1,5 @@
 const Category = require('../models/category')
+const Post = require('../models/post')
 
 exports.getIndex = (req, res) => {
     Category.find({}, 'title')
@@ -34,6 +35,13 @@ exports.postUpdateCategory = (req, res, next) => {
 }
 
 exports.postDestroy = (req, res, next) => {    
-    const id = req.body.id;
-    Category.deleteOne({_id: id}).catch(err => console.log(err));
+    const catId = req.body.id;
+    Post.find({'categories.items.categoryId': req.body.id})
+      .then(posts => {
+        posts.map(p => p.removeCategory(catId))
+        
+        return posts
+      })
+      .catch(err => console.log(err))
+    Category.deleteOne({_id: catId}).catch(err => console.log(err));
 }

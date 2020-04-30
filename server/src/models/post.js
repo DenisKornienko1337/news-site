@@ -20,6 +20,18 @@ postSchema.methods.addCategories = function(categories) {
   return this.save()  
 }
 
+postSchema.methods.removeCategory = function(categoryId) {  
+  const filteredCategories = this.categories.items.filter( cat => {
+    console.log('categoryId', categoryId , 'cat._id', cat._id);
+    
+    return categoryId.toString() !== cat.categoryId.toString()
+  })
+
+  this.categories.items = filteredCategories;
+
+  return this.save()  
+}
+
 const PostModel = mongoose.model('Post', postSchema)
 
 module.exports = PostModel
