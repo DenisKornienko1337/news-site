@@ -44,5 +44,6 @@ exports.postDestroy = (req, res, next) => {
         return posts
       })
       .catch(err => console.log(err))
+      
     Category.deleteOne({_id: catId}).catch(err => console.log(err));
 }

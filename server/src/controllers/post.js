@@ -65,18 +65,15 @@ exports.postUpdatePost = (req, res, next) => {
 
 exports.postDestroy = (req, res, next) => {    
     const postId = req.body.id;
-    Post.findById(postId)
-      .then(post => {        
-        const catsIds = post.categories.items.map(cat => cat.categoryId)
-        Category.find({'_id': {$in: catsIds} })
-        .then(cats => {
-          cats.map( c => {
-            c.removePost(post)
-          })
-          return cats;
+
+    Category.find({'articles.items.articleId': req.body.id})
+      .then(cats => {
+        cats.map( c => {
+          c.removePost(post)
         })
-        .catch(err => console.log(err))
+        return cats;
       })
+      .catch(err => console.log(err))
 
     Post.deleteOne({_id: postId}).catch(err => console.log(err));
 }
