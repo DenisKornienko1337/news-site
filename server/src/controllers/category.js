@@ -24,6 +24,11 @@ exports.postUpdateCategory = (req, res, next) => {
     const catId = req.body.id;
     const updatedTitle = req.body.title;
       
+    console.log('11111111111');
+    console.log('catId', req);
+    console.log('catId', catId);
+    console.log('updatedTitle', updatedTitle);
+    
     Category.findById(catId)
       .then( category => {        
         category.title = updatedTitle;
