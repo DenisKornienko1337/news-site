@@ -20,6 +20,13 @@ exports.postAddCategory = (req, res) => {
       .catch(err => console.log(err))
 }
 
+exports.getCategory = (req, res, next) => {  
+  const catId = req.body.id;
+      Category.findById(catId)
+      .then( category => res.send({ category: category }))
+      .catch( err => res.sendStatus(500))
+}
+
 exports.postUpdateCategory = (req, res, next) => {
     const catId = req.body.id;
     const updatedTitle = req.body.title;

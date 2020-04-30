@@ -48,7 +48,7 @@ exports.postUpdatePost = (req, res, next) => {
       .then( post => {        
         post.title = updatedTitle;
         post.description = updatedDesc;
-        post.updateCategories(updatedCategories)
+        // post.updateCategories(updatedCategories)
 
         return post.save()
       })
