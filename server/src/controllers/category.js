@@ -25,19 +25,18 @@ exports.postUpdateCategory = (req, res, next) => {
     const updatedTitle = req.body.title;
       
     console.log('11111111111');
-    console.log('catId', req);
     console.log('catId', catId);
     console.log('updatedTitle', updatedTitle);
     
-    Category.findById(catId)
-      .then( category => {        
-        category.title = updatedTitle;
-        return category.save()
-      })
-      .then(result => {
-        res.sendStatus(200)
-      })
-      .catch(err => console.log(err))
+    // Category.findById(catId)
+    //   .then( category => {        
+    //     category.title = updatedTitle;
+    //     return category.save()
+    //   })
+    //   .then(result => {
+    //     res.sendStatus(200)
+    //   })
+    //   .catch(err => console.log(err))
 }
 
 exports.postDestroy = (req, res, next) => {    
