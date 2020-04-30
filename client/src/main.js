@@ -3,13 +3,20 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import services from './services/api'
-
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { ValidationProvider } from 'vee-validate';
+import { extend } from 'vee-validate';
+
+extend('positive', value => {
+  return value.length-1;
+});
+
 
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
+Vue.component('ValidationProvider', ValidationProvider);
 
 Vue.config.productionTip = false
 

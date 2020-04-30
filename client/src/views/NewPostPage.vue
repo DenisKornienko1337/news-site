@@ -7,12 +7,14 @@
           | Add News
         form
           .form-group
-            input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="post.title" )
+            ValidationProvider(v-slot="v" rules="positive")
+              <span>{{ v.errors[0] }}</span>
+              input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="post.title" )
           .form-group
             textarea.form-control( type="text", rows="5", name="description", id="description", placeholder="Description", v-model.trim="post.description" )
           .form-group(v-for="(category, index) in categories", :key="category.title")
             input(type="checkbox" v-model.trim="category.title")
-            label(v-model.trim="category.title")
+            label()
              | {{category.title}}
 
           .form-group
@@ -25,6 +27,7 @@
 
 <script>
   import PostsService from '@/services/PostsService'
+
   export default {
     name: 'NewPostPage',
     data () {
@@ -51,12 +54,13 @@
           
           this.$router.push({ name: 'Posts' })
         } else {
-          alert('Empty fields!')
+          //alert('Empty fields!')
         }
       },
       async fetchCategories () {
         const response = await PostsService.fetchCategories()
         this.categories = response.data.categories
+        console.log(this.categories)
       },
       goBack () {
         this.$router.push({ name: 'Posts' })

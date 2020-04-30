@@ -14,11 +14,14 @@
             tr
               th Index
               th Title
-            tr( v-for="(post, index) in categories", :key="post.title" )
+            tr( v-for="(category, index) in categories", :key="category.title" )
               td {{ index }}
-              td {{ post.title }}
+              td {{ category.title }}
               td 
                 button( class="btn btn-danger" @click="deleteCategory(index)") Delete
+              td
+                router-link(:to="{name:'UpdateCategory', params:{id: category._id, category }}")
+                  | Update
         section.panel.panel-danger( v-if="!categories.length" )
           p
             | There are no news ... Lets add one now!

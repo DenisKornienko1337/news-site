@@ -6,6 +6,7 @@ import Categories from '../views/Categories'
 import NewPost from '../views/NewPostPage'
 import UpdatePost from '../views/UpdatePost'
 import AddCategory from '../views/AddCategory'
+import UpdateCategory from '../views/UpdateCategory'
 
 Vue.use(VueRouter)
 
@@ -49,6 +50,12 @@ Vue.use(VueRouter)
     path: '/categories/add-category',
     name: 'AddCategory',
     component: AddCategory,
+    props: true
+  },
+  {
+    path: '/categories/update-category/:id',
+    name: 'UpdateCategory',
+    component: UpdateCategory,
     props: true
   }
 ]
