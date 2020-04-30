@@ -36,6 +36,11 @@
             title: this.categoryItem.title,
             id: this.categoryItem.id,
           })
+          this.$notify({
+            group: 'notifications',
+            title: 'User notification',
+            text: 'Category have been updated!',
+          }); 
           this.$router.push({ name: 'Categories' })
         } else {
           alert('Empty fields!')

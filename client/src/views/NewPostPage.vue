@@ -49,9 +49,12 @@
             description: this.post.description,
             categories: this.categories
           })
-          
-          console.log('Created');
-          
+          this.$notify({
+            group: 'notifications',
+            title: 'User notification',
+            text: 'Post have been created!',
+            type: 'success',
+          });          
           this.$router.push({ name: 'Posts' })
         } else {
           //alert('Empty fields!')

@@ -7,6 +7,7 @@
       <router-link to="/categories">Categories</router-link>
     </div>
     <router-view/>
+    <notifications group="notifications" />
   </div>
 </template>
 

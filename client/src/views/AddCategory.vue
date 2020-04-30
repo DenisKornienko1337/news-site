@@ -33,6 +33,12 @@
           await PostsService.addCategory({
             title: this.post.title,
           })
+          this.$notify({
+            group: 'notifications',
+            title: 'User notification',
+            text: 'Category have been created!',
+            type: 'success',
+          }); 
           this.$router.push({ name: 'Categories' })
         } else {
           alert('Empty fields!')

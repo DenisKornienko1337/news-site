@@ -20,8 +20,12 @@
               td 
                 button( class="btn btn-danger" @click="deleteCategory(index)") Delete
               td
-                router-link(:to="{name:'UpdateCategory', params:{id: category._id, category }}")
-                  | Update
+                //- router-link(:to="{name:'UpdateCategory', params:{id: category._id, category }}")
+                //-   | Update
+                button(class="btn btn-danger" @click="roat_to_update(category._id)")
+                  | click_me
+                //- router-link(:to="{name:'UpdateCategory', params:{id: category._id, category }}")
+                //-   | Update
         section.panel.panel-danger( v-if="!categories.length" )
           p
             | There are no news ... Lets add one now!
@@ -44,6 +48,13 @@
       }
     },
     methods: {
+      async roat_to_update(catId){
+        const response = await PostsService.updateCategory({
+            id: catId
+        })
+        this.$router.push({ name: 'Posts' })
+        console.log(response);
+      },
       async fetchCategories () {
         const response = await PostsService.fetchCategories()
         this.categories = response.data.categories
@@ -52,7 +63,12 @@
         const deletedItem = this.categories[index]
         
         this.categories.splice(index,1)   
-
+        this.$notify({
+          group: 'notifications',
+          title: 'User notification',
+          text: 'Category have been deleted!',
+          type: 'error'
+        }); 
         await PostsService.deleteCategories({
             id: deletedItem._id
         })          

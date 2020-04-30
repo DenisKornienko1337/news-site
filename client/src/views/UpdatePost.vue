@@ -51,7 +51,11 @@
             description: this.postItem.description,
             categories: this.categories
           })
-          console.log('Updated');
+          this.$notify({
+            group: 'notifications',
+            title: 'User notification',
+            text: 'Post have been updated!',
+          });  
           this.$router.push({ name: 'Posts' })
           
         } else {

@@ -8,6 +8,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { ValidationProvider } from 'vee-validate';
 import { extend } from 'vee-validate';
+import Notifications from 'vue-notification'
+import VuejsDialog from "vuejs-dialog"
+
+
 
 extend('positive', value => {
   return value.length-1;
@@ -15,8 +19,11 @@ extend('positive', value => {
 
 
 Vue.use(BootstrapVue)
+Vue.use(Notifications)
 Vue.use(BootstrapVueIcons)
-Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationProvider', ValidationProvider)
+Vue.use(VuejsDialog)
+
 
 Vue.config.productionTip = false
 
