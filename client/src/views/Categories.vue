@@ -22,8 +22,8 @@
               td
                 //- router-link(:to="{name:'UpdateCategory', params:{id: category._id, category }}")
                 //-   | Update
-                button(class="btn btn-danger" @click="roat_to_update(category._id)")
-                  | click_me
+                button(class="btn btn-primary" @click="roat_to_update(category._id)")
+                  | Update
                 //- router-link(:to="{name:'UpdateCategory', params:{id: category._id, category }}")
                 //-   | Update
         section.panel.panel-danger( v-if="!categories.length" )
