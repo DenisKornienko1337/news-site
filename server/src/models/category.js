@@ -23,9 +23,9 @@ categorySchema.methods.addPost = function(post) {
   return this.save()  
 }
 
-categorySchema.methods.removePost = function(post) { 
+categorySchema.methods.removePost = function(postId) { 
   const filteredItems = this.articles.items.filter( postItem => {    
-    return postItem.articleId.toString() !== post._id.toString()
+    return postItem.articleId.toString() !== postId.toString()
   })
   this.articles.items = filteredItems
   

@@ -63,7 +63,7 @@ exports.postDestroy = (req, res, next) => {
 
     Category.find({'articles.items.articleId': req.body.id})
       .then(cats => {
-        cats.map( c => c.removePost(post))
+        cats.map( c => c.removePost(postId))
         
         return cats;
       })
