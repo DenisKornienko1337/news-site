@@ -24,7 +24,8 @@
     data () {
       return {
         categoryItem: {
-          title: this.$props.category.title
+          title: this.$props.category.title,
+          id: this.$props.category._id
         }
       }
     },
@@ -33,6 +34,7 @@
         if (this.categoryItem.title !== '') {
           await PostsService.updateCategory({
             title: this.categoryItem.title,
+            id: this.categoryItem.title,
           })
           this.$router.push({ name: 'Categories' })
         } else {
