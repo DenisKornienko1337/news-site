@@ -31,6 +31,7 @@ categorySchema.methods.removePost = function(post) {
   
   return this.save()  
 }
+
 const CategoryModel = mongoose.model('Category', categorySchema)
 
 module.exports = CategoryModel

@@ -21,9 +21,7 @@ postSchema.methods.addCategories = function(categories) {
 }
 
 postSchema.methods.removeCategory = function(categoryId) {  
-  const filteredCategories = this.categories.items.filter( cat => {
-    console.log('categoryId', categoryId , 'cat._id', cat._id);
-    
+  const filteredCategories = this.categories.items.filter( cat => {    
     return categoryId.toString() !== cat.categoryId.toString()
   })
 
