@@ -23,12 +23,11 @@ categorySchema.methods.addPost = function(post) {
   return this.save()  
 }
 
-categorySchema.methods.removePost = function(post) {  
-  const filteredItems = this.articles.items.filter( postItem => postItem.articleId.toString() !== post._id.toString())
+categorySchema.methods.removePost = function(post) { 
+  const filteredItems = this.articles.items.filter( postItem => {    
+    return postItem.articleId.toString() !== post._id.toString()
+  })
   this.articles.items = filteredItems
-  console.log('post', post);
-  console.log('this.articles', this.articles);
-  console.log('filteredItems', filteredItems);
   
   return this.save()  
 }
