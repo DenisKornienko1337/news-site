@@ -20,6 +20,12 @@ postSchema.methods.addCategories = function(categories) {
   return this.save()  
 }
 
+postSchema.methods.updateCategories = function(categories) {  
+  this.categories.items = []
+  categories.map(c => this.categories.items.push({'categoryId': c._id}))
+  return this.save()  
+}
+
 postSchema.methods.removeCategory = function(categoryId) {  
   const filteredCategories = this.categories.items.filter( cat => {    
     return categoryId.toString() !== cat.categoryId.toString()

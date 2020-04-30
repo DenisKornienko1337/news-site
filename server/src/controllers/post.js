@@ -41,19 +41,14 @@ exports.postAddPost = (req, res) => {
 exports.postUpdatePost = (req, res, next) => {
     const postId = req.body.id;
     const updatedTitle = req.body.title;
-    const updatedDesc = req.body.description;
-        
-    const categoriesTitles = req.body.categories.map( cat => {
-      return {
-        categoryTitle: cat.title
-      }
-    })
+    const updatedDesc = req.body.description;        
+    const updatedCategories = req.body.categories;
     
     Post.findById(postId)
       .then( post => {        
         post.title = updatedTitle;
         post.description = updatedDesc;
-        post.categories.items = categoriesTitles;
+        post.updateCategories(updatedCategories)
 
         return post.save()
       })
