@@ -49,10 +49,10 @@
     },
     methods: {
       async roat_to_update(catId){
-        const response = await PostsService.updateCategory({
+        const response = await PostsService.getCategory({
             id: catId
         })
-        this.$router.push({ name: 'Posts' })
+        this.$router.push({ name: 'UpdateCategory', params: {id: catId} })
         console.log(response);
       },
       async fetchCategories () {

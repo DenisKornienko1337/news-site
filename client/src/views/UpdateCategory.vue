@@ -14,18 +14,20 @@
           section
             button.btn.btn-success.btn-block( type="button", @click="goBack()" )
               | go to news page
+            button.btn.btn-success.btn-block( type="button", @click="getCat()" )
+              | getCat
 </template>
 
 <script>
   import PostsService from '@/services/PostsService'
   export default {
     name: 'UpdateCategory',
-    props: ['category'],
+    // props: ['category'],
     data () {
       return {
         categoryItem: {
-          title: this.$props.category.title,
-          id: this.$props.category._id
+          title: '',
+          id: ''
         }
       }
     },
@@ -46,9 +48,24 @@
           alert('Empty fields!')
         }
       },
+      async getCat(){        
+        const response = await PostsService.getCategory({
+            id: this.$attrs.id
+        })
+                
+        this.title = response.category.title
+      },
       goBack () {
         this.$router.push({ name: 'Categories' })
       }
+    },    
+    async mounted() {      
+        const response = await PostsService.getCategory({
+            id: this.$attrs.id
+        })
+        
+        this.categoryItem.title = response.data.category.title
+        this.categoryItem.id = response.data.category._id
     }
   }
 </script>
