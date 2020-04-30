@@ -34,7 +34,7 @@
         if (this.categoryItem.title !== '') {
           await PostsService.updateCategory({
             title: this.categoryItem.title,
-            id: this.categoryItem.title,
+            id: this.categoryItem.id,
           })
           this.$router.push({ name: 'Categories' })
         } else {
