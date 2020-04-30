@@ -3,6 +3,7 @@ const Post = require('../models/post')
 
 exports.getIndex = (req, res) => {
     Category.find({}, 'title')
+        .populate('articles.items.articleId')
         .sort({ _id: -1 })
         .then( categories => res.send({ categories: categories }))
         .catch( err => res.sendStatus(500))
