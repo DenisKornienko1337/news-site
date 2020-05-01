@@ -10,8 +10,8 @@ exports.getIndex = (req, res) => {
 }
 
 exports.getPost = (req, res) => {
-    const prodId = req.params.productId;
-    Post.findById(prodId, 'title description')
+    const postId = req.params.id;
+    Post.findById(postId, 'title description')
       .populate('categories.items.categoryId')
       .sort({ _id: -1 })
       .then(posts => res.send({ posts: posts }))

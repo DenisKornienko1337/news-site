@@ -66,16 +66,16 @@
           this.$dialog.alert('Fields cannot be empty!')
         }
       },
-      async fetchCategories () {
-        const response = await PostsService.fetchCategories()
-        this.categories = response.data.categories
-      },
+      // async fetchCategories () {
+      //   const response = await PostsService.fetchCategories()
+      //   this.categories = response.data.categories
+      // },
       goBack () {
         this.$router.push({ name: 'Posts' })
       }
     },
     async mounted () {
-      this.fetchCategories()
+      // this.fetchCategories()
       const response = await PostsService.getPost({
           id: this.$attrs.id
       })
