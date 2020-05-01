@@ -1,6 +1,8 @@
 <template lang="pug">
-    div
-       h2 {{ title }} 
+    .container
+        h2 {{ title }}
+        ul.articles(v-for="article in articles" :key="article.title")
+            li.article-item {{ article.articleId.title }}
 </template>
 
 <script>
@@ -10,7 +12,8 @@ export default {
     name: 'SingleCategory',
     data() {
         return {
-            title: ''
+            title: '',
+            articles: []
         }
     },
     methods: {
@@ -23,10 +26,13 @@ export default {
         console.log(response.data.category);
         
         this.title = response.data.category.title
+        this.articles = response.data.category.articles.items
    }
 }
 </script>
 
-<style>
-
+<style lang="scss">
+  .container {
+    max-width: 60%;
+  }
 </style>

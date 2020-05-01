@@ -59,7 +59,14 @@ exports.postUpdatePost = (req, res, next) => {
 
         return post.save()
       })
-      .then(post => {  
+      .then(post => { 
+        Category.find({'_id': updatedCategoriesIds})
+        .then(cat => {    
+          cat.map(c => {
+            c.addPost(post)
+          })
+        })
+        
         return post.updateCategories(updatedCategoriesIds)
       })
       .then(result => {
