@@ -43,13 +43,18 @@ exports.postUpdatePost = (req, res, next) => {
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;        
     const updatedCategoriesIds = req.body.categories;
-    
-    console.log('updatedCategoriesIds', updatedCategoriesIds);
-    
+        
     Post.findById(postId)
       .then( post => {        
         post.title = updatedTitle;
         post.description = updatedDesc;
+        
+        Category.find({'articles.items.articleId':postId})
+          .then(cats => {
+             cats.map(c => c.removePost(postId))
+             return cats
+          })
+          .catch(err => console.log(err))
 
         return post.save()
       })

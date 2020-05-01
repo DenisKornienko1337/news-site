@@ -26,8 +26,9 @@
                 //-   | Update
                 button(class="btn btn-primary" @click="roat_to_update(category._id)")
                   | Update
+              td 
                 router-link(:to="{name:'SingleCategory', params:{id: category._id}}")
-                  | Update
+                  | Single
         section.panel.panel-danger( v-if="!categories.length" )
           p
             | There are no news ... Lets add one now!
