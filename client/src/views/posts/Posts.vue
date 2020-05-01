@@ -17,15 +17,17 @@
               th Content
               th Buttons
               th Update
-              th Posts
+              th Categories
             tr( v-for="(post, index) in posts", :key="post.title" )
               td {{ index }}
-              td {{ post.title }}
+              td
+                router-link(:to="{name: 'SinglePost', params:{id: post._id }}")
+                  | {{ post.title }}                 
               td {{ post.description }}
               td 
                 button(class="btn btn-danger" @click="deletePosts(index)") Delete
               td
-                router-link(:to="{name: 'UpdatePost', params:{id: post._id, post }}")
+                router-link(class="btn btn-primary" :to="{name: 'UpdatePost', params:{id: post._id }}")
                   | Update
               td
                 div(v-for="(category, index) in post.categories.items", :key="category.categoryId.title")

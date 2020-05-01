@@ -22,8 +22,8 @@ export default {
             id: this.$attrs.id
         })
                 
-        this.title = response.data.post.title
-        this.categoryies = response.data.post.categories.items
+        this.title = response.data.posts.title
+        this.categoryies = response.data.posts.categories.items
    }
 }
 </script>
