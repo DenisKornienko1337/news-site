@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/src/views/Home.vue'
-import Posts from '@/src/views/posts/Posts'
-import Categories from '@/src/views/categories/Categories'
-import NewPost from '@/src/views/posts/NewPostPage'
-import UpdatePost from '@/src/views/posts/UpdatePost'
-import AddCategory from '@/src/views/categories/AddCategory'
-import UpdateCategory from '@/src/views/categories/UpdateCategory'
-import SingleCategory from '@/src/views/categories/SingleCategory'
+import Home from '../views/Home.vue'
+import Posts from '../views/posts/Posts'
+import Categories from '../views/categories/Categories'
+import NewPost from '../views/posts/NewPostPage'
+import UpdatePost from '../views/posts/UpdatePost'
+import AddCategory from '../views/categories/AddCategory'
+import UpdateCategory from '../views/categories/UpdateCategory'
 
 Vue.use(VueRouter)
 
@@ -60,9 +59,9 @@ Vue.use(VueRouter)
     props: true
   },
   {
-    path: '/categories/:id',
-    name: 'SingleCategory',
-    component: SingleCategory,
+    path: '/categories/update-category/:id',
+    name: 'UpdateCategory',
+    component: UpdateCategory,
     props: true
   }
 ]

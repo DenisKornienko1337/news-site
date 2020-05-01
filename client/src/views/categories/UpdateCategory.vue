@@ -14,8 +14,6 @@
           section
             button.btn.btn-success.btn-block( type="button", @click="goBack()" )
               | go to news page
-            button.btn.btn-success.btn-block( type="button", @click="getCat()" )
-              | getCat
 </template>
 
 <script>
