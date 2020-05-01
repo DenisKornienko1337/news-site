@@ -4,7 +4,7 @@ const postController = require('../controllers/post')
 
 router.get('/', postController.getIndex)
 
-router.get('/:id', postController.getPost)
+router.post('/item', categoryController.getPost)
 
 router.post('/', postController.postAddPost)
 
