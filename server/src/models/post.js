@@ -9,14 +9,18 @@ const postSchema = new Schema({
     type: String
   },    
   categories: {
-    items: [{
-      categoryId: {type : mongoose.Schema.ObjectId, ref : 'Category'}
-    }]
+    items: [
+      {
+        categoryId: {type : mongoose.Schema.ObjectId, ref : 'Category'}
+      }
+    ]
   }
 })
 
 postSchema.methods.addCategories = function(categories) {  
-  categories.map(c => this.categories.items.push({'categoryId': c._id}))
+  console.log('categories', categories);
+  
+  categories.map(c => this.categories.items.push({'categoryId': c}))
   return this.save()  
 }
 

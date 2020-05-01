@@ -23,6 +23,7 @@ exports.postAddCategory = (req, res) => {
 exports.getCategory = (req, res, next) => {  
   const catId = req.body.id;
       Category.findById(catId)
+      .populate('articles.items.articleId')
       .then( category => res.send({ category: category }))
       .catch( err => res.sendStatus(500))
 }
