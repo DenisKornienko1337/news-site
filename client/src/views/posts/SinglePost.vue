@@ -1,32 +1,29 @@
 <template lang="pug">
     .container
         h2 {{ title }}
-        ul.articles-list.list-group.mt-2
-            li.article-item.list-group-item(v-for="article in articles" :key="article.title") {{ article.articleId.title }}
+
 </template>
 
 <script>
   import PostsService from '@/services/PostsService'
 
 export default {
-    name: 'SingleCategory',
+    name: 'SinglePost',
     data() {
         return {
             title: '',
-            articles: []
+            categoryies: []
         }
     },
     methods: {
     },
     async mounted() {      
-        const response = await PostsService.getCategory({
+        const response = await PostsService.getPost({
             id: this.$attrs.id
         })
-        
-        console.log(response.data.category);
-        
-        this.title = response.data.category.title
-        this.articles = response.data.category.articles.items
+                
+        this.title = response.data.post.title
+        this.categoryies = response.data.post.categories.items
    }
 }
 </script>
