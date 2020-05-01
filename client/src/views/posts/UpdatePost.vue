@@ -29,13 +29,13 @@
   import PostsService from '@/services/PostsService'
   export default {
     name: 'UpdatePost',
-    props: ['post'],
+    //props: ['post'],
     data () {
       return {
         postItem: {
-          id: this.$props.post._id,
-          title: this.$props.post.title,
-          description: this.$props.post.description,
+          id: '',
+          title: '',
+          description: '',
         },
         categories:[{
           title: ''
@@ -66,20 +66,22 @@
           this.$dialog.alert('Fields cannot be empty!')
         }
       },
-      // async fetchCategories () {
-      //   const response = await PostsService.fetchCategories()
-      //   this.categories = response.data.categories
-      // },
+      async fetchCategories () {
+        const response = await PostsService.fetchCategories()
+        this.categories = response.data.categories
+      },
       goBack () {
         this.$router.push({ name: 'Posts' })
       }
     },
     async mounted () {
-      // this.fetchCategories()
+      this.fetchCategories()
       const response = await PostsService.getPost({
           id: this.$attrs.id
       })
-      console.log(response)
+      this.postItem.id = response.data.posts._id
+      this.postItem.title = response.data.posts.title
+      this.postItem.description = response.data.posts.description
     }
   }
 </script>
