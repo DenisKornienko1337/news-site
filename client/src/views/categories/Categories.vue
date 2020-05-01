@@ -14,6 +14,8 @@
             tr
               th Index
               th Title
+              th Update
+              th Single
             tr( v-for="(category, index) in categories", :key="category.title" )
               td {{ index }}
               td {{ category.title }}
@@ -24,8 +26,8 @@
                 //-   | Update
                 button(class="btn btn-primary" @click="roat_to_update(category._id)")
                   | Update
-                //- router-link(:to="{name:'UpdateCategory', params:{id: category._id, category }}")
-                //-   | Update
+                router-link(:to="{name:'SingleCategory', params:{id: category._id}}")
+                  | Update
         section.panel.panel-danger( v-if="!categories.length" )
           p
             | There are no news ... Lets add one now!
