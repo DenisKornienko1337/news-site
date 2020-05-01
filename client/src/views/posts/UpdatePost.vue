@@ -63,7 +63,7 @@
           this.$router.push({ name: 'Posts' })
           
         } else {
-          alert('Empty fields!')
+          this.$dialog.alert('Fields cannot be empty!')
         }
       },
       async fetchCategories () {
@@ -74,8 +74,12 @@
         this.$router.push({ name: 'Posts' })
       }
     },
-    mounted () {
+    async mounted () {
       this.fetchCategories()
+      const response = await PostsService.getPost({
+          id: this.$attrs.id
+      })
+      console.log(response.data)
     }
   }
 </script>

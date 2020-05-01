@@ -25,6 +25,9 @@ export default {
   getCategory(params) {
     return api().post('categories/item', params)
   },
+  getPost(params) {
+    return api().post('posts/item', params)
+  },
   deleteCategories(params) {
     return api().post('categories/delete-category', params)
   },

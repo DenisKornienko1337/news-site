@@ -1,9 +1,11 @@
 <template lang="pug">
-    h2
-        {{ title }}
+    div
+       h2 {{ title }} 
 </template>
 
 <script>
+  import PostsService from '@/services/PostsService'
+
 export default {
     name: 'SingleCategory',
     data() {
@@ -12,17 +14,16 @@ export default {
         }
     },
     methods: {
-        async getCat(){        
-            const response = await PostsService.getCategory({
-                id: this.$attrs.id
-            })
-                    
-            this.title = response.category.title
-      },
     },
-    mounted: {
-        getCat()
-    }
+    async mounted() {      
+        const response = await PostsService.getCategory({
+            id: this.$attrs.id
+        })
+        
+        console.log(response.data.category);
+        
+        this.title = response.data.category.title
+   }
 }
 </script>
 
