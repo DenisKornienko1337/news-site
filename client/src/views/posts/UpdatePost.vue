@@ -79,7 +79,7 @@
       const response = await PostsService.getPost({
           id: this.$attrs.id
       })
-      console.log(response.data)
+      console.log(response)
     }
   }
 </script>

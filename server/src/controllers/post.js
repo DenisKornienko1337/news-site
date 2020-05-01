@@ -10,10 +10,11 @@ exports.getIndex = (req, res) => {
 }
 
 exports.getPost = (req, res) => {
-    const postId = req.params.id;
+    const postId = req.body.id;
+
     Post.findById(postId, 'title description')
       .populate('categories.items.categoryId')
-      .sort({ _id: -1 })
+      // .sort({ _id: -1 })
       .then(posts => res.send({ posts: posts }))
       .catch(err => res.sendStatus(500))
 }
