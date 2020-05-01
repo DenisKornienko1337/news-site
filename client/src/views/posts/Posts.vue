@@ -23,7 +23,7 @@
               td {{ post.title }}
               td {{ post.description }}
               td 
-                button(class="btn btn-danger" @click="deleteOnConfirm(index)") Delete
+                button(class="btn btn-danger" @click="deletePosts(index)") Delete
               td
                 router-link(:to="{name: 'UpdatePost', params:{id: post._id, post }}")
                   | Update
@@ -67,10 +67,6 @@
         this.posts = response.data.posts
       },
       async deletePosts (index) {
-        this.$dialog.confirm('Please confirm to continue')
-        .then(function () {
-          console.log('Clicked on proceed')
-        })
         const deletedItem = this.posts[index]
         this.posts.splice(index,1)
         this.$notify({
@@ -83,16 +79,10 @@
             id: deletedItem._id
         })
       },
-      deleteOnConfirm(index) {
-        let self = this
-        this.$dialog.confirm('Please confirm to continue')
-        .then(function(){
-          self.deletePosts(index)
-        })
-      },
     },
     mounted () {
       this.getPosts()
+      //this.fetchCategories()
     }
   }
 </script>

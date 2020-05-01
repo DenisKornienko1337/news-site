@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Posts from '../views/Posts'
-import Categories from '../views/Categories'
-import NewPost from '../views/NewPostPage'
-import UpdatePost from '../views/UpdatePost'
-import AddCategory from '../views/AddCategory'
-import UpdateCategory from '../views/UpdateCategory'
+import Posts from '../views/posts/Posts'
+import Categories from '../views/categories/Categories'
+import NewPost from '../views/posts/NewPostPage'
+import UpdatePost from '../views/posts/UpdatePost'
+import AddCategory from '../views/categories/AddCategory'
+import UpdateCategory from '../views/categories/UpdateCategory'
 
 Vue.use(VueRouter)
 
