@@ -42,15 +42,19 @@ exports.postUpdatePost = (req, res, next) => {
     const postId = req.body.id;
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;        
-    const updatedCategories = req.body.categories;
+    const updatedCategoriesIds = req.body.categories;
+    
+    console.log('updatedCategoriesIds', updatedCategoriesIds);
     
     Post.findById(postId)
       .then( post => {        
         post.title = updatedTitle;
         post.description = updatedDesc;
-        // post.updateCategories(updatedCategories)
 
         return post.save()
+      })
+      .then(post => {  
+        return post.updateCategories(updatedCategoriesIds)
       })
       .then(result => {
         res.sendStatus(200)

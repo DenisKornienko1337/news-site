@@ -20,9 +20,12 @@ postSchema.methods.addCategories = function(categories) {
   return this.save()  
 }
 
-postSchema.methods.updateCategories = function(categories) {  
+postSchema.methods.updateCategories = function(categoriesIds) {    
   this.categories.items = []
-  categories.map(c => this.categories.items.push({'categoryId': c._id}))
+  categoriesIds.map(c => {    
+    return this.categories.items.push({'categoryId': c})
+  })
+
   return this.save()  
 }
 
