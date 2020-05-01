@@ -9,6 +9,14 @@ exports.getIndex = (req, res) => {
         .catch( err => res.sendStatus(500))
 }
 
+exports.getCategory = (req, res, next) => {  
+  const catId = req.body.id;
+      Category.findById(catId)
+      .populate('articles.items.articleId')
+      .then( category => res.send({ category: category }))
+      .catch( err => res.sendStatus(500))
+}
+
 exports.postAddCategory = (req, res) => {
     const category = new Category({
         title: req.body.title,
@@ -18,14 +26,6 @@ exports.postAddCategory = (req, res) => {
         res.sendStatus(200)
       })
       .catch(err => console.log(err))
-}
-
-exports.getCategory = (req, res, next) => {  
-  const catId = req.body.id;
-      Category.findById(catId)
-      .populate('articles.items.articleId')
-      .then( category => res.send({ category: category }))
-      .catch( err => res.sendStatus(500))
 }
 
 exports.postUpdateCategory = (req, res, next) => {
