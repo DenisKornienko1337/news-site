@@ -27,9 +27,9 @@
               td
                 router-link(:to="{name: 'UpdatePost', params:{id: post._id, post }}")
                   | Update
-              td
-                div(v-for="(category, index) in post.categories.items", :key="category.categoryId.title")
-                  span {{category.categoryId.title}}
+              //- td
+              //-   div(v-for="(category, index) in post.categories.items", :key="category.categoryId.title")
+              //-     span {{category.categoryId.title}}
 
 
 

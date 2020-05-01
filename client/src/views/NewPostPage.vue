@@ -13,7 +13,7 @@
           .form-group
             textarea.form-control( type="text", rows="5", name="description", id="description", placeholder="Description", v-model.trim="post.description" )
           .form-group(v-for="(category, index) in categories", :key="category.title")
-            input(type="checkbox" v-model.trim="category.title")
+            input(type="checkbox" v-model="selectedCategories[index]" v-bind:true-value="category._id")
             label()
              | {{category.title}}
 
@@ -38,7 +38,8 @@
         },
         categories:[{
           title: ''
-        }]
+        }],
+        selectedCategories: [],
       }
     },
     methods: {
@@ -47,7 +48,7 @@
           await PostsService.addNewPost({
             title: this.post.title,
             description: this.post.description,
-            categories: this.categories
+            categories: this.selectedCategories
           })
           this.$notify({
             group: 'notifications',
