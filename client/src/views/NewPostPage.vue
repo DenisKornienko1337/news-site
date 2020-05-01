@@ -45,6 +45,9 @@
     methods: {
       async addPost () {
         if (this.post.title !== '' && this.post.description !== '') {
+          this.selectedCategories = this.selectedCategories.filter(function(id) {
+            return !!id;
+          });
           await PostsService.addNewPost({
             title: this.post.title,
             description: this.post.description,

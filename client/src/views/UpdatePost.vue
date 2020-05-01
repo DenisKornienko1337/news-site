@@ -46,6 +46,9 @@
     methods: {
       async updatePost () {
         if (this.postItem.title !== '' && this.postItem.description !== '') {
+          this.selectedCategories = this.selectedCategories.filter(function(id) {
+            return !!id;
+          });
           await PostsService.updatePost({
             id: this.postItem.id,
             title: this.postItem.title,
