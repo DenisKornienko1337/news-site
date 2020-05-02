@@ -2,9 +2,11 @@
     .container
         h2 {{ title }}
         ul.articles-list.list-group.mt-2
-            li.article-item.list-group-item(v-for="article in articles" :key="article.title") 
-              //- router-link(:to="{name:'SingleCategory', params:{id: category._id}}")
-              //-     {{ article.articleId.title }}
+          li.article-item.list-group-item(v-for="(article, index) in articles" :key="index")
+            router-link(:to="{name:'SinglePost', params:{id: article.articleId._id}}") 
+             |  {{ article.articleId.title }} 
+              
+                  
 </template>
 
 <script>
