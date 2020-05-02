@@ -1,6 +1,7 @@
 <template lang="pug">
     .container
         h2 {{ title }}
+        |  {{description}}
 
 </template>
 
@@ -12,7 +13,8 @@ export default {
     data() {
         return {
             title: '',
-            categoryies: []
+            description: '',
+            categories: []
         }
     },
     methods: {
@@ -21,9 +23,9 @@ export default {
         const response = await PostsService.getPost({
             id: this.$attrs.id
         })
-                
         this.title = response.data.posts.title
-        this.categoryies = response.data.posts.categories.items
+        this.description = response.data.posts.description
+        this.categories = response.data.posts.categories.items
    }
 }
 </script>

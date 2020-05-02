@@ -6,11 +6,11 @@ import services from './services/api'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { ValidationProvider } from 'vee-validate';
-import { extend } from 'vee-validate';
+import { ValidationProvider } from 'vee-validate'
+import { extend } from 'vee-validate'
 import Notifications from 'vue-notification'
 import VuejsDialog from "vuejs-dialog"
-
+import "materialize-css/dist/css/materialize.min.css"
 
 
 extend('positive', value => {
@@ -28,9 +28,11 @@ Vue.config.productionTip = false
 
 Vue.config.productionTip = false
 
-new Vue({
+let vm = new Vue({
   services,
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+global.vm = vm;

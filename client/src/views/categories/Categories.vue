@@ -4,12 +4,9 @@
       .col-lg-12
         h1
           | Categories
-        h3
-          | This file will list all the news
 
         section.panel.panel-success( v-if="categories.length" )
-          .panel-heading
-            | list of categories
+          AddButton(text="Add Category" path="AddCategory")
           table.table.table-striped
             tr
               th Index
@@ -30,12 +27,6 @@
         section.panel.panel-danger( v-if="!categories.length" )
           p
             | There are no news ... Lets add one now!
-          div
-            router-link( :to="{ name: 'AddCategory'}" )
-              | add news
-        div
-            router-link( :to="{ name: 'AddCategory' }" )
-              | add  news
 </template>
 <style lang="scss">
   .circle-icon {
@@ -62,6 +53,8 @@
 <script>
   import { XCircleIcon, Edit2Icon } from 'vue-feather-icons'
   import PostsService from '@/services/PostsService'
+  import AddButton from '@/components/AddButton'
+
   export default {
     name: 'PostsPage',
     data () {
@@ -71,7 +64,7 @@
       }
     },
     components: {
-      XCircleIcon, Edit2Icon
+      XCircleIcon, Edit2Icon, AddButton
     },
     methods: {
       async roat_to_update(catId){

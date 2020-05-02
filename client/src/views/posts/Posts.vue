@@ -4,12 +4,12 @@
       .col-lg-12
         h1
           | News
-        h3
-          | This file will list all the news
-
         section.panel.panel-success( v-if="posts.length" )
-          .panel-heading
-            | list of news
+          AddButton(text="Add News" path="NewPost")
+          select.browser-default(@change="filterPosts($event)")
+            option(value="-1") All
+            option(v-for="(category) in categories" :key="category.title") {{category.title}}
+          input(@input="searchPosts($event)")
           table.table.table-striped
             tr
               th Index
@@ -18,7 +18,7 @@
               th Buttons
               th Update
               th Categories
-            tr( v-for="(post, index) in posts", :key="post.title" )
+            tr(v-for="(post, index) in posts", :key="post.title" v-show="!post.catHide && !post.queryHide")
               td {{ index }}
               td
                 router-link(:to="{name: 'SinglePost', params:{id: post._id }}")
@@ -33,25 +33,21 @@
               td
                 div(v-for="(category, index) in post.categories.items", :key="category.categoryId.title")
                   span {{category.categoryId.title}}
-
+        div.input-field
         section.panel.panel-danger( v-if="!posts.length" )
           p
             | There are no news ... Lets add one now!
-          div
-            router-link( :to="{ name: 'NewPost'}" )
-              | add news
-        div
-            router-link( :to="{ name: 'NewPost' }" )
-              | add  news
 </template>
 
 <script>
   import { XCircleIcon, Edit2Icon } from 'vue-feather-icons'
   import PostsService from '@/services/PostsService'
+  import AddButton from '@/components/AddButton'
+
   export default {
     name: 'PostsPage',
     components: {
-      XCircleIcon, Edit2Icon
+      XCircleIcon, Edit2Icon, AddButton
     },
     data () {
       return {
@@ -63,6 +59,35 @@
       }
     },
     methods: {
+      searchPosts(event) {
+        let searchQuery = event.target.value
+        for(let i in this.posts) {
+          if(this.posts[i].title.toLowerCase().includes(searchQuery.toLowerCase())) {
+            this.posts[i].queryHide = false
+          } else {
+            this.posts[i].queryHide = true
+          }
+        }
+        this.$forceUpdate();
+      },
+      filterPosts(event) {
+        let selectedCategoryTitle = event.target.value
+        for(let i in this.posts) {
+          if(selectedCategoryTitle==-1) {
+            this.posts[i].catHide = false
+          } else {
+            let flag = this.isInCategories(this.posts[i].categories.items, selectedCategoryTitle)
+            this.posts[i].catHide = flag
+          }
+        }
+        this.$forceUpdate();
+      },
+      isInCategories(cats, value){
+        for(let i in cats) {
+          if(cats[i].categoryId.title == value) return false
+        }
+        return true
+      },
       async fetchCategories () {
         const response = await PostsService.fetchCategories()
         this.categories = response.data.categories
@@ -74,20 +99,17 @@
       async deletePosts (index) {
         const deletedItem = this.posts[index]
         this.posts.splice(index,1)
-        this.$notify({
-          group: 'notifications',
-          title: 'User notification',
-          text: 'Post have been deleted!',
-          type: 'error'
-        }); 
         await PostsService.deletePosts({
             id: deletedItem._id
         })
       },
     },
     mounted () {
-      this.getPosts()
-      //this.fetchCategories()
+      this.fetchCategories()
+      let self = this
+      setTimeout(function(){
+        self.getPosts()
+      }, 200)
     }
   }
 </script>
@@ -96,7 +118,11 @@
   .delete {
     background: red;
   }
-  
+  select {
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
   .circle-icon {
     &:hover {
       circle {
