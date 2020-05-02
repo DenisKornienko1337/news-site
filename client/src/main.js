@@ -17,7 +17,6 @@ extend('positive', value => {
   return value.length-1;
 });
 
-
 Vue.use(BootstrapVue)
 Vue.use(Notifications)
 Vue.use(BootstrapVueIcons)

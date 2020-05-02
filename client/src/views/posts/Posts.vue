@@ -25,15 +25,14 @@
                   | {{ post.title }}                 
               td {{ post.description }}
               td 
-                button(class="btn btn-danger" @click="deletePosts(index)") Delete
+                button(class="btn pt-0" @click="deletePosts(index)") 
+                  <x-circle-icon size="2x" class="circle-icon"></x-circle-icon> 
               td
-                router-link(class="btn btn-primary" :to="{name: 'UpdatePost', params:{id: post._id }}")
-                  | Update
+                router-link(class="btn" :to="{name: 'UpdatePost', params:{id: post._id }}")
+                  | <edit-2-icon size="1.5x" class="edit-icon pt-0"></edit-2-icon>
               td
                 div(v-for="(category, index) in post.categories.items", :key="category.categoryId.title")
                   span {{category.categoryId.title}}
-
-
 
         section.panel.panel-danger( v-if="!posts.length" )
           p
@@ -47,9 +46,13 @@
 </template>
 
 <script>
+  import { XCircleIcon, Edit2Icon } from 'vue-feather-icons'
   import PostsService from '@/services/PostsService'
   export default {
     name: 'PostsPage',
+    components: {
+      XCircleIcon, Edit2Icon
+    },
     data () {
       return {
         posts: [],
@@ -92,5 +95,23 @@
 <style lang="scss" scoped>
   .delete {
     background: red;
+  }
+  
+  .circle-icon {
+    &:hover {
+      circle {
+        fill: #c82333;
+      }
+    }
+    color: white;
+    circle {
+      fill: #dc3545;
+    }
+    line {
+      color: white;
+    }
+  }
+  .edit-icon {
+    color: #007bff;
   }
 </style>

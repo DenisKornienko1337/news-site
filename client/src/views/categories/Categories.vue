@@ -14,6 +14,7 @@
             tr
               th Index
               th Title
+              th Delete
               th Update
             tr( v-for="(category, index) in categories", :key="category.title" )
               td {{ index }}
@@ -21,10 +22,10 @@
                 router-link(:to="{name:'SingleCategory', params:{id: category._id}}")
                   | {{ category.title }}
               td 
-                button( class="btn btn-danger" @click="deleteCategory(index)") Delete
+                button( class="btn pt-0" @click="deleteCategory(index)") <x-circle-icon size="2x" class="circle-icon"></x-circle-icon> 
               td
-                button(class="btn btn-primary" @click="roat_to_update(category._id)")
-                  | Update
+                button(class="btn" @click="roat_to_update(category._id)")
+                  | <edit-2-icon size="1.5x" class="edit-icon pt-0"></edit-2-icon>
                 
         section.panel.panel-danger( v-if="!categories.length" )
           p
@@ -36,8 +37,30 @@
             router-link( :to="{ name: 'AddCategory' }" )
               | add  news
 </template>
-
+<style lang="scss">
+  .circle-icon {
+    &:hover {
+      circle {
+        fill: #c82333;
+      }
+    }
+    color: white;
+    circle {
+      fill: #dc3545;
+    }
+    line {
+      color: white;
+    }
+  }
+  .edit-icon {
+    color: #007bff;
+    &:hover {
+      color: #0056b3;
+    }
+  }
+</style>
 <script>
+  import { XCircleIcon, Edit2Icon } from 'vue-feather-icons'
   import PostsService from '@/services/PostsService'
   export default {
     name: 'PostsPage',
@@ -46,6 +69,9 @@
         categories: [],
         deletedId: false
       }
+    },
+    components: {
+      XCircleIcon, Edit2Icon
     },
     methods: {
       async roat_to_update(catId){

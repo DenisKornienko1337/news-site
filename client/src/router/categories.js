@@ -3,6 +3,7 @@ import Categories from '../views/categories/Categories'
 import AddCategory from '../views/categories/AddCategory'
 import SingleCategory from '../views/categories/SingleCategory'
 import UpdateCategory from '../views/categories/UpdateCategory'
+
 const categoriesRoutes = [
     {
         path: '/categories',
