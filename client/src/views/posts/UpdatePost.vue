@@ -13,10 +13,10 @@
           .form-group
             textarea.form-control( type="text", rows="5", name="description", id="description", placeholder="Description", v-model.trim="postItem.description" )
           .form-group(v-for="(category, index) in categories", :key="category.title")
-            input(type="checkbox" v-model="selectedCategories[index]" v-bind:true-value="category._id")
+            input(type="checkbox" v-model="category.value")
             label
+             | {{category._id}}
              | {{category.title}}
-
           .form-group
             button.btn.btn-block.btn-primary( type="button", name="updatePost", id="updatePost", @click="updatePost()" )
               | update news
@@ -29,7 +29,6 @@
   import PostsService from '@/services/PostsService'
   export default {
     name: 'UpdatePost',
-    //props: ['post'],
     data () {
       return {
         postItem: {
@@ -37,23 +36,26 @@
           title: '',
           description: '',
         },
-        categories:[{
-          title: ''
-        }],
-        selectedCategories: [],
+        categories:[],
       }
     },
     methods: {
+      update: function() {
+        console.log(1)
+      },
       async updatePost () {
         if (this.postItem.title !== '' && this.postItem.description !== '') {
-          this.selectedCategories = this.selectedCategories.filter(function(id) {
-            return !!id;
-          });
+          // this.selectedCategories = this.selectedCategories.filter(function(id) {
+          //   return !!id;
+          // });
+          const selectedCategories = this.categories.filter(c => c.value)
+          const selectedIDS = selectedCategories.map(c => c.id)
+          console.log(selectedIDS)
           await PostsService.updatePost({
             id: this.postItem.id,
             title: this.postItem.title,
             description: this.postItem.description,
-            categories: this.selectedCategories
+            categories: selectedIDS
           })
           this.$notify({
             group: 'notifications',
@@ -68,7 +70,11 @@
       },
       async fetchCategories () {
         const response = await PostsService.fetchCategories()
-        this.categories = response.data.categories
+        //this.categories = response.data.categories
+        console.log( response.data.categories)
+         response.data.categories.map(c => {
+           this.categories.push({value: false, title: c.title, id: c._id})
+         })
       },
       goBack () {
         this.$router.push({ name: 'Posts' })
@@ -82,7 +88,19 @@
       this.postItem.id = response.data.posts._id
       this.postItem.title = response.data.posts.title
       this.postItem.description = response.data.posts.description
-    }
+      let helpArr = response.data.posts.categories.items
+      // for(let i in helpArr) {
+      //   this.presetCategories.push(helpArr[i].categoryId._id)
+      // }
+      //this.selectedCategories = [...this.presetCategories]
+      
+      this.categories.map(c => {
+        helpArr.map(selectedItem => {
+          console.log('c.id', c.id, 'selectedItem', selectedItem)
+          if(c.id === selectedItem.categoryId._id) c.value = true
+        })
+      })
+    },
   }
 </script>
 <style lang="scss">

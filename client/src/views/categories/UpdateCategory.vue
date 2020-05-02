@@ -57,11 +57,10 @@
         this.$router.push({ name: 'Categories' })
       }
     },    
-    async mounted() {      
+    async mounted() {   
         const response = await PostsService.getCategory({
             id: this.$attrs.id
         })
-        
         this.categoryItem.title = response.data.category.title
         this.categoryItem.id = response.data.category._id
     }
