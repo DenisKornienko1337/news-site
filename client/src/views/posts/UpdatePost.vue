@@ -29,6 +29,7 @@
             input(type="checkbox" v-model="category.value")
             span
             | {{category.title}}
+          .validation-error(v-if="!validCat") This filed cannot be empty!
       
 </template>
 
@@ -41,6 +42,7 @@
       return {
         validTitle: true,
         validDescription: true,
+        validCat: true,
         isAdd: true,
         postItem: {
           id: '',
@@ -53,7 +55,7 @@
     },
     methods: {
       async addPost () {
-        if (this.postItem.title !== '' && this.postItem.description !== '') {
+        if (this.postItem.title !== '' && this.postItem.description !== '' && this.postItem.categories) {
           this.selectedCategories = this.selectedCategories.filter(function(id) {
             return !!id;
           });
@@ -69,10 +71,11 @@
         } else {
           this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
           this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
+          this.postItem.categories ? this.validCat = true : this.validCat = false
         }
       },
       async updatePost () {
-        if (this.postItem.title !== '' && this.postItem.description !== '') {
+        if (this.postItem.title !== '' && this.postItem.description !== '' && this.postItem.categories) {
           const selectedCats = this.categories.filter(c => c.value)
           const selectedIDS = selectedCats.map(c => c.id)
           await PostsService.updatePost({
@@ -85,7 +88,9 @@
           this.$router.push({ name: 'Posts' })
           
         } else {
-          this.$dialog.alert('Fields cannot be empty!')
+          this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
+          this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
+          this.postItem.categories ? this.validCat = true : this.validCat = false
         }
       },
       async fetchCategories () {

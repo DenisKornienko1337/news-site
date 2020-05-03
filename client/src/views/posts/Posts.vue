@@ -15,8 +15,7 @@
               div.card.white-grey.darken-1000
                 div.card-content
                   span.card-title
-                    router-link(:to="{name: 'SinglePost', params:{id: post._id }}")
-                      | {{post.title}}
+                    | {{post.title}}
                   div.post-categories Categories: 
                     span(v-for="(category, index) in post.categories.items", :key="category.categoryId.title") {{category.categoryId.title}}, 
                   div.post-content {{post.description}}
@@ -162,6 +161,7 @@ input[type="text"] {
   a, button {
     background-color: transparent;
     margin-left: 15px;
+    box-shadow: none !important;
   }
 }
 .col {

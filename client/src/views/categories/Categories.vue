@@ -16,7 +16,7 @@
             tr( v-for="(category, index) in categories", :key="category.title" )
               td {{ index }}
               td 
-                router-link(:to="{name:'SingleCategory', params:{id: category._id}}")
+                span
                   | {{ category.title }}
               td 
                 button( class="btn pt-0" @click="deleteOnConfirm(index)") <x-circle-icon size="2x" class="circle-icon"></x-circle-icon> 
