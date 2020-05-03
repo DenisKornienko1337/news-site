@@ -19,7 +19,7 @@
                 router-link(:to="{name:'SingleCategory', params:{id: category._id}}")
                   | {{ category.title }}
               td 
-                button( class="btn pt-0" @click="deleteCategory(index)") <x-circle-icon size="2x" class="circle-icon"></x-circle-icon> 
+                button( class="btn pt-0" @click="deleteOnConfirm(index)") <x-circle-icon size="2x" class="circle-icon"></x-circle-icon> 
               td
                 button(class="btn" @click="roat_to_update(category._id)")
                   | <edit-2-icon size="1.5x" class="edit-icon pt-0"></edit-2-icon>
@@ -80,17 +80,19 @@
       },
       async deleteCategory(index) {
         const deletedItem = this.categories[index]
-        
         this.categories.splice(index,1)   
-        this.$notify({
-          group: 'notifications',
-          title: 'User notification',
-          text: 'Category have been deleted!',
-          type: 'error'
-        }); 
         await PostsService.deleteCategories({
             id: deletedItem._id
         })          
+      },
+      deleteOnConfirm(index) {
+        let self = this
+        this.$dialog
+          .confirm('Do you want delete this category?')
+          .then(function() {
+            self.deleteCategory(index)
+            self.$helper.notify('Notification', 'Category have been deleted!', 'error')
+          })
       }
     },
     mounted () {

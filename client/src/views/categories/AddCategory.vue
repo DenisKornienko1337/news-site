@@ -2,20 +2,20 @@
 <template lang="pug">
   .container
     .row
-      .col-lg-12
+      .col-md-12
         h1.test
-          | Add News
+          | Add Category
         form
           .form-group
             input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="categoryItem.title" )
+            .validation-error(v-if="!valid") This field cannot be empty!
           .form-group
-            button.btn.btn-block.btn-primary( v-if="isAdd" type="button", name="addPost", id="addPost", @click="addCategory()" )
+          .form-group.text-left.action-buttons
+            button.btn.btn-primary.blue( v-if="isAdd" type="button", name="addPost", id="addPost", @click="addCategory()" )
               | Add category
-          .form-group
-            button.btn.btn-block.btn-primary( v-if="!isAdd" type="button", name="addPost", id="addPost", @click="updateCategory()" )
+            button.btn.btn-primary.blue( v-if="!isAdd" type="button", name="addPost", id="addPost", @click="updateCategory()" )
               | Update category
-          section
-            button.btn.btn-success.btn-block( type="button", @click="goBack()" )
+            button.btn.btn-success.blue( type="button", @click="goBack()" )
               | Cancel
 </template>
 
@@ -25,6 +25,7 @@
     name: 'AddCategory',
     data () {
       return {
+        valid: true,
         isAdd: true,
         categoryItem: {
           title: '',
@@ -40,8 +41,9 @@
             id: this.categoryItem.id,
           })
           this.$router.push({ name: 'Categories' })
+          this.$helper.notify('Notification', 'Category have been updated!', 'warn')
         } else {
-          alert('Empty fields!')
+          this.valid = false
         }
       },
       async addCategory () {
@@ -50,8 +52,9 @@
             title: this.categoryItem.title,
           })
           this.$router.push({ name: 'Categories' })
+          this.$helper.notify('Notification', 'Category have been added!', 'success')
         } else {
-          alert('Empty fields!')
+          this.valid = false
         }
       },
       goBack () {
@@ -71,6 +74,11 @@
   }
 </script>
 <style lang="scss">
+  .validation-error {
+    font-size: 14px;
+    text-align: left;
+    color: red;
+  }
   .container {
     max-width: 60%;
   }

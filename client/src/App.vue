@@ -2,7 +2,7 @@
   #app
     Header(test="title")
     router-view
-    notifications(group="notification")
+    notifications(group="notifications" position="bottom right")
 </template>
 <script>
 import Header from '@/components/Header'
@@ -20,6 +20,15 @@ export default {
   table {
     margin-top: 30px;
   }
+  td {
+  a, button {
+    background-color: transparent !important;
+  }
+}
+.dg-btn {
+  background-color: blue !important;
+  color: #fff !important;
+}
 }
 </style>
 

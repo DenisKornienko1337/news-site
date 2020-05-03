@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        router-link( :to="{ name: path }" tag="a" class="waves-effect waves-light btn")
+        router-link( :to="{ name: path }" tag="a" class="waves-effect waves-light btn blue")
             | {{text}}
 </template>
 

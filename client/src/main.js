@@ -11,6 +11,9 @@ import { extend } from 'vee-validate'
 import Notifications from 'vue-notification'
 import VuejsDialog from "vuejs-dialog"
 import "materialize-css/dist/css/materialize.min.css"
+import {helper} from '@/helpers/helper.js'
+import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+
 
 
 extend('positive', value => {
@@ -22,6 +25,7 @@ Vue.use(Notifications)
 Vue.use(BootstrapVueIcons)
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.use(VuejsDialog)
+Vue.prototype.$helper = helper
 
 
 Vue.config.productionTip = false

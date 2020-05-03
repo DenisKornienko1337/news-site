@@ -2,38 +2,45 @@
 <template lang="pug">
   .container
     .row
-      .col-lg-12
-        h1.test
-          | Update News
+      .col-md-9
+        h1
+          span(v-if="isAdd") Add News
+          span(v-else) Update News
         form
           .form-group
             input.form-control( type="hidden", name="id", id="id", placeholder="Id", v-model.trim="postItem._id" )
           .form-group
             input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="postItem.title" )
-          .form-group
-            textarea.form-control( type="text", rows="5", name="description", id="description", placeholder="Description", v-model.trim="postItem.description" )
-          .form-group(v-for="(category, index) in categories", :key="category.title")
-            label
-              input(type="checkbox" v-model="category.value")
-              span
-              | {{category.title}}
-          .form-group
-            button.btn.btn-block.btn-primary( v-if="isAdd" type="button", name="updatePost", id="updatePost", @click="addPost()" )
+            .validation-error(v-if="!validTitle") This filed cannot be empty!
+          .form-group 
+            textarea.form-control( type="text", rows="10", name="description", id="description", placeholder="Content", v-model.trim="postItem.description" )
+            .validation-error(v-if="!validDescription") This filed cannot be empty!
+          .form-group.text-left.action-buttons
+            button.btn.btn-primary.blue( v-if="isAdd" type="button", name="updatePost", id="updatePost", @click="addPost()" )
               | add news
-          .form-group
-            button.btn.btn-block.btn-primary( v-if="!isAdd" type="button", name="updatePost", id="updatePost", @click="updatePost()" )
+            button.btn.btn-primary.blue( v-if="!isAdd" type="button", name="updatePost", id="updatePost", @click="updatePost()" )
               | update news
-          section
-            button.btn.btn-success.btn-block( type="button", @click="goBack()" )
+            button.btn.btn-success.blue( type="button", @click="goBack()" )
               | go to news page
+      .col-md-3
+        .sidebar-right
+          h3 Categories
+          label(v-for="(category, index) in categories", :key="category.title")
+            input(type="checkbox" v-model="category.value")
+            span
+            | {{category.title}}
+      
 </template>
 
 <script>
   import PostsService from '@/services/PostsService'
+
   export default {
     name: 'UpdatePost',
     data () {
       return {
+        validTitle: true,
+        validDescription: true,
         isAdd: true,
         postItem: {
           id: '',
@@ -56,10 +63,12 @@
             title: this.postItem.title,
             description: this.postItem.description,
             categories: selectedIDS
-          })        
+          })
+          this.$helper.notify('Notification', 'Post have been added!', 'success')   
           this.$router.push({ name: 'Posts' })
         } else {
-          alert('Empty fields!')
+          this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
+          this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
         }
       },
       async updatePost () {
@@ -71,7 +80,8 @@
             title: this.postItem.title,
             description: this.postItem.description,
             categories: selectedIDS
-          }) 
+          })
+          this.$helper.notify('Notification', 'Post have been updated!', 'warn')
           this.$router.push({ name: 'Posts' })
           
         } else {
@@ -101,7 +111,6 @@
         let helpArr = response.data.posts.categories.items
         this.categories.map(c => {
           helpArr.map(selectedItem => {
-            console.log('c.id', c.id, 'selectedItem', selectedItem)
             if(c.id === selectedItem.categoryId._id) c.value = true
           })
         })
@@ -110,7 +119,23 @@
   }
 </script>
 <style lang="scss">
+  .sidebar-right {
+    padding-left: 30px;
+    margin-top: 70px;
+    label {
+      text-align: left;
+      display: block !important;
+    }
+  }
+  .action-buttons {
+    button {
+      margin-top: 20px !important;
+      width: 200px;
+      margin-left: 20px !important;
+      display: inline-block;
+    }
+  }
   .container {
-    max-width: 60%;
+    max-width: 80%;
   }
 </style>

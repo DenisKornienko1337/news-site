@@ -9,30 +9,45 @@
           select.browser-default(@change="filterPosts($event)")
             option(value="-1") All
             option(v-for="(category) in categories" :key="category.title") {{category.title}}
-          input(@input="searchPosts($event)")
-          table.table.table-striped
-            tr
-              th Index
-              th Title
-              th Content
-              th Buttons
-              th Update
-              th Categories
-            tr(v-for="(post, index) in posts", :key="post.title" v-show="!post.catHide && !post.queryHide")
-              td {{ index }}
-              td
-                router-link(:to="{name: 'SinglePost', params:{id: post._id }}")
-                  | {{ post.title }}                 
-              td {{ post.description }}
-              td 
-                button(class="btn pt-0" @click="deletePosts(index)") 
-                  <x-circle-icon size="2x" class="circle-icon"></x-circle-icon> 
-              td
-                router-link(class="btn" :to="{name: 'UpdatePost', params:{id: post._id }}")
-                  | <edit-2-icon size="1.5x" class="edit-icon pt-0"></edit-2-icon>
-              td
-                div(v-for="(category, index) in post.categories.items", :key="category.categoryId.title")
-                  span {{category.categoryId.title}}
+          input( placeholder="Search post by title..." type="text" @input="searchPosts($event)")
+          div.row
+            div.col.s12.m6.l4(v-for="(post, index) in posts", :key="post.title" v-show="!post.catHide && !post.queryHide")
+              div.card.white-grey.darken-1000
+                div.card-content
+                  span.card-title
+                    router-link(:to="{name: 'SinglePost', params:{id: post._id }}")
+                      | {{post.title}}
+                  div.post-categories Categories: 
+                    span(v-for="(category, index) in post.categories.items", :key="category.categoryId.title") {{category.categoryId.title}}, 
+                  div.post-content {{post.description}}
+                div.card-action
+                  button(class="btn pt-0" @click="deleteOnConfirm(index)") 
+                    <x-circle-icon size="2x" class="circle-icon"></x-circle-icon>
+                  router-link(class="btn" :to="{name: 'UpdatePost', params:{id: post._id }}")
+                    <edit-2-icon size="1.5x" class="edit-icon pt-0"></edit-2-icon>
+          //- table.table.table-striped
+          //-   tr
+          //-     th Index
+          //-     th Title
+          //-     th Content
+          //-     th Buttons
+          //-     th Update
+          //-     th Categories
+          //-   tr(v-for="(post, index) in posts", :key="post.title" v-show="!post.catHide && !post.queryHide")
+          //-     td {{ index }}
+          //-     td
+          //-       router-link(:to="{name: 'SinglePost', params:{id: post._id }}")
+          //-         | {{ post.title }}                 
+          //-     td {{ post.description }}
+          //-     td 
+          //-       button(class="btn pt-0" @click="deletePosts(index)") 
+          //-         <x-circle-icon size="2x" class="circle-icon"></x-circle-icon> 
+          //-     td
+          //-       router-link(class="btn" :to="{name: 'UpdatePost', params:{id: post._id }}")
+          //-         | <edit-2-icon size="1.5x" class="edit-icon pt-0"></edit-2-icon>
+          //-     td
+          //-       div(v-for="(category, index) in post.categories.items", :key="category.categoryId.title")
+          //-         span {{category.categoryId.title}}
         div.input-field
         section.panel.panel-danger( v-if="!posts.length" )
           p
@@ -103,6 +118,15 @@
             id: deletedItem._id
         })
       },
+      deleteOnConfirm(index) {
+        let self = this
+        this.$dialog
+          .confirm('Do you want delete this post?')
+          .then(function() {
+            self.deletePosts(index)
+            self.$helper.notify('Notification', 'Post have been deleted!', 'error')
+          })
+      }
     },
     mounted () {
       this.fetchCategories()
@@ -115,6 +139,37 @@
 </script>
 
 <style lang="scss" scoped>
+
+input[type="text"] {
+  max-width: 500px;
+  margin-top: 30px !important;
+  margin-bottom: 30px !important;
+  &:focus {
+    box-shadow: unset;
+  }
+  border: 2px solid #9e9e9e !important;
+}
+.post-categories, .post-content {
+  text-align: left;
+}
+.post-categories {
+  font-size: 12px;
+  color: gray;
+  margin-bottom: 20px;
+}
+.card-action {
+  text-align: left;
+  a, button {
+    background-color: transparent;
+    margin-left: 15px;
+  }
+}
+.col {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  flex-basis: unset !important;
+  flex-grow: unset !important;
+}
   .delete {
     background: red;
   }
