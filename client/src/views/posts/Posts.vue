@@ -17,7 +17,8 @@
                   span.card-title
                     | {{post.title}}
                   div.post-categories Categories: 
-                    span(v-for="(category, index) in post.categories.items", :key="category.categoryId.title") {{category.categoryId.title}}, 
+                    span(v-for="(category, index) in post.categories.items", :key="category.categoryId.title") {{category.categoryId.title}}
+                      span(v-if="index!==post.categories.items.length-1") , 
                   div.post-content {{post.description}}
                 div.card-action
                   button(class="btn pt-0" @click="deleteOnConfirm(index)") 

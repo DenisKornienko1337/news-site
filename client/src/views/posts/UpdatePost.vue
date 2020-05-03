@@ -55,11 +55,11 @@
     },
     methods: {
       async addPost () {
-        if (this.postItem.title !== '' && this.postItem.description !== '' && this.postItem.categories) {
-          this.selectedCategories = this.selectedCategories.filter(function(id) {
-            return !!id;
-          });
-          const selectedCategories = this.categories.filter(c => c.value)
+        this.selectedCategories = this.selectedCategories.filter(function(id) {
+          return !!id;
+        });
+        const selectedCategories = this.categories.filter(c => c.value)
+        if (this.postItem.title !== '' && this.postItem.description !== '' && selectedCategories.length) {
           const selectedIDS = selectedCategories.map(c => c.id)
           await PostsService.addNewPost({
             title: this.postItem.title,
@@ -71,12 +71,12 @@
         } else {
           this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
           this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
-          this.postItem.categories ? this.validCat = true : this.validCat = false
+          selectedCategories.length ? this.validCat = true : this.validCat = false
         }
       },
       async updatePost () {
-        if (this.postItem.title !== '' && this.postItem.description !== '' && this.postItem.categories) {
-          const selectedCats = this.categories.filter(c => c.value)
+        const selectedCats = this.categories.filter(c => c.value)
+        if (this.postItem.title !== '' && this.postItem.description !== '' && selectedCats.length) {
           const selectedIDS = selectedCats.map(c => c.id)
           await PostsService.updatePost({
             id: this.postItem.id,
@@ -90,7 +90,7 @@
         } else {
           this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
           this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
-          this.postItem.categories ? this.validCat = true : this.validCat = false
+          selectedCats.length ? this.validCat = true : this.validCat = false
         }
       },
       async fetchCategories () {
