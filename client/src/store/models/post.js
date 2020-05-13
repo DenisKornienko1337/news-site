@@ -58,8 +58,6 @@ export default {
             ctx.commit('updatePostItem', post)
         },
         async removePost(ctx, post){
-            console.log('deletePost', 'acction');
-            
             await Services.deletePosts({
                 id: post._id
             })
