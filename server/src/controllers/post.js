@@ -40,10 +40,6 @@ exports.postAddPost = (req, res) => {
 }
 
 exports.postUpdatePost = (req, res, next) => {
-    if(!req.session.isLoggedIn) {
-      res.sendStatus(401)
-      return
-    }
     const postId = req.body.id;
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;        
