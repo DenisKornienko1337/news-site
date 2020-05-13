@@ -5,7 +5,7 @@
         h1
           | Categories
 
-        section.panel.panel-success( v-if="categories.length" )
+        section.panel.panel-success( v-if="allCategories.length" )
           AddButton(text="Add Category" path="AddCategory")
           table.table.table-striped
             tr
@@ -13,7 +13,7 @@
               th Title
               th Delete
               th Update
-            tr( v-for="(category, index) in categories", :key="category.title" )
+            tr( v-for="(category, index) in allCategories", :key="category.title" )
               td {{ index }}
               td 
                 span
@@ -21,10 +21,10 @@
               td 
                 button( class="btn pt-0" @click="deleteOnConfirm(index)") <x-circle-icon size="2x" class="circle-icon"></x-circle-icon> 
               td
-                button(class="btn" @click="roat_to_update(category._id)")
+                router-link(class="btn" :to="{ name: 'UpdateCategory', params: {id: category._id} }")
                   | <edit-2-icon size="1.5x" class="edit-icon pt-0"></edit-2-icon>
                 
-        section.panel.panel-danger( v-if="!categories.length" )
+        section.panel.panel-danger( v-if="!allCategories.length" )
           p
             | There are no news ... Lets add one now!
 </template>
@@ -51,8 +51,9 @@
   }
 </style>
 <script>
+  import {mapActions} from 'vuex'
   import { XCircleIcon, Edit2Icon } from 'vue-feather-icons'
-  import PostsService from '@/services/PostsService'
+  // import PostsService from '@/services/PostsService'
   import AddButton from '@/components/AddButton'
 
   export default {
@@ -67,23 +68,18 @@
       XCircleIcon, Edit2Icon, AddButton
     },
     methods: {
-      async roat_to_update(catId){
-        const response = await PostsService.getCategory({
-            id: catId
-        })
-        this.$router.push({ name: 'UpdateCategory', params: {id: catId} })
-        console.log(response);
-      },
-      async fetchCategories () {
-        const response = await PostsService.fetchCategories()
-        this.categories = response.data.categories
-      },
+      ...mapActions(['fetchCategories', 'removeCategory']),
       async deleteCategory(index) {
-        const deletedItem = this.categories[index]
-        this.categories.splice(index,1)   
-        await PostsService.deleteCategories({
-            id: deletedItem._id
-        })          
+        const category = {
+          _id: this.allCategories[index]._id,
+          index: index
+        }
+        this.removeCategory(category)
+        // const deletedItem = this.categories[index]
+        // this.categories.splice(index,1)   
+        // await PostsService.deleteCategories({
+        //     id: deletedItem._id
+        // })          
       },
       deleteOnConfirm(index) {
         let self = this
@@ -95,8 +91,14 @@
           })
       }
     },
-    mounted () {
+    created() {
       this.fetchCategories()
+    },
+    computed: {
+      allCategories: function(){
+        this.$forceUpdate();
+        return this.$store.state.category.categories
+      }
     }
   }
 </script>
