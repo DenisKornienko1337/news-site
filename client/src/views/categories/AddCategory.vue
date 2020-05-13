@@ -20,37 +20,28 @@
 </template>
 
 <script>
-  import PostsService from '@/services/PostsService'
+  import {mapActions} from 'vuex'
   export default {
     name: 'AddCategory',
     data () {
       return {
-        valid: true,
-        isAdd: true,
-        categoryItem: {
-          title: '',
-          id: ''
-        },
+        valid: true
       }
     },
     methods: {
-      async updateCategory () {
+      ...mapActions(['fetchSinglePost','createCategory','updateSingleCategory']),
+      updateCategory () {
         if (this.categoryItem.title !== '') {
-          await PostsService.updateCategory({
-            title: this.categoryItem.title,
-            id: this.categoryItem.id,
-          })
+          this.updateSingleCategory(this.categoryItem)
           this.$router.push({ name: 'Categories' })
           this.$helper.notify('Notification', 'Category have been updated!', 'warn')
         } else {
           this.valid = false
         }
       },
-      async addCategory () {
+      addCategory () {
         if (this.categoryItem.title !== '') {
-          await PostsService.addCategory({
-            title: this.categoryItem.title,
-          })
+          this.createCategory(this.categoryItem)
           this.$router.push({ name: 'Categories' })
           this.$helper.notify('Notification', 'Category have been added!', 'success')
         } else {
@@ -61,15 +52,19 @@
         this.$router.push({ name: 'Categories' })
       }
     },
-    async mounted() {   
-        const response = await PostsService.getCategory({
-            id: this.$attrs.id
-        })
-        if(response.data.category) {
-          this.isAdd = false
-          this.categoryItem.title = response.data.category.title
-          this.categoryItem.id = response.data.category._id
-        }
+    mounted() { 
+      this.fetchSinglePost(this.$attrs.id)
+    },
+    computed: {
+      categoryItem: function(){ 
+        if (this.$store.state.category.categories) return this.$store.state.category.categories
+        return {
+          title: ''
+        }        
+      },
+      isAdd: function (){
+        return !this.$attrs.id ? true : false
+      }
     }
   }
 </script>

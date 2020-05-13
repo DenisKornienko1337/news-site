@@ -4,7 +4,6 @@
       .col-lg-12
         h1
           | Categories
-
         section.panel.panel-success( v-if="allCategories.length" )
           AddButton(text="Add Category" path="AddCategory")
           table.table.table-striped
@@ -53,11 +52,10 @@
 <script>
   import {mapActions} from 'vuex'
   import { XCircleIcon, Edit2Icon } from 'vue-feather-icons'
-  // import PostsService from '@/services/PostsService'
   import AddButton from '@/components/AddButton'
 
   export default {
-    name: 'PostsPage',
+    name: 'Categoies',
     components: {
       XCircleIcon, Edit2Icon, AddButton
     },
@@ -85,7 +83,7 @@
     },
     computed: {
       allCategories: function(){
-        this.$forceUpdate();
+        // this.$forceUpdate();
         return this.$store.state.category.categories
       }
     }
