@@ -31,4 +31,10 @@ export default {
   deleteCategories(params) {
     return api().post('categories/delete-category', params)
   },
+  addUser(params) {
+    return api().post('users/add-user', params)
+  },
+  logIn(params) {
+    return api().post('users/login', params)
+  },
 }
