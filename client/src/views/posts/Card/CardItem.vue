@@ -32,20 +32,23 @@ export default {
         }
     },
     methods: {
-      ...mapActions['deletePost'],
-      deletePost() {
+      ...mapActions(['removePost']),
+      deletePostItem() {
+        console.log('deleted', 'Card Item');
+        
         const post = {
           _id: this.post._id,
           index: this.indexItem
         }
-        this.deletePost(post)
+        this.removePost(post)
+        this.$forceUpdate()  
       },
       deleteOnConfirm() {
         let self = this
         this.$dialog
           .confirm('Do you want delete this post?')
           .then(function() {
-            self.deletePosts()
+            self.deletePostItem()
             self.$helper.notify('Notification', 'Post have been deleted!', 'error')
           })
       }
