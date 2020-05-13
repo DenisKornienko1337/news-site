@@ -58,12 +58,6 @@
 
   export default {
     name: 'PostsPage',
-    data () {
-      return {
-        categories: [],
-        deletedId: false
-      }
-    },
     components: {
       XCircleIcon, Edit2Icon, AddButton
     },
@@ -75,11 +69,6 @@
           index: index
         }
         this.removeCategory(category)
-        // const deletedItem = this.categories[index]
-        // this.categories.splice(index,1)   
-        // await PostsService.deleteCategories({
-        //     id: deletedItem._id
-        // })          
       },
       deleteOnConfirm(index) {
         let self = this
