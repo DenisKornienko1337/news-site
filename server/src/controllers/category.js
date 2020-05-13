@@ -48,10 +48,13 @@ exports.postDestroy = (req, res, next) => {
     Post.find({'categories.items.categoryId': req.body.id})
       .then(posts => {
         posts.map(p => p.removeCategory(catId))
-        
         return posts
       })
       .catch(err => console.log(err))
       
-    Category.deleteOne({_id: catId}).catch(err => console.log(err));
+    Category.deleteOne({_id: catId})
+    .then(() => {
+      res.sendStatus(200)
+    })
+    .catch(err => console.log(err))
 }
