@@ -87,7 +87,7 @@
     margin: 0 auto;
     margin-top: 30px;
 }
-input[type="text"] {
+input[type="text"], input[type="password"] {
   max-width: 500px;
   margin-top: 30px !important;
   margin-bottom: 30px !important;
