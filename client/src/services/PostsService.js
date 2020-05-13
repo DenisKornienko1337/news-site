@@ -37,4 +37,10 @@ export default {
   logIn(params) {
     return api().post('users/login', params)
   },
+  logOut() {
+    return api().get('/users/logout')
+  },
+  isAuth() {
+    return api().get('/users/auth')
+  },
 }

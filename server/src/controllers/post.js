@@ -19,7 +19,7 @@ exports.getPost = (req, res) => {
       .catch(err => res.sendStatus(500))
 }
 
-exports.postAddPost = (req, res) => { 
+exports.postAddPost = (req, res) => {
     const post = new Post({
         title: req.body.title,
         description: req.body.description,
@@ -40,6 +40,10 @@ exports.postAddPost = (req, res) => {
 }
 
 exports.postUpdatePost = (req, res, next) => {
+    if(!req.session.isLoggedIn) {
+      res.sendStatus(401)
+      return
+    }
     const postId = req.body.id;
     const updatedTitle = req.body.title;
     const updatedDesc = req.body.description;        
@@ -86,5 +90,9 @@ exports.postDestroy = (req, res, next) => {
       })
       .catch(err => console.log(err))
 
-    Post.deleteOne({_id: postId}).catch(err => console.log(err));
+    Post.deleteOne({_id: postId})
+    .then(result => {
+      res.sendStatus(200)
+    })
+    .catch(err => console.log(err));
 }

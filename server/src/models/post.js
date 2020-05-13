@@ -14,7 +14,7 @@ const postSchema = new Schema({
         categoryId: {type : mongoose.Schema.ObjectId, ref : 'Category'}
       }
     ]
-  }
+  },
 })
 
 postSchema.methods.addCategories = function(categories) {  

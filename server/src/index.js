@@ -6,6 +6,21 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const config = require('./config/config')
 const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session)
+
+const store = new MongoDBStore({
+  uri: config.dbURL,
+
+});
+
+//app.use(cors())
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
+  next();
+});
 // Routes
 const postRoutes = require('./routes/posts')
 const categoryRoutes = require('./routes/category')
@@ -17,13 +32,13 @@ const usersRoutes = require('./routes/users')
 mongoose.Promise = global.Promise
 app.use(morgan('combined'))
 app.use(bodyParser.json())
-app.use(cors())
-
+//app.use(cookieParser)
 //Set middleware
 app.use(session({
   secret: 'production',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: store
 }))
 // Set Routes
 app.use('/posts', postRoutes)

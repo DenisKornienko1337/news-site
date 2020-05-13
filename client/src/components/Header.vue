@@ -5,6 +5,9 @@
                 | Home
             ul#nav-mobile.right
                 li
+                    router-link(:to="{path: '/login'}")
+                        | Login/Register
+                li
                     router-link(:to="{path: '/posts'}")
                         | News
                 li

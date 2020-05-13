@@ -7,8 +7,16 @@ const userSchema = new Schema({
   },
   password: {
     type: String
-  },    
+  },
+  permission: {
+    permissionId: {type: mongoose.Schema.ObjectId, ref: 'Permission'}
+  } 
 })
+
+userSchema.methods.setPermission = function(permission) {
+  
+}
+
 
 const UserModel = mongoose.model('User', userSchema)
 

@@ -1,4 +1,5 @@
 import Login from '../views/login/Login'
+import Admin from '../views/admin/Admin'
 
 const login = [
     {
@@ -7,10 +8,10 @@ const login = [
         component: Login
     },
     {
-        path: '/register',
-        name: 'Register',
-        component: Login
-    },
+        path: '/admin',
+        name: 'Admin',
+        component: Admin
+    }
 ]
 
 
