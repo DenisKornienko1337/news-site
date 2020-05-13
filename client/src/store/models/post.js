@@ -57,11 +57,13 @@ export default {
             
             ctx.commit('updatePostItem', post)
         },
-        async deletePost(ctx, post){
+        async removePost(ctx, post){
+            console.log('deletePost', 'acction');
+            
             await Services.deletePosts({
                 id: post._id
             })
-            ctx.commit('removePost', post)
+            ctx.commit('removePostItem', post)
         },
         filerByTitle(ctx, ops){
             const value = ops.value
@@ -120,7 +122,9 @@ export default {
             
             state.posts = updatedPosts
         },
-        removePost(state, post){
+        removePostItem(state, post){
+            console.log(post.index, 'post.index');
+            
             state.posts = state.posts.splice(post.index,1)
         }
     },

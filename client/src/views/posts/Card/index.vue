@@ -16,6 +16,8 @@
         section.panel.panel-danger( v-if="!allPosts.length" )
           p
             | There are no news ... Lets add one now!
+            
+          AddButton(text="Add News" path="NewPost")
 </template>
 
 <script>
