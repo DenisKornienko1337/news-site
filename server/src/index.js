@@ -10,7 +10,6 @@ const MongoDBStore = require('connect-mongodb-session')(session)
 
 const store = new MongoDBStore({
   uri: config.dbURL,
-
 });
 
 //app.use(cors())
