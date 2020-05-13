@@ -35,6 +35,7 @@
 
 <script>
   import PostsService from '@/services/PostsService'
+  import {mapActions} from 'vuex'
 
   export default {
     name: 'UpdatePost',
@@ -50,44 +51,79 @@
           description: '',
         },
         categories:[],
-        selectedCategories: [],
+        // selectedCategories: [],
       }
     },
     methods: {
-      async addPost () {
-        this.selectedCategories = this.selectedCategories.filter(function(id) {
-          return !!id;
-        });
+      ...mapActions(['createPost', 'updateSinglePost']),
+      addPost () {
+        // search selected categories
         const selectedCategories = this.categories.filter(c => c.value)
+        // End search selected categories
         if (this.postItem.title !== '' && this.postItem.description !== '' && selectedCategories.length) {
-          const selectedIDS = selectedCategories.map(c => c.id)
-          await PostsService.addNewPost({
+          const selectedIDS = selectedCategories.map(c => {
+            return {
+              _id: c.id,
+              title: c.title
+            } 
+          })
+          // add Post
+          const post = {
             title: this.postItem.title,
             description: this.postItem.description,
             categories: selectedIDS
-          })
-          this.$helper.notify('Notification', 'Post have been added!', 'success')   
+          }
+          this.createPost(post)
+          // await PostsService.addNewPost({
+            // title: this.postItem.title,
+            // description: this.postItem.description,
+            // categories: selectedIDS
+          // })
+          // End add Post
+          // use notification
+          this.$helper.notify('Notification', 'Post have been added!', 'success')
+          // redirect
           this.$router.push({ name: 'Posts' })
         } else {
+          // validate
           this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
           this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
           selectedCategories.length ? this.validCat = true : this.validCat = false
         }
       },
-      async updatePost () {
+      updatePost () {
+        // search selected categories
         const selectedCats = this.categories.filter(c => c.value)
         if (this.postItem.title !== '' && this.postItem.description !== '' && selectedCats.length) {
-          const selectedIDS = selectedCats.map(c => c.id)
-          await PostsService.updatePost({
-            id: this.postItem.id,
+          const selectedIDS = selectedCats.map(c => {
+            return {
+              _id: c.id,
+              title: c.title
+            } 
+          })
+          // update Post
+          const post = {
+            _id: this.postItem.id,
             title: this.postItem.title,
             description: this.postItem.description,
             categories: selectedIDS
-          })
+          }
+          this.updateSinglePost(post)
+          // await PostsService.updatePost({
+            // id: this.postItem.id,
+            // title: this.postItem.title,
+            // description: this.postItem.description,
+            // categories: selectedIDS
+          // })
+          // End update Post
+          // use notification
           this.$helper.notify('Notification', 'Post have been updated!', 'warn')
-          this.$router.push({ name: 'Posts' })
+          // redirect
+          this.$router.push({ name: 'Posts' })    
           
+          // this.$forceUpdate();      
         } else {
+          // validate
           this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
           this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
           selectedCats.length ? this.validCat = true : this.validCat = false
@@ -100,19 +136,23 @@
          })
       },
       goBack () {
-        this.$router.push({ name: 'Posts' })
+        this.$router.go({ name: 'Posts' })
       }
     },
     async mounted () {
+      // get Categories
       this.fetchCategories()
+      // get Post
       const response = await PostsService.getPost({
           id: this.$attrs.id
       })
       if(response.data.posts){
+        // update local post
         this.isAdd = false
         this.postItem.id = response.data.posts._id
         this.postItem.title = response.data.posts.title
         this.postItem.description = response.data.posts.description
+        // update local categories
         let helpArr = response.data.posts.categories.items
         this.categories.map(c => {
           helpArr.map(selectedItem => {

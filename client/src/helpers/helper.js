@@ -7,6 +7,6 @@ export const helper = {
             title: title,
             text: text,
             type: type
-            })
+        })
     }
 }
