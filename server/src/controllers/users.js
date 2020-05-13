@@ -31,7 +31,6 @@ exports.logIn = (req, res, next) => {
                 bcrypt.compare(req.body.password, user.password, function(err, result) {
                     if(err) console.log(err)
                     if(result) {
-                        console.log('success!')
                         req.session.isLoggedIn = true
                         res.sendStatus(200)
                     } else {
