@@ -7,7 +7,7 @@ router.get('/', postController.getIndex)
 
 router.post('/item', postController.getPost)
 
-router.post('/', isAuth, postController.postAddPost)
+router.post('/', postController.postAddPost)
 
 router.post('/edit-post/', postController.postUpdatePost)
 
