@@ -118,14 +118,11 @@ export default {
 
             const updatedPosts = state.posts;
             updatedPosts.push(post)
-            console.log(updatedPosts);
             
             state.posts = updatedPosts
         },
         removePostItem(state, post){
-            console.log(post.index, 'post.index');
-            
-            state.posts = state.posts.splice(post.index,1)
+            state.posts.splice(post.index,1)
         }
     },
     state: {
