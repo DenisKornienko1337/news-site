@@ -70,12 +70,16 @@
     },
     computed: {
       allPosts: function(){
+        const posts = this.$store.state.post.posts
         this.$forceUpdate();
-        return this.$store.state.post.posts
+        if(posts) return posts
+        return []
       },
       allCategories: function(){
+        const categories =  this.$store.state.category.categories
         this.$forceUpdate();
-        return this.$store.state.category.categories
+        if(categories) return this.$store.state.category.categories
+        return []        
       }
     }
   }

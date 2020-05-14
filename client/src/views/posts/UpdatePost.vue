@@ -55,7 +55,7 @@
         if (this.postItem.title !== '' && this.postItem.description !== '' && selectedCategories.length) {
           const selectedIDS = selectedCategories.map(c => {
             return {
-              _id: c.id,
+              _id: c._id,
               title: c.title
             } 
           })
