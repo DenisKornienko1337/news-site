@@ -44,10 +44,10 @@ export default {
             state.categories.splice(category.index,1)
         },
         updateCategoryItem(state, category){
-            const updatedCategoryIndex = state.categories.findIndex( c => c._id === category._id )
-            
-            let updatedCategoryies = state.categoryies;
-            updatedCategoryies[updatedCategoryIndex] = category;       
+            // const updatedCategoryIndex = state.categories.findIndex( c => c._id === category._id )
+            state.categoryies = category
+            // let updatedCategoryies = state.categoryies;
+            // updatedCategoryies[updatedCategoryIndex] = category;       
         },
         pushCategory(state, category){
             const updatedCategoryies = state.categoryies;
