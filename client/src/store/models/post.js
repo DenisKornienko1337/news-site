@@ -24,9 +24,8 @@ export default {
         async fetchSinglePost(ctx, postId) {
             const response = await Services.getPost({
                 id: postId
-            })
-            
-            const posts = response.data.user
+            })            
+            const posts = response.data.posts
             ctx.commit('updatePosts', posts)
         },
         async createPost(ctx, post){
@@ -47,7 +46,7 @@ export default {
         },
         async updateSinglePost(ctx, post){
             const categoriesIDs = post.categories.map(c => c._id)
-              
+            
             await Services.updatePost({
                 id: post._id,
                 title: post.title,
@@ -101,13 +100,8 @@ export default {
             const categoriesTitles = post.categories.map(c => c.title)
 
             post.categoriesTitles = categoriesTitles;  
-
-            const updatedPostIndex = state.posts.findIndex( p => p._id === post._id )
             
-            let updatedPosts = state.posts;
-            updatedPosts[updatedPostIndex] = post;            
-            
-            state.posts = updatedPosts     
+            state.posts = post     
         },
         pushPost(state, post) {            
             const categoriesTitles = post.categories.map(c => c.title)

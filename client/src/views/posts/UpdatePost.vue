@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import PostsService from '@/services/PostsService'
+  // import PostsService from '@/services/PostsService'
   import {mapActions} from 'vuex'
 
   export default {
@@ -44,18 +44,10 @@
         validTitle: true,
         validDescription: true,
         validCat: true,
-        isAdd: true,
-        postItem: {
-          id: '',
-          title: '',
-          description: '',
-        },
-        categories:[],
-        // selectedCategories: [],
       }
     },
     methods: {
-      ...mapActions(['createPost', 'updateSinglePost']),
+      ...mapActions(['fetchCategories','fetchSinglePost','createPost', 'updateSinglePost']),
       addPost () {
         // search selected categories
         const selectedCategories = this.categories.filter(c => c.value)
@@ -74,12 +66,6 @@
             categories: selectedIDS
           }
           this.createPost(post)
-          // await PostsService.addNewPost({
-            // title: this.postItem.title,
-            // description: this.postItem.description,
-            // categories: selectedIDS
-          // })
-          // End add Post
           // use notification
           this.$helper.notify('Notification', 'Post have been added!', 'success')
           // redirect
@@ -97,30 +83,22 @@
         if (this.postItem.title !== '' && this.postItem.description !== '' && selectedCats.length) {
           const selectedIDS = selectedCats.map(c => {
             return {
-              _id: c.id,
+              _id: c._id,
               title: c.title
             } 
-          })
+          })          
           // update Post
           const post = {
-            _id: this.postItem.id,
+            _id: this.postItem._id,
             title: this.postItem.title,
             description: this.postItem.description,
             categories: selectedIDS
           }
           this.updateSinglePost(post)
-          // await PostsService.updatePost({
-            // id: this.postItem.id,
-            // title: this.postItem.title,
-            // description: this.postItem.description,
-            // categories: selectedIDS
-          // })
-          // End update Post
           // use notification
           this.$helper.notify('Notification', 'Post have been updated!', 'warn')
           // redirect
-          this.$router.push({ name: 'Posts' })    
-          
+          this.$router.push({ name: 'Posts' })              
           // this.$forceUpdate();      
         } else {
           // validate
@@ -129,38 +107,47 @@
           selectedCats.length ? this.validCat = true : this.validCat = false
         }
       },
-      async fetchCategories () {
-        const response = await PostsService.fetchCategories()
-         response.data.categories.map(c => {
-           this.categories.push({value: false, title: c.title, id: c._id})
-         })
-      },
       goBack () {
         this.$router.go({ name: 'Posts' })
       }
     },
-    async mounted () {
+    mounted () {
       // get Categories
       this.fetchCategories()
-      // get Post
-      const response = await PostsService.getPost({
-          id: this.$attrs.id
-      })
-      if(response.data.posts){
-        // update local post
-        this.isAdd = false
-        this.postItem.id = response.data.posts._id
-        this.postItem.title = response.data.posts.title
-        this.postItem.description = response.data.posts.description
-        // update local categories
-        let helpArr = response.data.posts.categories.items
-        this.categories.map(c => {
-          helpArr.map(selectedItem => {
-            if(c.id === selectedItem.categoryId._id) c.value = true
-          })
-        })
-      }
+      this.fetchSinglePost(this.$attrs.id)
     },
+    computed: {
+      isAdd: function(){
+        if(this.$attrs.id) return false;
+        return true
+      },
+      categories: function(){
+        if (this.$store.state.category.categories){          
+          if(this.postItem.categories){            
+            this.postItem.categories.items.map(postCat => {
+              this.$store.state.category.categories.map(c => {
+                if(postCat.categoryId._id === c._id) {
+                  c.value = true
+                }
+              })
+            })
+          }
+          return this.$store.state.category.categories;
+        }
+        return []
+      },
+      postItem: function(){
+        if(this.$store.state.post.posts) return this.$store.state.post.posts;
+        return {
+          id: '',
+          title: '',
+          description: '',
+          categories: {
+            items: []
+          }
+        }
+      }
+    }
   }
 </script>
 <style lang="scss">
