@@ -28,9 +28,7 @@ export default {
             const posts = response.data.posts
             ctx.commit('updatePosts', posts)
         },
-        async createPost(ctx, post){
-            console.log('create Post');
-            
+        async createPost(ctx, post){            
             const categoriesIDs = post.categories.map(c => c._id)
             await Services.addNewPost({
                 title: post.title,
@@ -106,16 +104,13 @@ export default {
             state.posts = post     
         },
         pushPost(state, post) {    
-            console.log('pushPost');
-                    
             const categoriesTitles = post.categories.map(c => c.title)
 
             post.categoriesTitles = categoriesTitles;  
-            console.log('state', state);
-            console.log('state.posts', state.posts);
+            // console.log('state', state);
+            // console.log('state.posts', state.posts);
             
-            console.log(post);
-            
+            // console.log(post);
             state.posts = post
         },
         removePostItem(state, post){
