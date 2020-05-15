@@ -138,8 +138,8 @@
       },
       postItem: function(){
         const posts = this.$store.state.post.posts;
-
-        if(posts && this.$attrs.id){
+        
+        if(posts.length && this.$attrs.id){
           const findPostItem = posts.find(p => p._id === this.$attrs.id)
           return findPostItem;
         } 

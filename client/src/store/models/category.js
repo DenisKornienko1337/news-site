@@ -3,11 +3,11 @@ import Services from '@/services/PostsService'
 export default {
     actions: {
         async fetchCategories(ctx) {
-            setTimeout( async function(){
+            // setTimeout( async function(){
                 const response = await Services.fetchCategories()
                 const categories = response.data.categories
                 ctx.commit('updateCategories', categories)
-            }, 500);
+            // }, 500);
         },
         async fetchSinglePost(ctx, catId) {
             const response = await Services.getCategory({

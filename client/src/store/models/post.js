@@ -3,11 +3,12 @@ import helpers from '@/helpers/checkCat'
 
 export default {
     actions: {
-        async fetchPosts(ctx) {
+        async fetchPosts(ctx) {            
             setTimeout( async function(){
                 const response = await Services.fetchPosts()
 
                 const posts = response.data.posts
+                
                 posts.map(p => {
                     if (!p.categoriesTitles) { 
                         p.categoriesTitles = []
@@ -107,10 +108,9 @@ export default {
             const categoriesTitles = post.categories.map(c => c.title)
 
             post.categoriesTitles = categoriesTitles;  
-            // console.log('state', state);
-            // console.log('state.posts', state.posts);
+
+            console.log(post);
             
-            // console.log(post);
             state.posts.push(post)
         },
         removePostItem(state, post){

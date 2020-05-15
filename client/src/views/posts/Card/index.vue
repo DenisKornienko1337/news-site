@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
+  import {mapActions, mapGetters} from 'vuex'
 
   import AddButton from '@/components/AddButton'
   import CardItem from './CardItem'
@@ -63,25 +63,32 @@
       },
     },
     created() {
+      console.log('before',this.$store.state.post.posts);
+      
       this.fetchCategories()
       this.fetchPosts()
+      setTimeout(() => {
+      console.log('after',this.$store.state.post.posts);
 
-      this.$forceUpdate()    
+      }, 1000)
+
+      // this.$forceUpdate()    
     },
-    computed: {
-      allPosts: function(){
-        const posts = this.$store.state.post.posts
-        this.$forceUpdate();
-        if(posts) return posts
-        return []
-      },
-      allCategories: function(){
-        const categories =  this.$store.state.category.categories
-        this.$forceUpdate();
-        if(categories) return this.$store.state.category.categories
-        return []        
-      }
-    }
+    // computed: {
+    //   allPosts: function(){
+    //     const posts = this.$store.state.post.posts
+    //     this.$forceUpdate();
+    //     if(posts) return posts
+    //     return []
+    //   },
+    //   allCategories: function(){
+    //     const categories =  this.$store.state.category.categories
+    //     this.$forceUpdate();
+    //     if(categories) return this.$store.state.category.categories
+    //     return []        
+    //   }
+    // }
+    computed:mapGetters(['allPosts','allCategories'])
   }
 </script>
 
