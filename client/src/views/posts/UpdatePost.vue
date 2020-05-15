@@ -47,7 +47,7 @@
       }
     },
     methods: {
-      ...mapActions(['fetchCategories','fetchSinglePost','createPost', 'updateSinglePost']),
+      ...mapActions(['fetchCategories','fetchPosts','createPost', 'updateSinglePost']),
       addPost () {
         // search selected categories
         const selectedCategories = this.categories.filter(c => c.value)
@@ -114,7 +114,7 @@
     mounted () {
       // get Categories
       this.fetchCategories()
-      this.fetchSinglePost(this.$attrs.id)
+      this.fetchPosts()
     },
     computed: {
       isAdd: function(){
@@ -137,7 +137,12 @@
         return []
       },
       postItem: function(){
-        if(this.$store.state.post.posts) return this.$store.state.post.posts;
+        const posts = this.$store.state.post.posts;
+
+        if(posts && this.$attrs.id){
+          const findPostItem = posts.find(p => p._id === this.$attrs.id)
+          return findPostItem;
+        } 
         return {
           id: '',
           title: '',
