@@ -65,7 +65,7 @@
             description: this.postItem.description,
             categories: selectedIDS
           }
-          this.createPost(post).then(() => {            
+          this.createPost(post).then(() => {
             // use notification
             this.$helper.notify('Notification', 'Post have been added!', 'success')
             // redirect

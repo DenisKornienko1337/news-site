@@ -16,11 +16,9 @@ export default {
                             p.categoriesTitles.push(cat.categoryId.title)
                         });
                     }            
-                })           
-    
+                })       
                 ctx.commit('updatePosts', posts)
-            }, 1000)
-            
+            }, 200)            
         },
         async fetchSinglePost(ctx, postId) {
             const response = await Services.getPost({
@@ -108,8 +106,6 @@ export default {
             const categoriesTitles = post.categories.map(c => c.title)
 
             post.categoriesTitles = categoriesTitles;  
-
-            console.log(post);
             
             state.posts.push(post)
         },

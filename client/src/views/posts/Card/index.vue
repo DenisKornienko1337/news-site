@@ -63,16 +63,8 @@
       },
     },
     created() {
-      console.log('before',this.$store.state.post.posts);
-      
       this.fetchCategories()
-      this.fetchPosts()
-      setTimeout(() => {
-      console.log('after',this.$store.state.post.posts);
-
-      }, 1000)
-
-      // this.$forceUpdate()    
+      this.fetchPosts()   
     },
     // computed: {
     //   allPosts: function(){
