@@ -50,10 +50,7 @@ export default {
             // updatedCategoryies[updatedCategoryIndex] = category;       
         },
         pushCategory(state, category){
-            const updatedCategoryies = state.categoryies;
-            updatedCategoryies.push(category)
-            
-            state.categoryies = updatedCategoryies
+            state.categoryies.push(category)
         }
     },
     state: {
