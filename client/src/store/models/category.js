@@ -50,8 +50,8 @@ export default {
                 }
             });      
         },
-        pushCategory(state, category){
-            state.categoryies.push(category)
+        pushCategory(state, category){            
+            state.categories.push(category)
         }
     },
     state: {
