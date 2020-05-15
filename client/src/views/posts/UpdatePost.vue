@@ -65,11 +65,12 @@
             description: this.postItem.description,
             categories: selectedIDS
           }
-          this.createPost(post)
-          // use notification
-          this.$helper.notify('Notification', 'Post have been added!', 'success')
-          // redirect
-          this.$router.push({ name: 'Posts' })
+          this.createPost(post).then(() => {            
+            // use notification
+            this.$helper.notify('Notification', 'Post have been added!', 'success')
+            // redirect
+            this.$router.push({ name: 'Posts' })
+          } )
         } else {
           // validate
           this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
@@ -138,7 +139,7 @@
       },
       postItem: function(){
         const posts = this.$store.state.post.posts;
-        
+
         if(posts.length && this.$attrs.id){
           const findPostItem = posts.find(p => p._id === this.$attrs.id)
           return findPostItem;
