@@ -38,27 +38,17 @@ export default {
     },
     mutations: {
         updateCategories(state, categories){
-            console.log(state.categories);
-            
             state.categories = categories
         },
-        removeCategoryItem(state, category){                        
+        removeCategoryItem(state, category){     
             state.categories.splice(category.index,1)
         },
         updateCategoryItem(state, category){
-            console.log('category', category);
-            console.log('state', state);
-            
-            // const updatedCategoryIndex = state.categories.findIndex( c => c._id === category._id )
-            // console.log(state.categoryies);
-            
-            // state.categoryies.map( cat => {
-            //     if(cat._id === category._id){
-            //         cat = category;
-            //     }
-            // });
-            // let updatedCategoryies = state.categoryies;
-            // updatedCategoryies[updatedCategoryIndex] = category;       
+            state.categories.map( cat => {
+                if(cat._id === category._id){
+                    cat = category;
+                }
+            });      
         },
         pushCategory(state, category){
             state.categoryies.push(category)
