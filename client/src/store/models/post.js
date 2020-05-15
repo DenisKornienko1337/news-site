@@ -94,13 +94,13 @@ export default {
         updatePosts(state, posts){            
             state.posts = posts
         },
-        updatePostItem(state, post){            
-            
+        updatePostItem(state, post){
             const categoriesTitles = post.categories.map(c => c.title)
 
             post.categoriesTitles = categoriesTitles;  
-            
-            state.posts = post     
+            state.posts.map( p => {
+                if(p._id === post._id) p = post
+            })
         },
         pushPost(state, post) {    
             const categoriesTitles = post.categories.map(c => c.title)

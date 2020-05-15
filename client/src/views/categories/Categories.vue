@@ -50,7 +50,7 @@
   }
 </style>
 <script>
-  import {mapActions} from 'vuex'
+  import {mapActions, mapGetters} from 'vuex'
   import { XCircleIcon, Edit2Icon } from 'vue-feather-icons'
   import AddButton from '@/components/AddButton'
 
@@ -81,11 +81,12 @@
     created() {
       this.fetchCategories()
     },
-    computed: {
-      allCategories: function(){
-        // this.$forceUpdate();
-        return this.$store.state.category.categories
-      }
-    }
+    // computed: {
+    //   allCategories: function(){
+    //     // this.$forceUpdate();
+    //     return this.$store.state.category.categories
+    //   }
+    // }
+    computed:mapGetters(['allCategories'])
   }
 </script>

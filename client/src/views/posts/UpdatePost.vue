@@ -95,11 +95,12 @@
             description: this.postItem.description,
             categories: selectedIDS
           }
-          this.updateSinglePost(post)
-          // use notification
-          this.$helper.notify('Notification', 'Post have been updated!', 'warn')
-          // redirect
-          this.$router.push({ name: 'Posts' })              
+          this.updateSinglePost(post).then(() => {
+            // use notification
+            this.$helper.notify('Notification', 'Post have been updated!', 'warn')
+            // redirect
+            this.$router.push({ name: 'Posts' }) 
+          })             
           // this.$forceUpdate();      
         } else {
           // validate

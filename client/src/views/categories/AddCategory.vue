@@ -29,21 +29,23 @@
       }
     },
     methods: {
-      ...mapActions(['fetchSinglePost','createCategory','updateSingleCategory']),
+      ...mapActions(['fetchCategories','createCategory','updateSingleCategory']),
       updateCategory () {
         if (this.categoryItem.title !== '') {
-          this.updateSingleCategory(this.categoryItem)
-          this.$router.push({ name: 'Categories' })
-          this.$helper.notify('Notification', 'Category have been updated!', 'warn')
+          this.updateSingleCategory(this.categoryItem).then(() => {
+            this.$router.push({ name: 'Categories' })
+            this.$helper.notify('Notification', 'Category have been updated!', 'warn')
+          })
         } else {
           this.valid = false
         }
       },
       addCategory () {
         if (this.categoryItem.title !== '') {
-          this.createCategory(this.categoryItem)
-          this.$router.push({ name: 'Categories' })
-          this.$helper.notify('Notification', 'Category have been added!', 'success')
+          this.createCategory(this.categoryItem).then(() => {
+            this.$router.push({ name: 'Categories' })
+            this.$helper.notify('Notification', 'Category have been added!', 'success')
+          })
         } else {
           this.valid = false
         }
@@ -53,11 +55,15 @@
       }
     },
     mounted() { 
-      this.fetchSinglePost(this.$attrs.id)
+      this.fetchCategories()
     },
     computed: {
       categoryItem: function(){ 
-        if (this.$store.state.category.categories) return this.$store.state.category.categories
+        const categories = this.$store.state.category.categories;
+        if (categories.length && this.$attrs.id) {          
+          const findCatItem = categories.find(c => c._id === this.$attrs.id)
+          return findCatItem;
+        }
         return {
           title: ''
         }        
