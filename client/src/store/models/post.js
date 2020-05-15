@@ -18,7 +18,7 @@ export default {
                 })           
     
                 ctx.commit('updatePosts', posts)
-            }, 500)
+            }, 1000)
             
         },
         async fetchSinglePost(ctx, postId) {
