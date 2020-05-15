@@ -111,7 +111,7 @@ export default {
             // console.log('state.posts', state.posts);
             
             // console.log(post);
-            state.posts = post
+            state.posts.push(post)
         },
         removePostItem(state, post){
             state.posts.splice(post.index,1)
