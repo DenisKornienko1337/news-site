@@ -15,7 +15,7 @@ const categorySchema = new Schema({
       }
     ]
   },
-  user: {
+  userId: {
     type : mongoose.Schema.ObjectId,
     ref: 'User'
   }
@@ -23,7 +23,6 @@ const categorySchema = new Schema({
 
 categorySchema.methods.addPost = function(post) {  
   this.articles.items.push({'articleId': post._id})
-
   return this.save()  
 }
 

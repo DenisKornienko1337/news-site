@@ -25,19 +25,21 @@ exports.postAddCategory = (req, res) => {
   User.find({})
   .then((users) => {
     users.map(user => {
-      bcrypt.compare(String(user._id), req.session.user, function(err, result){
-        if(result){
+        if(String(user._id)==String(req.session.user)){
           const category = new Category({
             title: req.body.title,
-            user: user._id
+            userId: user._id
         })
         category.save()
-          .then(result => { 
+          .then(() => {
+            User.findById(req.session.user)
+            .then(user => {
+              user.addCategory(category)
+            })
             res.sendStatus(200)
           })
           .catch(err => console.log(err))
         }
-      })
     })
   })
 }
@@ -69,6 +71,12 @@ exports.postDestroy = (req, res, next) => {
     Category.deleteOne({_id: catId})
     .then(() => {
       res.sendStatus(200)
+    })
+    .then(() => {
+      User.findById(req.session.user)
+      .then(user => {
+        user.removeCategory(catId)
+      })
     })
     .catch(err => console.log(err))
 }
