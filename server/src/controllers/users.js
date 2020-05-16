@@ -6,20 +6,23 @@ const saltRounds = 10
 
 exports.addUser = (req, res) => {
     bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-        Permission.find({'slug': 'superuser'})
+        Permission.find({'slug': 'user'})
         .then(permission => {
             const user = new User({
                 name: req.body.name,
                 password: hash,
-                permission: permission,
+                permission: permission[0].slug,
             })
             user.save()
             req.session.isLoggedIn = true
-            res.sendStatus(200)
+            bcrypt.hash(String(user._id), saltRounds, function(err, hash){
+                req.session.user = hash
+                res.sendStatus(200)
+            })
         })        
         .catch(err => {
             console.log(err)
-            if(err) res.sendStatus(401)
+            if(err) res.sendStatus(500)
         })
       });
 }
@@ -32,7 +35,12 @@ exports.logIn = (req, res, next) => {
                     if(err) console.log(err)
                     if(result) {
                         req.session.isLoggedIn = true
-                        res.sendStatus(200)
+                        res.cookie('Test', 'test')
+                        bcrypt.hash(String(user._id), saltRounds, function(err, hash){
+                            req.session.user = hash
+                            console.log(hash)
+                            res.sendStatus(200)
+                        })
                     } else {
                         return res.sendStatus(401)
                     }
@@ -46,5 +54,6 @@ exports.logIn = (req, res, next) => {
 exports.logOut = (req, res, next) => {
     req.session.destroy(err => {
         console.log(err)
+        res.sendStatus(200)
     })
 }

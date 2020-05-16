@@ -1,5 +1,9 @@
 const Category = require('../models/category')
 const Post = require('../models/post')
+const User = require('../models/user')
+
+const bcrypt = require('bcrypt')
+const saltRounds = 10
 
 exports.getIndex = (req, res) => {
     Category.find({}, 'title')
@@ -9,7 +13,7 @@ exports.getIndex = (req, res) => {
         .catch( err => res.sendStatus(500))
 }
 
-exports.getCategory = (req, res, next) => {  
+exports.getCategory = (req, res, next) => {
   const catId = req.body.id;
       Category.findById(catId)
       .populate('articles.items.articleId')
@@ -18,14 +22,24 @@ exports.getCategory = (req, res, next) => {
 }
 
 exports.postAddCategory = (req, res) => {
-    const category = new Category({
-        title: req.body.title,
-    })
-    category.save()
-      .then(result => { 
-        res.sendStatus(200)
+  User.find({})
+  .then((users) => {
+    users.map(user => {
+      bcrypt.compare(String(user._id), req.session.user, function(err, result){
+        if(result){
+          const category = new Category({
+            title: req.body.title,
+            user: user._id
+        })
+        category.save()
+          .then(result => { 
+            res.sendStatus(200)
+          })
+          .catch(err => console.log(err))
+        }
       })
-      .catch(err => console.log(err))
+    })
+  })
 }
 
 exports.postUpdateCategory = (req, res, next) => {

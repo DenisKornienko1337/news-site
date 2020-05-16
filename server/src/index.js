@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const config = require('./config/config')
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
 const MongoDBStore = require('connect-mongodb-session')(session)
 
 const store = new MongoDBStore({
@@ -21,6 +22,8 @@ app.use(function(req, res, next) {
   next();
 });
 // Routes
+//app.use(cookieParser)
+
 const postRoutes = require('./routes/posts')
 const categoryRoutes = require('./routes/category')
 const usersRoutes = require('./routes/users')
@@ -31,7 +34,6 @@ const usersRoutes = require('./routes/users')
 mongoose.Promise = global.Promise
 app.use(morgan('combined'))
 app.use(bodyParser.json())
-//app.use(cookieParser)
 //Set middleware
 app.use(session({
   secret: 'production',

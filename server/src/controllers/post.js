@@ -1,5 +1,9 @@
 const Post = require('../models/post')
 const Category = require('../models/category')
+const User = require('../models/user')
+
+const bcrypt = require('bcrypt')
+const saltRounds = 10
 
 exports.getIndex = (req, res) => {
     Post.find({}, 'title description')    
@@ -14,29 +18,38 @@ exports.getPost = (req, res) => {
 
     Post.findById(postId, 'title description')
       .populate('categories.items.categoryId')
-      // .sort({ _id: -1 })
       .then(posts => res.send({ posts: posts }))
+      .then(() => res.sendStatus(200))
       .catch(err => res.sendStatus(500))
 }
 
 exports.postAddPost = (req, res) => {
-    const post = new Post({
-        title: req.body.title,
-        description: req.body.description,
-    })
-
-    post.save()
-      .then(result => { 
-        Category.find({'_id': req.body.categories})
-          .then(cat => {
-            post.addCategories(req.body.categories)      
-            cat.map(c => {
-              c.addPost(post)
-            })
+  User.find({})
+  .then((users) => {
+    users.map(user => {
+      bcrypt.compare(String(user._id), req.session.user, function(err, result){
+        if(result) {
+          const post = new Post({
+            title: req.body.title,
+            description: req.body.description,
+            user: user._id
           })
-        res.sendStatus(200)
+          post.save()
+          .then(result => { 
+            Category.find({'_id': req.body.categories})
+              .then(cat => {
+                post.addCategories(req.body.categories)      
+                cat.map(c => {
+                  c.addPost(post)
+                })
+              })
+            res.sendStatus(200)
+          })
+          .catch(err => console.log(err))
+        }
       })
-      .catch(err => console.log(err))
+    })
+  })
 }
 
 exports.postUpdatePost = (req, res, next) => {
@@ -77,11 +90,9 @@ exports.postUpdatePost = (req, res, next) => {
 
 exports.postDestroy = (req, res, next) => {    
     const postId = req.body.id;
-
     Category.find({'articles.items.articleId': req.body.id})
       .then(cats => {
         cats.map( c => c.removePost(postId))
-        
         return cats;
       })
       .catch(err => console.log(err))

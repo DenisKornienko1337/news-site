@@ -9,14 +9,23 @@ const userSchema = new Schema({
     type: String
   },
   permission: {
-    permissionId: {type: mongoose.Schema.ObjectId, ref: 'Permission'}
-  } 
+    type: String,
+  },
+  categories: {
+    items: [
+      {
+        categoryId: {type : mongoose.Schema.ObjectId, ref : 'Category'}
+      }
+    ]
+  },
+  posts: {
+    items: [
+      {
+        postId: {type : mongoose.Schema.ObjectId, ref : 'Post'}
+      }
+    ]
+  }
 })
-
-userSchema.methods.setPermission = function(permission) {
-  
-}
-
 
 const UserModel = mongoose.model('User', userSchema)
 

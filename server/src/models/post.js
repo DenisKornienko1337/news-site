@@ -15,12 +15,19 @@ const postSchema = new Schema({
       }
     ]
   },
+  userId: {
+    type : mongoose.Schema.ObjectId,
+    ref: 'User'
+  }
 })
 
-postSchema.methods.addCategories = function(categories) {  
-  console.log('categories', categories);
-  
+postSchema.methods.addCategories = function(categories) {    
   categories.map(c => this.categories.items.push({'categoryId': c}))
+  return this.save()  
+}
+
+postSchema.methods.setUser = function(user) {    
+  this.userId = user
   return this.save()  
 }
 

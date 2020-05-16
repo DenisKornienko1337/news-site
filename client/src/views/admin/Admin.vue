@@ -26,9 +26,7 @@
     methods: {
         async logOut() { 
             await PostsService.logOut()
-            .then(() => {
-              this.$router.push({ name: 'Posts' })
-            })
+            this.$router.push({ name: 'Posts' })
         }
     },
     async mounted () {

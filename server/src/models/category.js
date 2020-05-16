@@ -14,6 +14,10 @@ const categorySchema = new Schema({
         articleId: {type : mongoose.Schema.ObjectId, ref : 'Post'}
       }
     ]
+  },
+  user: {
+    type : mongoose.Schema.ObjectId,
+    ref: 'User'
   }
 })
 

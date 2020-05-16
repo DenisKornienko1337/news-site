@@ -1,17 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const categoryController = require('../controllers/category')
+const isAuth = require('../middleware/is-auth')
+const isPermissionCategory = require('../middleware/is-permission-category')
 
 router.get('/', categoryController.getIndex)
 
 // router.get('/:id', postController.getPost)
 
-router.post('/', categoryController.postAddCategory)
+router.post('/', isAuth, categoryController.postAddCategory)
 
 router.post('/item', categoryController.getCategory)
 
-router.post('/edit-category', categoryController.postUpdateCategory)
+router.post('/edit-category', isAuth, isPermissionCategory, categoryController.postUpdateCategory)
 
-router.post('/delete-category', categoryController.postDestroy);
+router.post('/delete-category', isAuth, isPermissionCategory, categoryController.postDestroy);
 
 module.exports = router
