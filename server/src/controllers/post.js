@@ -8,9 +8,27 @@ const saltRounds = 10
 exports.getIndex = (req, res) => {
     Post.find({}, 'title description')    
       .populate('categories.items.categoryId')
+      .populate('userId')
       .sort({ _id: -1 })
-      .then(posts => res.send({ posts: posts }))
+      .then(posts => {
+        res.send({ posts: posts })
+      })
       .catch(err => res.sendStatus(500))
+}
+
+exports.getUserIndex = (req, res) => {
+  User.findById(req.session.user)
+  .then(user => {
+    if(user.permission == 'superuser'){
+      Post.find()
+      .then(posts => res.send({posts: posts}))
+      .catch(err => res.sendStatus(500))
+    } else {
+      Post.find({'userId': req.session.user})
+      .then(posts => res.send({posts: posts}))
+      .catch(err => res.sendStatus(500))
+    }
+  })
 }
 
 exports.getPost = (req, res) => {

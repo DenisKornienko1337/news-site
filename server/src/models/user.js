@@ -3,27 +3,30 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
   name: {
     type: String,
-    unique: true
+    unique: true,
+    required: true,
   },
   password: {
-    type: String
+    type: String,
+    required: true,
   },
   permission: {
     type: String,
+    required: true,
   },
   categories: {
     items: [
       {
         categoryId: {type : mongoose.Schema.ObjectId, ref : 'Category'}
       }
-    ]
+    ],
   },
   posts: {
     items: [
       {
         postId: {type : mongoose.Schema.ObjectId, ref : 'Post'}
       }
-    ]
+    ],
   }
 })
 

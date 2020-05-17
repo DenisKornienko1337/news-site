@@ -13,6 +13,21 @@ exports.getIndex = (req, res) => {
         .catch( err => res.sendStatus(500))
 }
 
+exports.getUserIndex = (req, res) => {
+  User.findById(req.session.user)
+  .then(user => {
+    if(user.permission == 'superuser'){
+      Category.find()
+      .then(categories => res.send({categories: categories}))
+      .catch(err => res.sendStatus(500))
+    } else {
+      Category.find({'userId': req.session.user})
+      .then(categories => res.send({categories: categories}))
+      .catch(err => res.sendStatus(500))
+    }
+  })
+}
+
 exports.getCategory = (req, res, next) => {
   const catId = req.body.id;
       Category.findById(catId)

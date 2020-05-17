@@ -3,7 +3,8 @@ const Schema = mongoose.Schema
 const permissionSchema = new Schema({
   slug: {
     type: String,
-    unique: true
+    unique: true,
+    required: true,
   },   
 })
 

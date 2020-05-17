@@ -3,17 +3,19 @@ const Schema = mongoose.Schema
 const postSchema = new Schema({
   title: {
     type: String,
-    unique: true
+    unique: true,
+    required: true,
   },
   description: {
-    type: String
+    type: String,
+    required: true,
   },    
   categories: {
     items: [
       {
         categoryId: {type : mongoose.Schema.ObjectId, ref : 'Category'}
       }
-    ]
+    ],
   },
   userId: {
     type : mongoose.Schema.ObjectId,

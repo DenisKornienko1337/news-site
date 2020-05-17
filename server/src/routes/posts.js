@@ -6,6 +6,8 @@ const isPermissionPost = require('../middleware/is-permission-post')
 
 router.get('/', postController.getIndex)
 
+router.get('/user', postController.getUserIndex)
+
 router.post('/item', postController.getPost)
 
 router.post('/', isAuth, postController.postAddPost)

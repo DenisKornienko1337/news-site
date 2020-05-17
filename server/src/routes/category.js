@@ -6,7 +6,7 @@ const isPermissionCategory = require('../middleware/is-permission-category')
 
 router.get('/', categoryController.getIndex)
 
-// router.get('/:id', postController.getPost)
+router.get('/user', categoryController.getUserIndex)
 
 router.post('/', isAuth, categoryController.postAddCategory)
 
