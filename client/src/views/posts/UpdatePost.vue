@@ -10,11 +10,11 @@
           .form-group
             input.form-control( type="hidden", name="id", id="id", placeholder="Id", v-model.trim="postItem._id" )
           .form-group
-            input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="postItem.title" )
-            .validation-error(v-if="!validTitle") This filed cannot be empty!
+            input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="postItem.title" v-validate="'required'" )
+            div(class="validation-error") {{ errors.first('title') }}
           .form-group 
-            textarea.form-control( type="text", rows="10", name="description", id="description", placeholder="Content", v-model.trim="postItem.description" )
-            .validation-error(v-if="!validDescription") This filed cannot be empty!
+            textarea.form-control( type="text", rows="10", name="description", id="description", placeholder="Content", v-model.trim="postItem.description" v-validate="'required'" )
+            div(class="validation-error") {{ errors.first('description') }}
           .form-group.text-left.action-buttons
             button.btn.btn-primary.blue( v-if="isAdd" type="button", name="updatePost", id="updatePost", @click="addPost()" )
               | add news
@@ -25,104 +25,99 @@
       .col-md-3
         .sidebar-right
           h3 Categories
+          input(type="hidden" name="categories" v-validate:selectedCats="'required'")
+          div(class="validation-error") {{ errors.first('categories') }}
           label(v-for="(category, index) in categories", :key="category.title")
             input(type="checkbox" v-model="category.value")
             span
             | {{category.title}}
-          .validation-error(v-if="!validCat") This filed cannot be empty!
-      
 </template>
 
 <script>
-  // import PostsService from '@/services/PostsService'
   import {mapActions} from 'vuex'
 
   export default {
     name: 'UpdatePost',
     data () {
       return {
-        validTitle: true,
-        validDescription: true,
-        validCat: true,
+        selectedCats: []
       }
     },
     methods: {
       ...mapActions(['fetchCategories','fetchPosts','createPost', 'updateSinglePost']),
       addPost () {
-        // search selected categories
-        const selectedCategories = this.categories.filter(c => c.value)
-        // End search selected categories
-        if (this.postItem.title !== '' && this.postItem.description !== '' && selectedCategories.length) {
-          const selectedIDS = selectedCategories.map(c => {
-            return {
-              _id: c._id,
-              title: c.title
-            } 
-          })
-          // add Post
-          const post = {
-            title: this.postItem.title,
-            description: this.postItem.description,
-            categories: selectedIDS
-          }
-          this.createPost(post).then(() => {
-            // use notification
-            this.$helper.notify('Notification', 'Post have been added!', 'success')
-            // redirect
-            this.$router.push({ name: 'Posts' })
-          } )
-        } else {
-          // validate
-          this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
-          this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
-          selectedCategories.length ? this.validCat = true : this.validCat = false
-        }
+        this.$validator.validateAll()        
+        .then(() => {
+          if (!this.errors.any()) {            
+            const selectedCategories = this.categories.filter(c => c.value)
+            const selectedIDS = selectedCategories.map(c => {
+                return {
+                  _id: c._id,
+                  title: c.title
+                } 
+              })
+            const post = {
+              title: this.postItem.title,
+              description: this.postItem.description,
+              categories: selectedIDS
+            }
+            this.createPost(post).then(() => {
+              this.$helper.notify('Notification', 'Post have been added!', 'success')
+              this.$router.push({ name: 'Posts' })
+            } )                
+          } 
+        })     
       },
-      updatePost () {
-        // search selected categories
-        const selectedCats = this.categories.filter(c => c.value)
-        if (this.postItem.title !== '' && this.postItem.description !== '' && selectedCats.length) {
-          const selectedIDS = selectedCats.map(c => {
-            return {
-              _id: c._id,
-              title: c.title
-            } 
-          })          
-          // update Post
-          const post = {
-            _id: this.postItem._id,
-            title: this.postItem.title,
-            description: this.postItem.description,
-            categories: selectedIDS
-          }
-          this.updateSinglePost(post).then(() => {
-            // use notification
-            this.$helper.notify('Notification', 'Post have been updated!', 'warn')
-            // redirect
-            this.$router.push({ name: 'Posts' }) 
-          })             
-          // this.$forceUpdate();      
-        } else {
-          // validate
-          this.postItem.title=='' ? this.validTitle = false : this.validTitle = true
-          this.postItem.description=='' ? this.validDescription = false : this.validDescription = true
-          selectedCats.length ? this.validCat = true : this.validCat = false
-        }
+      updatePost () {        
+        const selected = this.categories.filter(c => c.value)
+        this.selectedCats = selected
+        this.$validator.validateAll()
+        .then(() => {
+          if (!this.errors.any()) {
+            const selectedCats = this.categories.filter(c => c.value)
+            const selectedIDS = selectedCats.map(c => {
+              return {
+                _id: c._id,
+                title: c.title
+              } 
+            })          
+            const post = {
+              _id: this.postItem._id,
+              title: this.postItem.title,
+              description: this.postItem.description,
+              categories: selectedIDS
+            }
+            this.updateSinglePost(post)
+            .then(() => {
+              this.$helper.notify('Notification', 'Post have been updated!', 'warn')
+              this.$router.push({ name: 'Posts' }) 
+            })
+          }        
+        })     
       },
       goBack () {
         this.$router.go({ name: 'Posts' })
       }
     },
     mounted () {
-      // get Categories
       this.fetchCategories()
       this.fetchPosts()
+    },
+    watch: {
+      categories: function(){        
+        if(this.categories.filter(c => c.value).length){          
+          const selected = this.categories.filter(c => c.value)  
+          this.selectedCats = selected      
+        }
+        return this.categories        
+      }
     },
     computed: {
       isAdd: function(){
         if(this.$attrs.id) return false;
         return true
       },
+
       categories: function(){
         if (this.$store.state.category.categories){          
           if(this.postItem.categories){            

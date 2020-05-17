@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+// import isLogOut from './router/isLogOut'
 import store from './store'
 import services from './services/api'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { ValidationProvider } from 'vee-validate'
-import { extend } from 'vee-validate'
+// import { ValidationProvider } from 'vee-validate'
+// import { extend } from 'vee-validate'
 import Notifications from 'vue-notification'
 import VuejsDialog from "vuejs-dialog"
 import "materialize-css/dist/css/materialize.min.css"
@@ -15,15 +16,32 @@ import {helper} from '@/helpers/helper.js'
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 
 
+import VeeValidate from 'vee-validate';
 
-extend('positive', value => {
-  return value.length-1;
-});
+// import PostsService from '@/services/PostsService'
+
+// router.beforeEach( async (to, from, next) => {
+//   const response = await PostsService.isAuth()
+
+//   if(!response.data.isLoggedIn) {    
+//     const allowedRoute = isLogOut.find(r => r === to.path)
+
+//     if(allowedRoute) next()
+//   } else {
+//     next()
+//   }
+// })
+
+// extend('positive', value => {
+//   return value.length-1;
+// });
+
+Vue.use(VeeValidate);
 
 Vue.use(BootstrapVue)
 Vue.use(Notifications)
 Vue.use(BootstrapVueIcons)
-Vue.component('ValidationProvider', ValidationProvider)
+// Vue.component('ValidationProvider', ValidationProvider)
 Vue.use(VuejsDialog)
 Vue.prototype.$helper = helper
 

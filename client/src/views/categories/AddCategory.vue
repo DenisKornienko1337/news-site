@@ -7,8 +7,8 @@
           | Add Category
         form
           .form-group
-            input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="categoryItem.title" )
-            .validation-error(v-if="!valid") This field cannot be empty!
+            input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="categoryItem.title" v-validate="'required'")
+            div(class="validation-error") {{ errors.first('title') }}
           .form-group
           .form-group.text-left.action-buttons
             button.btn.btn-primary.blue( v-if="isAdd" type="button", name="addPost", id="addPost", @click="addCategory()" )
@@ -23,32 +23,29 @@
   import {mapActions} from 'vuex'
   export default {
     name: 'AddCategory',
-    data () {
-      return {
-        valid: true
-      }
-    },
     methods: {
       ...mapActions(['fetchCategories','createCategory','updateSingleCategory']),
-      updateCategory () {
-        if (this.categoryItem.title !== '') {
-          this.updateSingleCategory(this.categoryItem).then(() => {
-            this.$router.push({ name: 'Categories' })
-            this.$helper.notify('Notification', 'Category have been updated!', 'warn')
-          })
-        } else {
-          this.valid = false
-        }
+      updateCategory () {        
+        this.$validator.validateAll()
+        .then(() => {
+          if (!this.errors.any()) {  
+            this.updateSingleCategory(this.categoryItem).then(() => {
+              this.$router.push({ name: 'Categories' })
+              this.$helper.notify('Notification', 'Category have been updated!', 'warn')
+            })
+          }
+        })        
       },
-      addCategory () {
-        if (this.categoryItem.title !== '') {
-          this.createCategory(this.categoryItem).then(() => {
-            this.$router.push({ name: 'Categories' })
-            this.$helper.notify('Notification', 'Category have been added!', 'success')
-          })
-        } else {
-          this.valid = false
-        }
+      addCategory () {        
+        this.$validator.validateAll()
+        .then(() => {
+          if (!this.errors.any()) { 
+            this.createCategory(this.categoryItem).then(() => {
+              this.$router.push({ name: 'Categories' })
+              this.$helper.notify('Notification', 'Category have been added!', 'success')
+            })
+          }
+        })        
       },
       goBack () {
         this.$router.push({ name: 'Categories' })

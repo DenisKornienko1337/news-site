@@ -18,7 +18,6 @@ Vue.use(VueRouter)
     component: Home
   }
 ]
-
 const router = new VueRouter({
   routes
 })
