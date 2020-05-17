@@ -6,12 +6,13 @@ const authController = require('../controllers/auth')
 const isAuth = require('../middleware/is-auth')
 const isSuperuser = require('../middleware/is-superuser')
 
+router.get('/', usersController.fetchUsers)
 router.post('/add-user', usersController.addUser)
 router.post('/login', usersController.logIn)
 router.get('/logout', usersController.logOut)
 router.get('/auth', authController.isAuth)
 router.get('/permissions', usersController.fetchPermissions)
 router.post('/delete-user', isAuth, isSuperuser, usersController.removeUser);
-//router.post('/change-permission', isAuth, isSuperuser, usersController.changePermission)
+router.post('/change-permission', isAuth, isSuperuser, usersController.changePermission)
 
 module.exports = router

@@ -6,6 +6,16 @@ const Category = require('../models/category')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
+exports.fetchUsers = (req, res) => {
+    User.find()
+    .then(users => {
+        res.send({users: users})
+    })
+    .catch(err => {
+        res.sendStatus(500)
+    })
+}
+
 exports.addUser = (req, res) => {
     bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
         Permission.find({'slug': 'user'})
@@ -29,14 +39,14 @@ exports.addUser = (req, res) => {
 }
 
 exports.removeUser = (req, res) => {
-    // let userId = req.body.id
-    // User.deleteOne({_id: userId})
-    // .then(result => {
+    let userId = req.body.id
+    User.deleteOne({_id: userId})
+    .then(result => {
         
-    // })
-    // .catch((err) => {
-    //     res.sendStatus(500)
-    // })
+    })
+    .catch((err) => {
+        res.sendStatus(500)
+    })
 }
 
 exports.logIn = (req, res, next) => {
@@ -76,20 +86,20 @@ exports.fetchPermissions = (req, res) => {
     .catch(err => {res.sendStatus(500)})
 }
 
-// exports.changePermission = (req, res) => {
-//     let permissionId = req.body.permissionId
-//     let userId = req.session.user
-//     Permission.findById(permissionId)
-//     .then(permission => {
-//         User.findById(userId)
-//         .then(user => {
-//             user.pemission = permission.slug
-//         })
-//         .catch(err => {
-//             res.sendStatus(500)
-//         })
-//     })
-//     .catch(err => {
-//         res.sendStatus(500)
-//     })
-// }
+exports.changePermission = (req, res) => {
+    let permissionId = req.body.permissionId
+    let userId = req.session.user
+    Permission.findById(permissionId)
+    .then(permission => {
+        User.findById(userId)
+        .then(user => {
+            user.pemission = permission.slug
+        })
+        .catch(err => {
+            res.sendStatus(500)
+        })
+    })
+    .catch(err => {
+        res.sendStatus(500)
+    })
+}
