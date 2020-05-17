@@ -9,7 +9,7 @@ const isSuperuser = require('../middleware/is-superuser')
 router.post('/add-user', usersController.addUser)
 router.post('/login', usersController.logIn)
 router.get('/logout', usersController.logOut)
-router.get('/is-auth', authController.isAuth)
+router.get('/auth', authController.isAuth)
 router.get('/permissions', usersController.fetchPermissions)
 router.post('/delete-user', isAuth, isSuperuser, usersController.removeUser);
 
