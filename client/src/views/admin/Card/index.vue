@@ -66,20 +66,6 @@
       this.fetchCategories()
       this.fetchUserPosts()   
     },
-    // computed: {
-    //   allPosts: function(){
-    //     const posts = this.$store.state.post.posts
-    //     this.$forceUpdate();
-    //     if(posts) return posts
-    //     return []
-    //   },
-    //   allCategories: function(){
-    //     const categories =  this.$store.state.category.categories
-    //     this.$forceUpdate();
-    //     if(categories) return this.$store.state.category.categories
-    //     return []        
-    //   }
-    // }
     computed: mapGetters(['allUserPosts','allCategories'])
   }
 </script>

@@ -22,23 +22,15 @@ class Post {
 
     async update(){
         const response = await Services.updatePost({
-            id: post._id,
-            title: post.title,
-            description: post.description,
-            categories: categoriesIDs
+            id: this._id,
+            title: this.title,
+            description: this.description,
+            categories: this.categories
         })    
         if(response){
             return true
         }
         return false     
-    }
-
-    static featchPosts(){
-        const response = await Services.fetchPosts()
-        if(response){
-            return true
-        }
-        return false  
     }
 
     static async featchPosts(){

@@ -1,8 +1,8 @@
-import User from '@/models/user'
+import User from '../controllers/user'
 
 export default {
     actions: {
-        async fetchUserPosts(ctx) {   
+        fetchUserPosts(ctx) {   
             User.fetchPosts()
             .then(Posts => {
                 let posts = Posts
@@ -15,9 +15,7 @@ export default {
                     }            
                 })       
                 ctx.commit('updatePosts', posts)
-            })
-                
-                          
+            })                             
         },
     },
     mutations: {

@@ -1,13 +1,14 @@
 import Services from '@/services/PostsService'
+import Post from '../controllers/post'
 import helpers from '@/helpers/checkCat'
 
 export default {
     actions: {
-        async fetchPosts(ctx) {            
-            setTimeout( async function(){
-                const response = await Services.fetchPosts()
-
-                const posts = response.data.posts
+        fetchPosts(ctx) {            
+            Post.featchPosts()
+            .then(Posts => {
+                let posts = Posts
+                console.log(Posts);
                 
                 posts.map(p => {
                     p.userName = p.userId.name
@@ -19,7 +20,7 @@ export default {
                     }            
                 })       
                 ctx.commit('updatePosts', posts)
-            }, 200)            
+            })         
         },
         async fetchSinglePost(ctx, postId) {
             const response = await Services.getPost({
