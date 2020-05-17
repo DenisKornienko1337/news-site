@@ -26,11 +26,6 @@ postSchema.methods.addCategories = function(categories) {
   return this.save()  
 }
 
-postSchema.methods.setUser = function(user) {    
-  this.userId = user
-  return this.save()  
-}
-
 postSchema.methods.updateCategories = function(categoriesIds) {    
   this.categories.items = []
   categoriesIds.map(c => {    

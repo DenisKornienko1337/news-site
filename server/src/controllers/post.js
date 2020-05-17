@@ -27,12 +27,11 @@ exports.postAddPost = (req, res) => {
   User.find({})
   .then((users) => {
     users.map(user => {
-      bcrypt.compare(String(user._id), req.session.user, function(err, result){
-        if(result) {
+        if(String(user._id)==String(req.session.user)) {
           const post = new Post({
             title: req.body.title,
             description: req.body.description,
-            user: user._id
+            userId: user._id
           })
           post.save()
           .then(result => { 
@@ -45,9 +44,14 @@ exports.postAddPost = (req, res) => {
               })
             res.sendStatus(200)
           })
+          .then(() => {
+            User.findById(req.session.user)
+            .then(user => {
+              user.addPost(post)
+            })
+          })
           .catch(err => console.log(err))
         }
-      })
     })
   })
 }
@@ -100,6 +104,12 @@ exports.postDestroy = (req, res, next) => {
     Post.deleteOne({_id: postId})
     .then(result => {
       res.sendStatus(200)
+    })
+    .then(() => {
+      User.findById(req.session.user)
+      .then(user => {
+        user.removePost(postId)
+      })
     })
     .catch(err => console.log(err));
 }
