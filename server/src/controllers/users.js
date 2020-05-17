@@ -18,6 +18,7 @@ exports.addUser = (req, res) => {
             user.save()
             req.session.isLoggedIn = true
             req.session.user = user._id
+            res.cookie('isLoggedIn', 'true')
             res.sendStatus(200)
         })        
         .catch(err => {
@@ -47,6 +48,7 @@ exports.logIn = (req, res, next) => {
                     if(result) {
                         req.session.isLoggedIn = true
                         req.session.user = user._id
+                        res.cookie('isLoggedIn', 'true')
                         res.sendStatus(200)
                     } else {
                         return res.sendStatus(401)
