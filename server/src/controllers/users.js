@@ -75,3 +75,21 @@ exports.fetchPermissions = (req, res) => {
     })
     .catch(err => {res.sendStatus(500)})
 }
+
+// exports.changePermission = (req, res) => {
+//     let permissionId = req.body.permissionId
+//     let userId = req.session.user
+//     Permission.findById(permissionId)
+//     .then(permission => {
+//         User.findById(userId)
+//         .then(user => {
+//             user.pemission = permission.slug
+//         })
+//         .catch(err => {
+//             res.sendStatus(500)
+//         })
+//     })
+//     .catch(err => {
+//         res.sendStatus(500)
+//     })
+// }

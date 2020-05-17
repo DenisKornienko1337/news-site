@@ -21,10 +21,12 @@ exports.getUserIndex = (req, res) => {
   .then(user => {
     if(user.permission == 'superuser'){
       Post.find()
+      .populate('categories.items.categoryId')
       .then(posts => res.send({posts: posts}))
       .catch(err => res.sendStatus(500))
     } else {
       Post.find({'userId': req.session.user})
+      .populate('categories.items.categoryId')
       .then(posts => res.send({posts: posts}))
       .catch(err => res.sendStatus(500))
     }
@@ -129,5 +131,5 @@ exports.postDestroy = (req, res, next) => {
         user.removePost(postId)
       })
     })
-    .catch(err => console.log(err));
+    .catch(err => res.sendStatus(500));
 }

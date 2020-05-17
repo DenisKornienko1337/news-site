@@ -53,7 +53,7 @@ exports.postAddCategory = (req, res) => {
             })
             res.sendStatus(200)
           })
-          .catch(err => console.log(err))
+          .catch(err => res.sendStatus(500))
         }
     })
   })
