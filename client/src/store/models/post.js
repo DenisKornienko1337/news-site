@@ -10,6 +10,7 @@ export default {
                 const posts = response.data.posts
                 
                 posts.map(p => {
+                    p.userName = p.userId.name
                     if (!p.categoriesTitles) { 
                         p.categoriesTitles = []
                         p.categories.items.map(cat => {                    

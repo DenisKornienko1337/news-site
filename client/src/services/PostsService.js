@@ -43,4 +43,7 @@ export default {
   isAuth() {
     return api().get('/users/auth')
   },
+  getUserPosts() {
+    return api().get('/posts/user')
+  }
 }
