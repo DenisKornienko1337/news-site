@@ -38,7 +38,6 @@ exports.getUserIndex = (req, res) => {
 
 exports.getPost = (req, res) => {
     const postId = req.body.id;
-
     Post.findById(postId, 'title description')
       .populate('categories.items.categoryId')
       .then(posts => res.send({ posts: posts }))
@@ -51,10 +50,13 @@ exports.postAddPost = (req, res) => {
   .then((users) => {
     users.map(user => {
         if(String(user._id)==String(req.session.user)) {
+          let date  = new Date()
+          let formattedDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()
           const post = new Post({
             title: req.body.title,
             description: req.body.description,
-            userId: user._id
+            userId: user._id,
+            date: formattedDate
           })
           post.save()
           .then(result => { 

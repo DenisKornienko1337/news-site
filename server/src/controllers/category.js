@@ -11,9 +11,6 @@ exports.getIndex = (req, res) => {
         .sort({ _id: -1 })
         .then( categories => {
           res.send({ categories: categories })
-          let date = new Date()
-          console.log(dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate()
-          )
         })
         .catch( err => res.sendStatus(500))
 }
@@ -98,15 +95,34 @@ exports.postDestroy = (req, res, next) => {
         return posts
       })
       .catch(err => console.log(err))
-      
-    Category.deleteOne({_id: catId})
-    .then(() => {
-      res.sendStatus(200)
-    })
-    .then(() => {
-      User.findById(req.session.user)
-      .then(user => {
-        user.removeCategory(catId)
+    Category.findById(catId)
+    .then(category => {
+      console.log('|||||||||||||||||||||||||||||||')
+      console.log(category.articles.items)
+      console.log('|||||||||||||||||||||||||||||||')
+      category.articles.items.map(item => {
+        Post.findById(item.articleId)
+        .then(post => {
+          if(post.categories.items.length<=1){
+            // console.log('|||||||||||||||||||||||||||||||')
+            // console.log(post.categories.items.length)
+            // console.log('|||||||||||||||||||||||||||||||')
+            Post.deleteOne({_id: post._id})
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+      Category.deleteOne({_id: catId})
+      .then(() => {
+        res.sendStatus(200)
+      })
+      .then(() => {
+        User.findById(req.session.user)
+        .then(user => {
+          user.removeCategory(catId)
+        })
       })
     })
     .catch(err => console.log(err))

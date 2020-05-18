@@ -9,7 +9,10 @@ const postSchema = new Schema({
   description: {
     type: String,
     required: true,
-  },    
+  },
+  date: {
+    type: String,
+  },
   categories: {
     items: [
       {
