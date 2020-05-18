@@ -4,12 +4,10 @@ import helpers from '@/helpers/checkCat'
 
 export default {
     actions: {
-        fetchPosts(ctx) {            
+        fetchPosts(ctx) {           
             Post.featchPosts()
-            .then(Posts => {
-                let posts = Posts
-                console.log(Posts);
-                
+            .then(posts => {     
+                console.log('posts', posts);          
                 posts.map(p => {
                     p.userName = p.userId.name
                     if (!p.categoriesTitles) { 
@@ -18,9 +16,11 @@ export default {
                             p.categoriesTitles.push(cat.categoryId.title)
                         });
                     }            
-                })       
+                })  
+                     
                 ctx.commit('updatePosts', posts)
-            })         
+            })
+            .catch(err => console.log(err))         
         },
         async fetchSinglePost(ctx, postId) {
             const response = await Services.getPost({
@@ -29,21 +29,29 @@ export default {
             const posts = response.data.posts
             ctx.commit('updatePosts', posts)
         },
-        async createPost(ctx, post){            
-            const categoriesIDs = post.categories.map(c => c._id)
-            await Services.addNewPost({
-                title: post.title,
-                description: post.description,
-                categories: categoriesIDs
-            });                     
-            
-            post = {
-                title: post.title,
-                description: post.description,
-                categories: post.categories 
-            }
-            
-            ctx.commit('pushPost', post)
+        // async createPost(ctx, post){
+        //     const categoriesIDs = post.categories.map(c => c._id)
+        //     await Services.addNewPost({
+        //         title: post.title,
+        //         description: post.description,
+        //         categories: categoriesIDs
+        //     });
+
+        //     post = {
+        //         title: post.title,
+        //         description: post.description,
+        //         categories: post.categories 
+        //     }
+
+        //     ctx.commit('pushPost', post)
+        // },
+        createPost(ctx, post){                         
+            const categoriesIDs = post.categories.map(cat => cat._id)
+            post.categoriesIDs = categoriesIDs
+
+            const newPost = new Post(post)            
+            newPost.create()
+            .then(() => ctx.commit('pushPost', post))                 
         },
         async updateSinglePost(ctx, post){
             const categoriesIDs = post.categories.map(c => c._id)
@@ -104,11 +112,14 @@ export default {
                 if(p._id === post._id) p = post
             })
         },
-        pushPost(state, post) {    
+        // pushPost(state, post) {                  
+        //     state.posts.push(post)
+        // },
+        pushPost(state, post) {
             const categoriesTitles = post.categories.map(c => c.title)
 
-            post.categoriesTitles = categoriesTitles;  
-            
+            post.categoriesTitles = categoriesTitles;
+
             state.posts.push(post)
         },
         removePostItem(state, post){

@@ -60,7 +60,7 @@
               title: this.postItem.title,
               description: this.postItem.description,
               categories: selectedIDS
-            }
+            }            
             this.createPost(post).then(() => {
               this.$helper.notify('Notification', 'Post have been added!', 'success')
               this.$router.push({ name: 'Posts' })
@@ -88,7 +88,7 @@
               categories: selectedIDS
             }
             this.updateSinglePost(post)
-            .then(() => {
+            .then(() => {              
               this.$helper.notify('Notification', 'Post have been updated!', 'warn')
               this.$router.push({ name: 'Posts' }) 
             })
