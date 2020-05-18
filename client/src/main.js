@@ -28,10 +28,8 @@ router.beforeEach( async (to, from, next) => {
 
     if(allowedRoute) next()
   } else {
-    
     const map = cookieToMap.cookieToMap(document.cookie)
-    console.log(map.get('isLoggedIn'));
-       
+    console.log(map.get('isLoggedIn'));    
     
     next()
   }

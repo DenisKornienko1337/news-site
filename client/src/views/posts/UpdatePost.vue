@@ -8,8 +8,6 @@
           span(v-else) Update News
         form
           .form-group
-            input.form-control( type="hidden", name="id", id="id", placeholder="Id", v-model.trim="postItem._id" )
-          .form-group
             input.form-control( type="text", name="title", id="title", placeholder="Title", v-model.trim="postItem.title" v-validate="'required'" )
             div(class="validation-error") {{ errors.first('title') }}
           .form-group 
@@ -55,12 +53,12 @@
                   _id: c._id,
                   title: c.title
                 } 
-              })
+            })
             const post = {
               title: this.postItem.title,
               description: this.postItem.description,
               categories: selectedIDS
-            }            
+            }                        
             this.createPost(post).then(() => {
               this.$helper.notify('Notification', 'Post have been added!', 'success')
               this.$router.push({ name: 'Posts' })
@@ -80,7 +78,8 @@
                 _id: c._id,
                 title: c.title
               } 
-            })          
+            })    
+                  
             const post = {
               _id: this.postItem._id,
               title: this.postItem.title,
