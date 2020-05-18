@@ -9,8 +9,21 @@ exports.getIndex = (req, res) => {
     Category.find({}, 'title')
         .populate('articles.items.articleId')
         .sort({ _id: -1 })
-        .then( categories => res.send({ categories: categories }))
+        .then( categories => {
+          res.send({ categories: categories })
+          let date = new Date()
+          console.log(dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate()
+          )
+        })
         .catch( err => res.sendStatus(500))
+}
+
+exports.getPosts = (req, res) => {
+  let categoryId = req.body.id
+  Category.findById(categoryId)
+  .then(category => {
+    res.send({posts: category.articles})
+  })
 }
 
 exports.getUserIndex = (req, res) => {
@@ -53,7 +66,10 @@ exports.postAddCategory = (req, res) => {
             })
             res.sendStatus(200)
           })
-          .catch(err => res.sendStatus(500))
+          .catch(err => {
+            console.log(err)
+            res.sendStatus(500)
+          })
         }
     })
   })

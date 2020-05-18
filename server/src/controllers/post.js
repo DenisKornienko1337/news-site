@@ -31,7 +31,7 @@ exports.getUserIndex = (req, res) => {
       .catch(err => res.sendStatus(500))
     }
   })
-  .then(err => {
+  .catch(err => {
     res.sendStatus(500)
   })
 }
