@@ -11,7 +11,7 @@
                 input(type="password" name="password" v-model="password" v-validate="'required'" )
                 div(class="validation-error text-center") {{ errors.first('password') }}
             div.input-container
-                button( class="waves-effect waves-light btn" @click="register")
+                button( class="waves-effect waves-light btn")
                     | Register
 </template>
 
@@ -31,24 +31,25 @@ export default {
             .then( async () => {
                 if (!this.errors.any()) {                     
                     
-                    const res = await PostsService.addUser({
-                        name: this.name,
-                        password: this.password
-                    })
-                    console.log(res);
+                    // const res = await PostsService.addUser({
+                    //     name: this.name,
+                    //     password: this.password
+                    // })
+                    //console.log(res);
                     
                     // if(res)  this.$router.push({ name: 'Admin' })
                     // else this.$dialog.alert('Cant find user or failed password')
-                    // try {
-                    //     await PostsService.addUser({
-                    //         name: this.name,
-                    //         password: this.password
-                    //     })
-                    //     this.$router.push({ name: 'Admin' })
-                    // } catch(err) {         
-                    //     this.$dialog
-                    //     .alert('Cant find save user try other username')
-                    // }
+                    try {
+                        console.log('try')
+                        await PostsService.addUser({
+                            name: this.name,
+                            password: this.password
+                        })
+                        this.$router.push({ name: 'Admin' })
+                    } catch(err) {         
+                        this.$dialog
+                        .alert('Cant find save user try other username')
+                    }
                 }
             })
         }

@@ -25,12 +25,15 @@ exports.addUser = (req, res) => {
                 password: hash,
                 permission: permission[0].slug,
             })
-            user.save()
+            return user.save()
+
+        })   
+        .then(() => {
             req.session.isLoggedIn = true
             req.session.user = user._id
             res.cookie('isLoggedIn', 'true')
             res.sendStatus(200)
-        })        
+        })
         .catch(err => {
             console.log(err)
             if(err) res.sendStatus(500)
