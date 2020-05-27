@@ -8,9 +8,18 @@ const config = require('./config/config')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const MongoDBStore = require('connect-mongodb-session')(session)
+const path = require('path')
 
 const store = new MongoDBStore({
   uri: config.dbURL,
+});
+app.use(express.static('public'));
+app.use('/public/:name', (req, res) => {
+  console.log(req.params.name);
+  
+  res.sendFile(path.resolve(__dirname+'/public/'+req.params.name).replace(/\\/g, '/'))
+  
+  // res.send('hellow')
 });
 
 //app.use(cors())
