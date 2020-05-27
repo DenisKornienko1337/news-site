@@ -1,14 +1,15 @@
 <template lang="pug">
   .container
     .row
-      .col-lg-12
+      .col-lg-8
         h1
           | News         
         section.panel.panel-success( v-if="allPosts.length" )
           AddButton(text="Add News" path="NewPost")
           select.browser-default(@change="filterPosts($event)")
             option(value="-1") All
-            option(v-for="(category) in allCategories" :key="category.title") {{category.title}}
+            option(v-for="(category) in allCategories" :key="category.title")
+              | {{category.title}}
           input( placeholder="Search post by title..." type="text" @input="searchPosts($event)")
           div.row
             card-item(v-for="(postItem, index) in allPosts" :key="index"  :postItem="postItem" :index="index" v-show="!postItem.catHide && !postItem.queryHide")
@@ -17,7 +18,12 @@
           p
             | There are no news ... Lets add one now!
             
-          AddButton(text="Add News" path="NewPost")
+          AddButton(text="Add News" path="NewPost")      
+      .col-lg-4
+        div.categories-sidebar(v-if="allPosts.length")
+          div(v-for="(category) in allCategories" :key="category.title")
+            router-link(:to="{name: 'SingleCategory', params:{id: category._id }}")
+                | {{category.title}}
 </template>
 
 <script>
@@ -85,6 +91,13 @@
 </script>
 
 <style lang="scss">
+.categories-sidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
 .browser-default {
     max-width: 300px;
     margin: 0 auto;

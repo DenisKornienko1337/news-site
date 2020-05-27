@@ -33,9 +33,9 @@ body {
   background-color: blue !important;
   color: #fff !important;
 }
-.row {
-  display: block !important;
-}
+// .row {
+//   display: block !important;
+// }
 
   @font-face {
     font-family: 'Open Sans';

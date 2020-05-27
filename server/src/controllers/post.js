@@ -8,7 +8,11 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 exports.getIndex = (req, res) => {
+<<<<<<< HEAD
+    Post.find({}, 'title description date')    
+=======
     Post.find({}, 'title description imageId')    
+>>>>>>> e0f684968e51e360faf20e08867df40bed8c2470
       .populate('categories.items.categoryId')
       .populate('userId')
       .sort({ _id: -1 })

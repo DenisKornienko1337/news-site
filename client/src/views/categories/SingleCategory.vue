@@ -3,8 +3,8 @@
         h2 {{ title }}
         ul.articles-list.list-group.mt-2
           li.article-item.list-group-item(v-for="(article, index) in articles" :key="index")
-            router-link(:to="{name:'SinglePost', params:{id: article.articleId._id}}") 
-            //-  |  {{ article.articleId.title }} 
+            router-link(v-if="article.articleId" :to="{name:'SinglePost', params:{id: article.articleId._id}}") 
+             |  {{ article.articleId.title }} 
               
                   
 </template>
