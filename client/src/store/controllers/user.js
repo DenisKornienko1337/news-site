@@ -1,7 +1,7 @@
 import Services from '@/services/PostsService'
 
 class User {
-    constructor(_id) {
+    constructor({_id}) {
         this._id = _id
     }
 

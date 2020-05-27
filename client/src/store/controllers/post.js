@@ -33,9 +33,18 @@ class Post {
         return false     
     }
 
+    async remove(){
+        const response = await Services.deletePosts({
+            id: this._id
+        })        
+        if(response){
+            return true
+        }
+        return false  
+    }
+
     static async featchPosts(){
         const response = await Services.fetchPosts()
-        console.log('featchPosts', response.data.posts);
         
         if(response){
             return response.data.posts

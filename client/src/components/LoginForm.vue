@@ -1,14 +1,18 @@
 <template lang="pug">
-      form.register
-        div.input-container
-            | Login:
-            input(type="text" v-model="name")
-        div.input-container
-            | Password:
-            input(type="password" v-model="password")
-        div.input-container
-            button( class="waves-effect waves-light btn" @click="logIn")
-                | Login
+    div.register-form
+        h2 Login Form
+        form.register( @submit.prevent="logIn" )
+            div.input-container
+                | Login:
+                input(type="text" name="name" v-model="name" v-validate="'required'" )
+                div(class="validation-error text-center") {{ errors.first('name') }}
+            div.input-container
+                | Password:
+                input(type="password" name="password" v-model="password" v-validate="'required'" )
+                div(class="validation-error text-center") {{ errors.first('password') }}
+            div.input-container
+                button( class="waves-effect waves-light btn")
+                    | Login
 </template>
 
 <script>
@@ -23,11 +27,21 @@ export default {
     },
     methods: {
         async logIn() {
-            await PostsService.logIn({
-                name: this.name,
-                password: this.password
+            this.$validator.validateAll()        
+            .then( async () => {
+                if (!this.errors.any()) { 
+                    try {
+                        await PostsService.logIn({
+                            name: this.name,
+                            password: this.password
+                        })
+                        this.$router.push({ name: 'Admin' })
+                    } catch(err) {         
+                        this.$dialog
+                        .alert('Cant find user or failed password')
+                    }
+                }
             })
-            this.$router.push({ name: 'Admin' })
         }
     }
 }
