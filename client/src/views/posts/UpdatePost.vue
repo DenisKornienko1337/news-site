@@ -13,6 +13,8 @@
           .form-group 
             textarea.form-control( type="text", rows="10", name="description", id="description", placeholder="Content", v-model.trim="postItem.description" v-validate="'required'" )
             div(class="validation-error") {{ errors.first('description') }}
+            div.input-file(@change="uploadImage")
+              input(type="file" accept="image/*")
           .form-group.text-left.action-buttons
             button.btn.btn-primary.blue( v-if="isAdd" type="button", name="updatePost", id="updatePost", @click="addPost()" )
               | add news
@@ -43,6 +45,14 @@
     },
     methods: {
       ...mapActions(['fetchCategories','fetchPosts','createPost', 'updateSinglePost']),
+      uploadImage(e){
+        const image = e.target.files[0]
+        const reader = new FileReader()
+        reader.readAsDataURL(image)
+        reader.onload = e => {
+          this.postItem.image = e.target.result
+        }
+      },
       addPost () {
         this.$validator.validateAll()        
         .then(() => {
@@ -57,7 +67,8 @@
             const post = {
               title: this.postItem.title,
               description: this.postItem.description,
-              categories: selectedIDS
+              categories: selectedIDS,
+              image: this.postItem.image,
             }                        
             this.createPost(post).then(() => {
               this.$helper.notify('Notification', 'Post have been added!', 'success')
@@ -145,13 +156,18 @@
           description: '',
           categories: {
             items: []
-          }
+          },
+          image: '',
         }
       }
     }
   }
 </script>
 <style lang="scss">
+  .input-file {
+    text-align: left;
+    margin-top: 20px;
+  }
   .sidebar-right {
     padding-left: 30px;
     margin-top: 70px;

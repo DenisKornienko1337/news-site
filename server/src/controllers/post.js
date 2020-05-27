@@ -1,19 +1,25 @@
 const Post = require('../models/post')
 const Category = require('../models/category')
 const User = require('../models/user')
-
+const fs = require('fs')
+const path = require('path')
+const uuidv4 = require('uuid/v4')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 exports.getIndex = (req, res) => {
-    Post.find({}, 'title description')    
+    Post.find({}, 'title description imageId')    
       .populate('categories.items.categoryId')
       .populate('userId')
       .sort({ _id: -1 })
       .then(posts => {
+        console.log(posts)
         res.send({ posts: posts })
       })
-      .catch(err => res.sendStatus(500))
+      .catch(err => {
+        res.sendStatus(500)
+        console.log(err)
+      })
 }
 
 exports.getUserIndex = (req, res) => {
@@ -50,16 +56,22 @@ exports.postAddPost = (req, res) => {
   .then((users) => {
     users.map(user => {
         if(String(user._id)==String(req.session.user)) {
+          const imagePath = path.resolve(__dirname, '..').replace(/\\/g, '/')+'/assets/images/posts/'
+          base64Image = req.body.image.replace(/^data:image\/png;base64,/,"")
+          binaryImage = new Buffer(base64Image, 'base64').toString('binary')
+          const imageId = uuidv4().toString()
+          fs.writeFileSync(imagePath+imageId+".png", binaryImage, "binary");
           let date  = new Date()
           let formattedDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()
           const post = new Post({
             title: req.body.title,
             description: req.body.description,
             userId: user._id,
-            date: formattedDate
+            date: formattedDate,
+            imageId: imageId,
           })
           post.save()
-          .then(result => { 
+          .then(result => {
             Category.find({'_id': req.body.categories})
               .then(cat => {
                 post.addCategories(req.body.categories)      

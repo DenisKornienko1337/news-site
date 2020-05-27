@@ -33,7 +33,7 @@ const usersRoutes = require('./routes/users')
 // Set default configs
 mongoose.Promise = global.Promise
 app.use(morgan('combined'))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '100mb'}))
 //Set middleware
 app.use(session({
   secret: 'production',

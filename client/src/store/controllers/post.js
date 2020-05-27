@@ -1,18 +1,20 @@
 import Services from '@/services/PostsService'
 
 class Post {
-    constructor({_id, title, description, categoriesIDs}) {
+    constructor({_id, title, description, categoriesIDs, image}) {
         this._id = _id
         this.title = title
         this.description = description
         this.categoriesIDs = categoriesIDs
+        this.image = image
     }
 
     async create(){ 
         const response = await Services.addNewPost({
             title: this.title,
             description: this.description,
-            categories: this.categoriesIDs
+            categories: this.categoriesIDs,
+            image: this.image,
         });
         if(response){
             return true
@@ -35,7 +37,7 @@ class Post {
 
     static async featchPosts(){
         const response = await Services.fetchPosts()
-        console.log('featchPosts', response.data.posts);
+        console.log(response.data.posts);
         
         if(response){
             return response.data.posts

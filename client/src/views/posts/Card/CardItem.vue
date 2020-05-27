@@ -2,6 +2,7 @@
     div.col.s12.m6.l4
         div.card.white-grey.darken-1000
             div.card-content
+                div.card-image
                 span.card-title
                 | {{post.title}}
                 div.post-categories Categories: 
@@ -35,9 +36,7 @@ export default {
     },
     methods: {
       ...mapActions(['removePost']),
-      deletePostItem() {
-        console.log('deleted', 'Card Item');
-        
+      deletePostItem() {        
         const post = {
           _id: this.post._id,
           index: this.indexItem
