@@ -2,6 +2,7 @@
     div.col.s12.m6.l4
         div.card.white-grey.darken-1000
             div.card-content
+                div.card-image
                 span.card-title
                 | {{post.title}}
                 div.post-categories Categories: 
