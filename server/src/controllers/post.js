@@ -59,8 +59,9 @@ exports.postAddPost = (req, res) => {
           const imagePath = path.resolve(__dirname, '..').replace(/\\/g, '/')+'/assets/images/posts/'
           base64Image = req.body.image.replace(/^data:image\/png;base64,/,"")
           binaryImage = new Buffer(base64Image, 'base64').toString('binary')
-          const imageId = uuidv4().toString()
-          fs.writeFileSync(imagePath+imageId+".png", binaryImage, "binary");
+          let imageId = uuidv4().toString()
+          imageId+=".png"
+          fs.writeFileSync(imagePath+imageId, binaryImage, "binary");
           let date  = new Date()
           let formattedDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()
           const post = new Post({
