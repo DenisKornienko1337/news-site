@@ -8,6 +8,10 @@ const config = require('./config/config')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const MongoDBStore = require('connect-mongodb-session')(session)
+const path = require('path')
+// console.log(11111111111111111111)
+// console.log(path.dirname(process.mainModule.filename)+'/public')
+// console.log(11111111111111111111)
 
 const store = new MongoDBStore({
   uri: config.dbURL,
@@ -41,10 +45,14 @@ app.use(session({
   saveUninitialized: false,
   store: store
 }))
+
 // Set Routes
+app.use('/public', express.static(path.resolve(__dirname+'/public').replace(/\\/g, '/')))
+
 app.use('/posts', postRoutes)
 app.use('/categories', categoryRoutes)
 app.use('/users', usersRoutes)
+
 
 // test task Set Routes
 // app.use('/users', userRoutes)
