@@ -30,17 +30,7 @@ export default {
             this.$validator.validateAll()        
             .then( async () => {
                 if (!this.errors.any()) {                     
-                    
-                    // const res = await PostsService.addUser({
-                    //     name: this.name,
-                    //     password: this.password
-                    // })
-                    //console.log(res);
-                    
-                    // if(res)  this.$router.push({ name: 'Admin' })
-                    // else this.$dialog.alert('Cant find user or failed password')
                     try {
-                        console.log('try')
                         await PostsService.addUser({
                             name: this.name,
                             password: this.password

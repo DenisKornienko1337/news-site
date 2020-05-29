@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import PostsService from '@/services/PostsService'
 export default {
     name: 'LoginForm',
@@ -31,12 +32,16 @@ export default {
             .then( async () => {
                 if (!this.errors.any()) { 
                     try {
-                        await PostsService.logIn({
+                        const response = await PostsService.logIn({
                             name: this.name,
                             password: this.password
                         })
+                          
+                        Vue.prototype.$userName = response.data.username 
+                        Vue.prototype.$isAuth = true
                         this.$router.push({ name: 'Admin' })
-                    } catch(err) {         
+                    } catch(err) {   
+                        Vue.prototype.$isAuth = false      
                         this.$dialog
                         .alert('Cant find user or failed password')
                     }
