@@ -60,8 +60,7 @@ exports.postAddPost = (req, res) => {
           base64Image = req.body.image.replace(/^data:image\/png;base64,/,"")
           binaryImage = new Buffer(base64Image, 'base64').toString('binary')
           let imageId = uuidv4().toString()
-          imageId+=".png"
-          fs.writeFileSync(imagePath+imageId, binaryImage, "binary");
+          fs.writeFileSync(imagePath+imageId+'.png', binaryImage, "binary");
           let date  = new Date()
           let formattedDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()
           const post = new Post({

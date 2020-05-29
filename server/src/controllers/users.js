@@ -31,6 +31,7 @@ exports.addUser = (req, res) => {
         .then(() => {
             req.session.isLoggedIn = true
             req.session.user = user._id
+            req.session.username = user.name
             res.cookie('isLoggedIn', 'true')
             res.sendStatus(200)
         })
@@ -61,6 +62,7 @@ exports.logIn = (req, res, next) => {
                     if(result) {
                         req.session.isLoggedIn = true
                         req.session.user = user._id
+                        req.session.username = user.name
                         res.cookie('isLoggedIn', 'true')
                         res.sendStatus(200)
                     } else {
