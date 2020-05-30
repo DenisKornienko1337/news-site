@@ -5,32 +5,15 @@
                 | Home
             ul#nav-mobile.right
                 li
-                    router-link(:to="{path: '/admin'}")
-                        | Admin
-                li
                     router-link(:to="{path: '/login'}")
                         | Login/Register
                 li
                     router-link(:to="{path: '/posts'}")
                         | News
-                li
-                    router-link(:to="{path: '/categories'}")
-                        | Categories
 </template>
 <script>
 export default {
-  name: 'Header',
-  mounted() {
-      console.log(this.$isAuth);
-      
-  },
-  computed: {
-      isLoged: function(){
-          console.log(this.$isAuth);
-          
-        return this.$isAuth
-      },
-  }
+  name: 'LogoutHeader'
 }
 </script>
 <style lang="scss">

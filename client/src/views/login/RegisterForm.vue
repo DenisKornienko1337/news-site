@@ -1,7 +1,7 @@
 <template lang="pug">
-    div.register-form
-        h2 Login Form
-        form.register( @submit.prevent="logIn" )
+    div.login-form
+        h2 Register Form
+        form.register( @submit.prevent="register" )
             div.input-container
                 | Login:
                 input(type="text" name="name" v-model="name" v-validate="'required'" )
@@ -12,14 +12,14 @@
                 div(class="validation-error text-center") {{ errors.first('password') }}
             div.input-container
                 button( class="waves-effect waves-light btn")
-                    | Login
+                    | Register
 </template>
 
 <script>
-import Vue from 'vue'
-import PostsService from '@/services/PostsService'
+import User from '@/store/controllers/user.js'
+
 export default {
-    name: 'LoginForm',
+    name: 'RegisterForm',
     data () {
         return {
             name: '',
@@ -27,24 +27,20 @@ export default {
         }
     },
     methods: {
-        async logIn() {
+        async register(){
             this.$validator.validateAll()        
             .then( async () => {
-                if (!this.errors.any()) { 
-                    try {
-                        const response = await PostsService.logIn({
-                            name: this.name,
-                            password: this.password
-                        })
-                          
-                        Vue.prototype.$userName = response.data.username 
-                        Vue.prototype.$isAuth = true
-                        this.$router.push({ name: 'Admin' })
-                    } catch(err) {   
-                        Vue.prototype.$isAuth = false      
-                        this.$dialog
-                        .alert('Cant find user or failed password')
+                if (!this.errors.any()) {                      
+                    const user = {
+                        name: this.name, 
+                        password: this.password
                     }
+                    const res = await User.addUser(user)
+                    
+                    if(res) this.$router.push({ name: 'Admin' })
+                    else this.$dialog
+                        .alert('Cant find save user try other username')
+                    
                 }
             })
         }

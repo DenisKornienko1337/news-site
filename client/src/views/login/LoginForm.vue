@@ -1,7 +1,7 @@
 <template lang="pug">
-    div.login-form
-        h2 Register Form
-        form.register( @submit.prevent="register" )
+    div.register-form
+        h2 Login Form
+        form.register( @submit.prevent="logIn" )
             div.input-container
                 | Login:
                 input(type="text" name="name" v-model="name" v-validate="'required'" )
@@ -12,13 +12,14 @@
                 div(class="validation-error text-center") {{ errors.first('password') }}
             div.input-container
                 button( class="waves-effect waves-light btn")
-                    | Register
+                    | Login
 </template>
 
 <script>
-import PostsService from '@/services/PostsService'
+import User from '@/store/controllers/user.js'
+
 export default {
-    name: 'RegisterForm',
+    name: 'LoginForm',
     data () {
         return {
             name: '',
@@ -26,20 +27,19 @@ export default {
         }
     },
     methods: {
-        async register(){
+        async logIn() {
             this.$validator.validateAll()        
             .then( async () => {
-                if (!this.errors.any()) {                     
-                    try {
-                        await PostsService.addUser({
-                            name: this.name,
-                            password: this.password
-                        })
-                        this.$router.push({ name: 'Admin' })
-                    } catch(err) {         
-                        this.$dialog
-                        .alert('Cant find save user try other username')
+                if (!this.errors.any()) {
+                    const user = {
+                        name: this.name, 
+                        password: this.password
                     }
+                    const res = await User.logIn(user)
+                    
+                    if (res)  this.$router.push({ name: 'Admin' })
+                    else this.
+                        $dialog.alert('Cant find user or failed password')
                 }
             })
         }

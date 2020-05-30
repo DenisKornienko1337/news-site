@@ -13,6 +13,30 @@ class User {
         }
         return false  
     }
+
+    static async logIn({name, password}){
+        try {            
+            await Services.logIn({
+                name: name,
+                password: password
+            })
+            return true
+        } catch(err){
+            return false
+        }        
+    } 
+
+    static async addUser({name, password}){
+        try {
+            await Services.addUser({
+                name: name,
+                password: password
+            })
+            return true
+        } catch(err){
+            return false
+        }
+    }
 }
 
 export default User

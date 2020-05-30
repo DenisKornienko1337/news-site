@@ -1,5 +1,5 @@
-import Login from '../views/login/Login'
-import Admin from '../views/admin/Admin'
+import Login from '../views/login/'
+// import Admin from '../views/admin/Admin'
 
 const login = [
     {
@@ -7,11 +7,14 @@ const login = [
         name: 'Login',
         component: Login
     },
-    {
-        path: '/admin',
-        name: 'Admin',
-        component: Admin
-    }
+    // {
+    //     path: '/admin',
+    //     name: 'Admin',
+    //     component: Admin,
+    //     meta: {
+    //         layout: 'logged'
+    //     }
+    // }
 ]
 
 

@@ -12,8 +12,8 @@
 </template>
 
 <script>
-  import LoginForm from '@/components/LoginForm'
-  import RegisterForm from '@/components/RegisterForm'
+  import LoginForm from './LoginForm'
+  import RegisterForm from './RegisterForm'
 
   export default {
     name: 'Login',

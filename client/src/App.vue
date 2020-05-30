@@ -1,13 +1,24 @@
 <template lang="pug">
   #app
-    Header(test="title")
-    router-view
+    component(:is="layout")
+      router-view
     notifications(group="notifications" position="bottom right")
 </template>
 <script>
-import Header from '@/components/Header'
+import LoggedLayout from '@/layouts/Logged'
+import LogoutLayout from '@/layouts/Logout'
+
 export default {
-  components: {Header}
+  components: {
+    LoggedLayout, LogoutLayout
+  },
+  computed: {
+    layout:  function() {      
+      console.log('this.$route.layout', this.$route.meta.layout);
+      
+      return (this.$route.meta.layout || 'logout' ) + '-layout'
+    }
+  }
 }
 </script>
 <style lang="scss">

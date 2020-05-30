@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 import posts from './posts.js'
 import categories from './categories.js'
 import login from './login.js'
+import admin from './admin.js'
 
 Vue.use(VueRouter)
 
@@ -12,6 +13,7 @@ Vue.use(VueRouter)
   ...posts,
   ...categories,
   ...login,
+  ...admin,
   {
     path: '/',
     name: 'Home',
