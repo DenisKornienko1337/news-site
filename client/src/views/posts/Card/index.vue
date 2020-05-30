@@ -58,7 +58,7 @@
 
         this.$forceUpdate();
       },
-      filterPosts(event) {          
+      filterPosts(event) {                  
         const ops = {
             value: event.target.value,
             posts: this.allPosts

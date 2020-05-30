@@ -1,4 +1,5 @@
 import User from '../controllers/user'
+import helpers from '@/helpers/checkCat'
 
 export default {
     actions: {
@@ -14,21 +15,37 @@ export default {
                 }            
             }) 
       
-            ctx.commit('updatePosts', posts)
-                                         
+            ctx.commit('updateUsersPosts', posts)                                         
         },
+        usersFilerByCategory(ctx, ops){
+            const value = ops.value
+            const posts = ops.posts
+            
+            console.log('ops', ops);
+            
+            for(let i in posts) {
+              if(value==-1) {
+                posts[i].catHide = false
+              } else {
+                let flag = helpers.isInCategories(posts[i].categories.items, value)
+                posts[i].catHide = flag
+              }
+            }
+            
+            ctx.commit('updateUsersPosts', posts)
+        }
     },
     mutations: {
-        updatePosts(state, posts){            
-            state.posts = posts
+        updateUsersPosts(state, posts){            
+            state.userPosts = posts
         },
     },
     state: {
-        posts: []
+        userPosts: []
     },
     getters: {
         allUserPosts(state){
-            return state.posts
+            return state.userPosts
         }
     }
 }

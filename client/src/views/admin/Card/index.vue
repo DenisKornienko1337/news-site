@@ -41,23 +41,28 @@
       }
     },
     methods: {
-      ...mapActions(['fetchUserPosts', 'fetchCategories','filerByTitle', 'filerByCategory']),
+      ...mapActions(['fetchUserPosts', 'fetchCategories','filerByTitle', 'usersFilerByCategory']),
       searchPosts(event) {
         const ops = {
             value: event.target.value,
-            posts: this.allPosts
+            posts: this.allUserPosts
         }
 
         this.filerByTitle(ops)          
 
         this.$forceUpdate();
       },
-      filterPosts(event) {          
+      filterPosts(event) {   
+        console.log(111111111111);
+                       
         const ops = {
             value: event.target.value,
-            posts: this.allPosts
+            posts: this.allUserPosts
         }
-        this.filerByCategory(ops)
+        console.log('this.allUserPosts', this.allUserPosts);
+        
+        console.log(22222222);
+        this.usersFilerByCategory(ops)
 
         this.$forceUpdate();
       },
