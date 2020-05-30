@@ -1,7 +1,7 @@
 <template lang="pug">
   .container
     .row
-      .col-lg-8
+      .col-lg-12
         h1
           | News         
         section.panel.panel-success( v-if="allPosts.length" )
@@ -19,11 +19,11 @@
             | There are no news ... Lets add one now!
             
           AddButton(text="Add News" path="NewPost")      
-      .col-lg-4
-        div.categories-sidebar(v-if="allPosts.length")
-          div(v-for="(category) in allCategories" :key="category.title")
-            router-link(:to="{name: 'SingleCategory', params:{id: category._id }}")
-                | {{category.title}}
+      //- .col-lg-4
+      //-   div.categories-sidebar(v-if="allPosts.length")
+      //-     div(v-for="(category) in allCategories" :key="category.title")
+      //-       router-link(:to="{name: 'SingleCategory', params:{id: category._id }}")
+      //-           | {{category.title}}
 </template>
 
 <script>
