@@ -2,9 +2,10 @@
     div.col.s12.m6.l4
         div.card.white-grey.darken-1000
             div.card-content
-                img(:src="server_url+post.imageId")
-                span.server_url 
-                  | {{ server_url }}
+                div(v-if="post.imageId")
+                  img(:src="server_url+post.imageId")
+                  span.server_url 
+                    | {{ server_url }}
                 span.card-title
                 | {{post.title}}
                 div.post-categories Categories: 
