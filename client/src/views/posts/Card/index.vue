@@ -5,7 +5,6 @@
         h1
           | News         
         section.panel.panel-success( v-if="allPosts.length" )
-          AddButton(text="Add News" path="NewPost")
           select.browser-default(@change="filterPosts($event)")
             option(value="-1") All
             option(v-for="(category) in allCategories" :key="category.title")
@@ -16,9 +15,7 @@
         div.input-field
         section.panel.panel-danger( v-if="!allPosts.length" )
           p
-            | There are no news ... Lets add one now!
-            
-          AddButton(text="Add News" path="NewPost")      
+            | There are no news ... Lets add one now!            
       //- .col-lg-4
       //-   div.categories-sidebar(v-if="allPosts.length")
       //-     div(v-for="(category) in allCategories" :key="category.title")

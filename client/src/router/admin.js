@@ -12,7 +12,7 @@ const routes = [
     },
     {
         path: '/admin/Profile',
-        name: 'Admin',
+        name: 'AdminProfile',
         component: Profile,
         meta: {
             layout: 'logged'
@@ -20,7 +20,7 @@ const routes = [
     },
     {
         path: '/admin/news',
-        name: 'Admin',
+        name: 'AdminNews',
         component: Card,
         meta: {
             layout: 'logged'

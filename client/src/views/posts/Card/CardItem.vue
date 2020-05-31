@@ -14,11 +14,6 @@
                     em Author - {{post.userName}}
                   div.mt-2
                     em Public - {{post.date}}
-            div.card-action
-                button(class="btn pt-0" @click="deleteOnConfirm()") 
-                    <x-circle-icon size="2x" class="circle-icon"></x-circle-icon>
-                router-link(class="btn" :to="{name: 'UpdatePost', params:{id: post._id }}")
-                    <edit-2-icon size="1.5x" class="edit-icon pt-0"></edit-2-icon>
 </template>
 
 <script>

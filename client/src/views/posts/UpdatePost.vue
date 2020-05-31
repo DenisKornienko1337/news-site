@@ -75,7 +75,7 @@
             }                        
             this.createPost(post).then(() => {
               this.$helper.notify('Notification', 'Post have been added!', 'success')
-              this.$router.push({ name: 'Posts' })
+              this.$router.push({ name: 'AdminNews' })
             } )                
           } 
         })     
@@ -103,13 +103,13 @@
             this.updateSinglePost(post)
             .then(() => {              
               this.$helper.notify('Notification', 'Post have been updated!', 'warn')
-              this.$router.push({ name: 'Posts' }) 
+              this.$router.push({ name: 'AdminNews' }) 
             })
           }        
         })     
       },
       goBack () {
-        this.$router.go({ name: 'Posts' })
+        this.$router.go({ name: 'AdminNews' })
       }
     },
     mounted () {

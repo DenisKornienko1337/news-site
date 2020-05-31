@@ -1,4 +1,5 @@
 import User from '../controllers/user'
+import Post from '../controllers/post'
 import helpers from '@/helpers/checkCat'
 
 export default {
@@ -33,12 +34,21 @@ export default {
             }
             
             ctx.commit('updateUsersPosts', posts)
-        }
+        },
+        async userRemovePost(ctx, post){
+            const newPost = new Post(post)                        
+            await newPost.remove()
+
+            ctx.commit('userRemovePostItem', post)
+        },
     },
     mutations: {
         updateUsersPosts(state, posts){            
             state.userPosts = posts
         },
+        userRemovePostItem(state, post){
+            state.userPosts.splice(post.index,1)
+        }
     },
     state: {
         userPosts: []

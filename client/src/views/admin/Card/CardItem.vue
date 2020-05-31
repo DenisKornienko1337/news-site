@@ -32,15 +32,13 @@ export default {
         }
     },
     methods: {
-      ...mapActions(['removePost']),
-      deletePostItem() {
-        console.log('deleted', 'Card Item');
-        
+      ...mapActions(['userRemovePost']),
+      deletePostItem() {        
         const post = {
           _id: this.post._id,
           index: this.indexItem
         }
-        this.removePost(post)
+        this.userRemovePost(post)
         this.$forceUpdate()  
       },
       deleteOnConfirm() {
@@ -58,7 +56,7 @@ export default {
         this.post = this.$props.postItem
       }
     },
-    computed: mapGetters(['allPosts'])
+    computed: mapGetters(['allUserPosts'])
 }
 </script>
 
