@@ -101,7 +101,21 @@ exports.postUpdatePost = (req, res, next) => {
     const updatedCategoriesIds = req.body.categories;
         
     Post.findById(postId)
-      .then( post => {        
+      .then( post => {
+        console.log(11111111111111111111)
+        console.log(req.body.image.length)
+        console.log(11111111111111111111)
+        if(req.body.image){
+          fs.unlinkSync(path.resolve(__dirname, '..').replace(/\\/g, '/')+post.imageId)
+          const imagePath = path.resolve(__dirname, '..').replace(/\\/g, '/')+'/public/'
+          let base64Image = req.body.image.replace(/^data:image\/[a-z]+;base64,/, "")
+          let binaryImage = new Buffer(base64Image, 'base64')
+          let imageId = uuidv4().toString()
+          let imageFile = imageId+'.jpg'
+          let fullImagePath = imagePath+imageFile
+          fs.writeFileSync(fullImagePath, binaryImage)
+          post.imageId = '/public/'+imageFile;
+        }    
         post.title = updatedTitle;
         post.description = updatedDesc;
         
