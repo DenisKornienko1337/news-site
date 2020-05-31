@@ -27,7 +27,8 @@ class Post {
             id: this._id,
             title: this.title,
             description: this.description,
-            categories: this.categoriesIDs
+            categories: this.categoriesIDs,
+            image: this.image,
         })    
         if(response){
             return true
