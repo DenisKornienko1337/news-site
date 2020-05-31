@@ -2,6 +2,13 @@ import Services from '@/services/PostsService'
 
 class Post {
     constructor({_id, title, description, categoriesIDs, image}) {
+        // this.post = {
+        //     _id: _id,
+        //     title: title,
+        //     description: description,
+        //     categoriesIDs: categoriesIDs,
+        //     image: image
+        // }
         this._id = _id
         this.title = title
         this.description = description
