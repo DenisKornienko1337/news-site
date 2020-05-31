@@ -69,7 +69,7 @@ exports.postAddPost = (req, res) => {
             description: req.body.description,
             userId: user._id,
             date: formattedDate,
-            imageId: fullImagePath,
+            imageId: '/public/'+imageFile,
           })
           post.save()
           .then(result => {
