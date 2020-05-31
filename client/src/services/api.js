@@ -1,8 +1,9 @@
+import config from '@/config/config'
 import axios from 'axios'
 
 export default () => {
   return axios.create({
-    baseURL: 'http://localhost:8081',
+    baseURL: config.server_url,
     withCredentials: true
   })
 }
