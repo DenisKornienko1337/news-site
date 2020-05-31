@@ -10,7 +10,10 @@
                         span(v-if="index!==post.categoriesTitles.length-1") , 
                 div.post-content {{post.description}}
                 footer.mt-2.blockquote-footer.text-left
-                  em Author - {{post.userName}}
+                  div
+                    em Author - {{post.userName}}
+                  div.mt-2
+                    em Public - {{post.date}}
             div.card-action
                 button(class="btn pt-0" @click="deleteOnConfirm()") 
                     <x-circle-icon size="2x" class="circle-icon"></x-circle-icon>

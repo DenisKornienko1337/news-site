@@ -17,7 +17,22 @@
                     router-link(:to="{path: '/categories'}")
                         | Categories
 </template>
-
+<script>
+export default {
+  name: 'Header',
+  mounted() {
+      console.log(this.$isAuth);
+      
+  },
+  computed: {
+      isLoged: function(){
+          console.log(this.$isAuth);
+          
+        return this.$isAuth
+      },
+  }
+}
+</script>
 <style lang="scss">
 nav {
   .brand-logo {

@@ -1,7 +1,7 @@
 import Services from '@/services/PostsService'
 
 class Category {
-    constructor(_id, title) {
+    constructor({_id, title}) {
         this._id = _id
         this.title = title
     }
@@ -18,13 +18,23 @@ class Category {
 
     async update(){
         const response = await Services.updateCategory({
-            id: post._id,
-            title: post.title
+            id: this._id,
+            title: this.title
         })    
         if(response){
             return true
         }
         return false     
+    }
+
+    async remove(){
+        const response = await Services.deleteCategories({
+            id: this._id
+        })  
+        if(response){
+            return true
+        }
+        return false  
     }
 
     static async fetchCategories(){

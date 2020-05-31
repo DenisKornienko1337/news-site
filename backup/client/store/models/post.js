@@ -1,57 +1,49 @@
-import Services from '@/services/PostsService'
 import Post from '../controllers/post'
 import helpers from '@/helpers/checkCat'
 
 export default {
     actions: {
-        fetchPosts(ctx) {            
-            Post.featchPosts()
-            .then(posts => {     
-                console.log('posts', posts);          
-                posts.map(p => {
-                    p.userName = p.userId.name
-                    if (!p.categoriesTitles) { 
-                        p.categoriesTitles = []
-                        p.categories.items.map(cat => {                    
-                            p.categoriesTitles.push(cat.categoryId.title)
-                        });
-                    }            
-                })  
-                    
-                ctx.commit('updatePosts', posts)
+        async fetchPosts(ctx) {
+            const posts = await Post.featchPosts()            
+            posts.map(p => {
+                p.userName = p.userId.name
+                if (!p.categoriesTitles) { 
+                    p.categoriesTitles = []
+                    p.categories.items.map(cat => {                    
+                        p.categoriesTitles.push(cat.categoryId.title)
+                    });
+                } 
             })
-            .catch(err => console.log(err))                  
+
+            ctx.commit('updatePosts', posts)               
         },
         async fetchSinglePost(ctx, postId) {
-            const response = await Services.getPost({
-                id: postId
-            })            
-            const posts = response.data.posts
-            ctx.commit('updatePosts', posts)
+            const post = await Post.fetchSinglePost(postId)
+            
+            ctx.commit('updatePosts', post)
         },
         async createPost(ctx, post){                         
             const categoriesIDs = post.categories.map(cat => cat._id)
             post.categoriesIDs = categoriesIDs
 
-            const newPost = new Post(post)
-                        
+            const newPost = new Post(post)                        
             await newPost.create()
-            .then(() => ctx.commit('pushPost', post))                 
+
+            ctx.commit('pushPost', post)            
         },
         async updateSinglePost(ctx, post){                   
             const categoriesIDs = post.categories.map(cat => cat._id)
             post.categoriesIDs = categoriesIDs
 
-            const newPost = new Post(post)
-                        
+            const newPost = new Post(post)                        
             await newPost.update()
             
             ctx.commit('updatePostItem', post)
         },
         async removePost(ctx, post){
-            await Services.deletePosts({
-                id: post._id
-            })
+            const newPost = new Post(post)                        
+            await newPost.remove()
+
             ctx.commit('removePostItem', post)
         },
         filerByTitle(ctx, ops){

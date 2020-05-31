@@ -2,7 +2,9 @@ const User = require('../models/user')
 const Permission = require('../models/permission')
 const Post = require('../models/post')
 const Category = require('../models/category')
-
+const fs = require('fs')
+const path = require('path')
+const uuidv4 = require('uuid/v4')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
@@ -12,6 +14,64 @@ exports.fetchUsers = (req, res) => {
         res.send({users: users})
     })
     .catch(err => {
+        res.sendStatus(500)
+    })
+}
+
+exports.addAvatar = (req, res) => {
+    const username = req.body.username
+    if(username != req.session.user) {
+        res.sendStatus(401)
+        return
+    }
+    const imagePath = path.resolve(__dirname, '..').replace(/\\/g, '/')+'/public/'
+    let base64Image = req.body.image.replace(/^data:image\/[a-z]+;base64,/, "")
+    let binaryImage = new Buffer(base64Image, 'base64')
+    let imageId = uuidv4().toString()
+    let imageFile = imageId+'.jpg'
+    let fullImagePath = '/public/'+imageId
+    fs.writeFileSync(imagePath+imageFile, binaryImage)
+    User.find({'name': username})
+    .then((user) => {
+        user.image = fullImagePath
+    })
+    .catch((err) => {
+        res.sendStatus(500)
+    })
+}
+
+exports.changeUserName = (req, res) => {
+    if(username != req.session.user) {
+        res.sendStatus(401)
+        return
+    }
+    const oldUserName = req.body.oldUserName
+    const newUserName = req.body.newUserName
+
+    User.find({'name': oldUserName})
+    .then((user) => {
+        user.name = newUserName
+    })
+    .catch((err) => {
+        res.sendStatus(500)
+    })
+}
+
+exports.changePassword = (req, res) => {
+    if(username != req.session.user) {
+        res.sendStatus(401)
+        return
+    }
+    const userName = req.body.username
+    const newPassword = req.body.password
+
+    User.find({'name': userName})
+    .then((user) => {
+        bcrypt.hash(newPassword, saltRounds, (err, hash) => {
+            user.password = hash
+        })
+    })
+    .catch((err) => {
         res.sendStatus(500)
     })
 }
@@ -36,17 +96,16 @@ exports.addUser = (req, res) => {
             res.sendStatus(200)
         })
         .catch(err => {
-            console.log(err)
             if(err) res.sendStatus(500)
         })
       });
 }
 
 exports.removeUser = (req, res) => {
-    let userId = req.body.id
-    User.deleteOne({_id: userId})
+    let userName = req.body.username
+    User.deleteOne({name: userName})
     .then(result => {
-        
+        res.sendStatus(200)
     })
     .catch((err) => {
         res.sendStatus(500)
@@ -77,7 +136,6 @@ exports.logIn = (req, res, next) => {
 
 exports.logOut = (req, res, next) => {
     req.session.destroy(err => {
-        console.log(err)
         res.sendStatus(200)
     })
 }
@@ -92,9 +150,9 @@ exports.fetchPermissions = (req, res) => {
 }
 
 exports.changePermission = (req, res) => {
-    let permissionId = req.body.permissionId
+    let permission = req.body.permissionId
     let userId = req.session.user
-    Permission.findById(permissionId)
+    Permission.find({'slug': permission})
     .then(permission => {
         User.findById(userId)
         .then(user => {
