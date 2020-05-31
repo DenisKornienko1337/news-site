@@ -102,7 +102,8 @@
               _id: this.postItem._id,
               title: this.postItem.title,
               description: this.postItem.description,
-              categories: selectedIDS
+              categories: selectedIDS,
+              image: this.postItem.image
             }
             this.updateSinglePost(post)
             .then(() => {              
