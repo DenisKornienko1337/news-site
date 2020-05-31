@@ -2,7 +2,8 @@
     div.col.s12.m6.l4
         div.card.white-grey.darken-1000
             div.card-content
-                div.card-image
+                div(class="post-image" v-if="post.imageId")
+                  img(:src="server_url+post.imageId")
                 span.card-title
                 | {{post.title}}
                 div.post-categories Categories: 
@@ -19,6 +20,7 @@
 <script>
 import { XCircleIcon, Edit2Icon } from 'vue-feather-icons'
 import {mapActions, mapGetters} from 'vuex'
+import config from '@/config/config'
 
 export default {
     name: "CardItem",
@@ -28,6 +30,7 @@ export default {
     },
     data(){
         return {
+            server_url: config.server_url,
             post: this.$props.postItem,
             indexItem: this.$props.index
         }
