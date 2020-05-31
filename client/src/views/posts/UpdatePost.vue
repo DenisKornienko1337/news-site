@@ -13,6 +13,8 @@
           .form-group 
             textarea.form-control( type="text", rows="10", name="description", id="description", placeholder="Content", v-model.trim="postItem.description" v-validate="'required'" )
             div(class="validation-error") {{ errors.first('description') }}
+            div(class="post-image" v-if="postItem.imageId")
+              img(:src="server_url+postItem.imageId")
             div.input-file(@change="uploadImage")
               input(type="file" accept="image/*")
           .form-group.text-left.action-buttons
@@ -35,11 +37,13 @@
 
 <script>
   import {mapActions} from 'vuex'
+  import config from '@/config/config'
 
   export default {
     name: 'UpdatePost',
     data () {
       return {
+        server_url: config.server_url,
         selectedCats: []
       }
     },

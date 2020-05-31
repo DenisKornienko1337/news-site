@@ -52,16 +52,12 @@
 
         this.$forceUpdate();
       },
-      filterPosts(event) {   
-        console.log(111111111111);
-                       
+      filterPosts(event) {                          
         const ops = {
             value: event.target.value,
             posts: this.allUserPosts
         }
         console.log('this.allUserPosts', this.allUserPosts);
-        
-        console.log(22222222);
         this.usersFilerByCategory(ops)
 
         this.$forceUpdate();
