@@ -17,6 +17,7 @@ import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 import VeeValidate from 'vee-validate';
 
 import PostsService from '@/services/PostsService'
+import config from '@/config/config'
 
 router.beforeEach( async (to, from , next) => {
   const response = await PostsService.isAuth()
@@ -40,6 +41,8 @@ Vue.use(BootstrapVueIcons)
 
 Vue.use(VuejsDialog)
 Vue.prototype.$helper = helper
+Vue.prototype.$server_url = config.server_url
+
 
 
 Vue.config.productionTip = false
