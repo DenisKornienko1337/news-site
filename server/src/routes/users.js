@@ -12,7 +12,11 @@ router.post('/login', usersController.logIn)
 router.get('/logout', usersController.logOut)
 router.get('/auth', authController.isAuth)
 router.get('/permissions', usersController.fetchPermissions)
-router.post('/delete-user', isAuth, isSuperuser, usersController.removeUser);
+
+router.post('/add-avatar', isAuth, usersController.addAvatar)
+router.post('/change-username', isAuth, usersController.changeUserName)
+router.post('/change-password', isAuth, usersController.changePassword)
+router.post('/delete-user', isAuth, isSuperuser, usersController.removeUser)
 router.post('/change-permission', isAuth, isSuperuser, usersController.changePermission)
 
 module.exports = router

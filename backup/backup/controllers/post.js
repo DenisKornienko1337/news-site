@@ -8,12 +8,11 @@ const bcrypt = require('bcrypt')
 const saltRounds = 10
 
 exports.getIndex = (req, res) => {
-    Post.find({}, 'title description imageId')    
+    Post.find({}, 'title description date imageId')    
       .populate('categories.items.categoryId')
       .populate('userId')
       .sort({ _id: -1 })
       .then(posts => {
-        console.log(posts)
         res.send({ posts: posts })
       })
       .catch(err => {
@@ -56,12 +55,13 @@ exports.postAddPost = (req, res) => {
   .then((users) => {
     users.map(user => {
         if(String(user._id)==String(req.session.user)) {
-          const imagePath = path.resolve(__dirname, '..').replace(/\\/g, '/')+'/assets/images/posts/'
-          base64Image = req.body.image.replace(/^data:image\/png;base64,/,"")
-          binaryImage = new Buffer(base64Image, 'base64').toString('binary')
+          const imagePath = path.resolve(__dirname, '..').replace(/\\/g, '/')+'/public/'
+          let base64Image = req.body.image.replace(/^data:image\/[a-z]+;base64,/, "")
+          let binaryImage = new Buffer(base64Image, 'base64')
           let imageId = uuidv4().toString()
-          imageId+=".png"
-          fs.writeFileSync(imagePath+imageId, binaryImage, "binary");
+          let imageFile = imageId+'.jpg'
+          let fullImagePath = '/public/'+imageId
+          fs.writeFileSync(imagePath+imageFile, binaryImage)
           let date  = new Date()
           let formattedDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()
           const post = new Post({
@@ -69,7 +69,7 @@ exports.postAddPost = (req, res) => {
             description: req.body.description,
             userId: user._id,
             date: formattedDate,
-            imageId: imageId,
+            imageId: fullImagePath,
           })
           post.save()
           .then(result => {

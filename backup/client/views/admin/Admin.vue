@@ -45,7 +45,6 @@
     async mounted () {
       const response = await PostsService.isAuth()
       if(!response.data.isLoggedIn) {
-        console.log(response.data.isLoggedIn)
         this.$router.push({ name: 'Login' })
       }
     }

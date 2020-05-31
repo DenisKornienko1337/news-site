@@ -42,11 +42,14 @@ app.use(session({
   saveUninitialized: false,
   store: store
 }))
+
 // Set Routes
+app.use('/public', express.static(path.resolve(__dirname+'/public').replace(/\\/g, '/')))
+
 app.use('/posts', postRoutes)
 app.use('/categories', categoryRoutes)
 app.use('/users', usersRoutes)
-app.use('/public', express.static(path.join(__dirname.replace(/\\/g, '/'), '/public')))
+
 
 // test task Set Routes
 // app.use('/users', userRoutes)

@@ -27,6 +27,9 @@ const userSchema = new Schema({
         postId: {type : mongoose.Schema.ObjectId, ref : 'Post'}
       }
     ],
+  },
+  image: {
+    type: String,
   }
 })
 

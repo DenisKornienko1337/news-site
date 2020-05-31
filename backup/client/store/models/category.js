@@ -1,38 +1,33 @@
-import Services from '@/services/PostsService'
+import Category from '../controllers/categories'
 
 export default {
     actions: {
         async fetchCategories(ctx) {
-            // setTimeout( async function(){
-                const response = await Services.fetchCategories()
-                const categories = response.data.categories
-                ctx.commit('updateCategories', categories)
-            // }, 500);
+            const categories = await Category.fetchCategories()
+            
+            ctx.commit('updateCategories', categories)
         },
-        async fetchSinglePost(ctx, catId) {
-            const response = await Services.getCategory({
-                id: catId
-            })
-            const category = response.data.category
+        async fetchSinglePost(ctx, catId) {            
+            const category = await Category.fetchCategories(catId)
+            
             ctx.commit('updateCategories', category)
         },
         async createCategory(ctx, category){
-            await Services.addCategory({
-                title: category.title
-            })
+            const newCategory = new Category(category)
+            await newCategory.create()
+
             ctx.commit('pushCategory',category);
         },
         async updateSingleCategory(ctx, category){
-            await Services.updateCategory({
-                title: category.title,
-                id: category._id,
-            })
+            const newCategory = new Category(category)
+            await newCategory.update()
+
             ctx.commit('updateCategoryItem', category)
         },
         async removeCategory(ctx, category){
-            await Services.deleteCategories({
-                id: category._id
-            })  
+            const newCategory = new Category(category)
+            await newCategory.remove()
+
             ctx.commit('removeCategoryItem', category)
         }
     },

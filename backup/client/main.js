@@ -18,19 +18,20 @@ import VeeValidate from 'vee-validate';
 
 import PostsService from '@/services/PostsService'
 
-import cookieToMap from '@/helpers/cookieToMap.js'
+// import cookieToMap from '@/helpers/cookieToMap.js'
 
-router.beforeEach( async (to, from, next) => {
+router.beforeEach( async (to, from , next) => {
   const response = await PostsService.isAuth()
-
+    
   if(!response.data.isLoggedIn) {    
     const allowedRoute = isLogOut.find(r => r === to.path)
-
+    Vue.prototype.$isAuth = false
     if(allowedRoute) next()
-  } else {
-    const map = cookieToMap.cookieToMap(document.cookie)
-    console.log(map.get('isLoggedIn'));    
-    
+  } else {    
+    // const map = cookieToMap.cookieToMap(document.cookie)
+    // console.log(map.get('isLoggedIn'));   
+    Vue.prototype.$userName = response.data.username 
+    Vue.prototype.$isAuth = true
     next()
   }
 })

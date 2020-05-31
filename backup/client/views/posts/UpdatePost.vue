@@ -54,6 +54,9 @@
         }
       },
       addPost () {
+        const selected = this.categories.filter(c => c.value)
+        this.selectedCats = selected
+        
         this.$validator.validateAll()        
         .then(() => {
           if (!this.errors.any()) {            

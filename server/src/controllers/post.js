@@ -57,11 +57,11 @@ exports.postAddPost = (req, res) => {
         if(String(user._id)==String(req.session.user)) {
           const imagePath = path.resolve(__dirname, '..').replace(/\\/g, '/')+'/public/'
           let base64Image = req.body.image.replace(/^data:image\/[a-z]+;base64,/, "")
-          binaryImage = new Buffer(base64Image, 'base64')
+          let binaryImage = new Buffer(base64Image, 'base64')
           let imageId = uuidv4().toString()
           let imageFile = imageId+'.jpg'
-          let fullImagePath = '/public/'+imageId
-          fs.writeFileSync(imagePath+imageFile, binaryImage)
+          let fullImagePath = imagePath+imageFile
+          fs.writeFileSync(fullImagePath, binaryImage)
           let date  = new Date()
           let formattedDate = date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate()
           const post = new Post({
