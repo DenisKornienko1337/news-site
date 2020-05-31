@@ -1,5 +1,6 @@
 import Profile from '@/views/admin/Profile'
 import Card from '@/views/admin/Card'
+import Categories from '@/views/admin/Categories'
 
 const routes = [
     {
@@ -26,14 +27,14 @@ const routes = [
             layout: 'logged'
         }
     },
-    // {
-    //     path: '/admin/categories',
-    //     name: 'Admin',
-    //     component: Admin,
-    //     meta: {
-    //         layout: 'logged'
-    //     }
-    // },
+    {
+        path: '/admin/categories',
+        name: 'Admin',
+        component: Categories,
+        meta: {
+            layout: 'logged'
+        }
+    },
 ]
 
 export default routes

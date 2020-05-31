@@ -18,6 +18,11 @@ export default {
       
             ctx.commit('updateUsersPosts', posts)                                         
         },
+        async fetchUserCategories(ctx){
+            const categories = await User.fetchCategories()
+
+            ctx.commit('updateUsersCategories', categories)   
+        },
         usersFilerByCategory(ctx, ops){
             const value = ops.value
             const posts = ops.posts
@@ -46,16 +51,23 @@ export default {
         updateUsersPosts(state, posts){            
             state.userPosts = posts
         },
+        updateUsersCategories(state, categories){
+            state.userCategories = categories
+        },
         userRemovePostItem(state, post){
             state.userPosts.splice(post.index,1)
         }
     },
     state: {
-        userPosts: []
+        userPosts: [],
+        userCategories: []
     },
     getters: {
         allUserPosts(state){
             return state.userPosts
+        },
+        allUserCategories(state){
+            return state.userCategories
         }
     }
 }

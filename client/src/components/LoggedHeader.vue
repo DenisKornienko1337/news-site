@@ -9,6 +9,9 @@
                     router-link(:to="{path: '/admin/news'}")
                         | News list
                 li
+                    router-link(:to="{path: '/admin/categories'}")
+                        | Categories
+                li
                     span( class="link" @click.prevent="logOut")
                         | Log out
         router-view

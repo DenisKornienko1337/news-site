@@ -14,6 +14,15 @@ class User {
         return false  
     }
 
+    static async fetchCategories(){
+        const response = await Services.getUserCategories()
+        
+        if(response){
+            return response.data.categories
+        }
+        return false  
+    }
+
     static async logIn({name, password}){
         try {            
             await Services.logIn({

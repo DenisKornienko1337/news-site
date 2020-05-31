@@ -45,5 +45,8 @@ export default {
   },
   getUserPosts() {
     return api().get('/posts/user')
+  },
+  getUserCategories() {
+    return api().get('/categories/user')
   }
 }
