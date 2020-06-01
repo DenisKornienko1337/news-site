@@ -65,6 +65,15 @@ export default {
 </script>
 
 <style lang="scss">
+.post-image {
+  margin-top: .5rem;
+  width: 100%;
+  text-align: left;
+  img {
+    max-width: 100%;
+    max-height: 300px;
+  }
+}
 blockquote.remove-color {
   border-left-color: transparent !important;
 }

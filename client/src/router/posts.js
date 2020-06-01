@@ -1,18 +1,13 @@
-import PostCards from '../views/posts/Card'
-//import NewPost from '../views/posts/NewPostPage'
-import UpdatePost from '../views/posts/UpdatePost'
-import SinglePost from '../views/posts/SinglePost'
-
 const postsRoutes = [
     {
         path: '/posts',
         name: 'Posts',
-        component: PostCards
+        component: () => import("@/views/posts/Card"),
     },
     {
         path: '/posts/new',
         name: 'NewPost',
-        component: UpdatePost,
+        component: () => import("@/views/posts/UpdatePost"),
         props: true,
         meta: {
             layout: 'logged'
@@ -21,7 +16,7 @@ const postsRoutes = [
       {
         path: '/posts/update/:id',
         name: 'UpdatePost',
-        component: UpdatePost,
+        component: () => import("@/views/posts/UpdatePost"),
         props: true,
         meta: {
             layout: 'logged'
@@ -30,7 +25,7 @@ const postsRoutes = [
       {
         path: '/posts/:id',
         name: 'SinglePost',
-        component: SinglePost,
+        component: () => import("@/views/posts/SinglePost"),
         props: true
       }
 ]

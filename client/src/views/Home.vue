@@ -20,16 +20,20 @@
         div.col.m12.l6
           div.card.white-grey.darken-1000
             div.card-content
+              span.card-title Backend
               span.card-title Denis Kornienko
               div.skills
                 h4 Skills:
                 ul
                   li - CSS3/HTML5/Pug
                   li - Javascript (ES6)
-                  li - jQuery
-                  li - PHP
-                  li - Wordpress
+                  //- li - jQuery
+                  //- li - PHP
+                  //- li - Wordpress
                   li - VueJS
+                  li - NodeJS
+                  li - Express
+                  li - MongoDB
               div.contact 
                 h4 Contacts:
                 ul
@@ -43,6 +47,7 @@
         div.col.m12.l6
           div.card.white-grey.darken-1000
             div.card-content
+              span.card-title Frontend
               span.card-title Illia Nozdrevatih
               div.skills
                 h4 Skills:

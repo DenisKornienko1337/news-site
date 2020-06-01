@@ -1,24 +1,19 @@
-import Categories from '../views/categories/Categories'
-
-import AddCategory from '../views/categories/AddCategory'
-import SingleCategory from '../views/categories/SingleCategory'
-
 const categoriesRoutes = [
-    {
-        path: '/categories',
-        name: 'Categories',
-        component: Categories
-      },
+      // {
+      //   path: '/categories',
+      //   name: 'Categories',
+      //   component: Categories
+      // },
       {
         path: '/categories/:id',
         name: 'SingleCategory',
-        component: SingleCategory,
+        component: () => import("@/views/categories/SingleCategory"),
         props: true
       },
       {
         path: '/categories/add-category',
         name: 'AddCategory',
-        component: AddCategory,
+        component: () => import("@/views/admin/Categories/AddCategory"),
         props: true,
         meta: {
             layout: 'logged'
@@ -27,7 +22,7 @@ const categoriesRoutes = [
       {
         path: '/categories/update-category/:id',
         name: 'UpdateCategory',
-        component: AddCategory,
+        component: () => import("@/views/admin/Categories/AddCategory"),
         props: true,
         meta: {
             layout: 'logged'

@@ -1,12 +1,8 @@
-import Profile from '@/views/admin/Profile'
-import Card from '@/views/admin/Card'
-import Categories from '@/views/admin/Categories'
-
 const routes = [
     {
         path: '/admin',
         name: 'Admin',
-        component: Card,
+        component: () => import("@/views/admin/Card"),
         meta: {
             layout: 'logged'
         }
@@ -14,7 +10,7 @@ const routes = [
     {
         path: '/admin/Profile',
         name: 'AdminProfile',
-        component: Profile,
+        component: () => import("@/views/admin/Profile"),
         meta: {
             layout: 'logged'
         }
@@ -22,7 +18,7 @@ const routes = [
     {
         path: '/admin/news',
         name: 'AdminNews',
-        component: Card,
+        component: () => import("@/views/admin/Card"),
         meta: {
             layout: 'logged'
         }
@@ -30,7 +26,7 @@ const routes = [
     {
         path: '/admin/categories',
         name: 'AdminCategories',
-        component: Categories,
+        component: () => import("@/views/admin/Categories"),
         meta: {
             layout: 'logged'
         }

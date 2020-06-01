@@ -1,11 +1,10 @@
-import Login from '../views/login/'
 // import Admin from '../views/admin/Admin'
 
 const login = [
     {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: () => import("@/views/login"),
     },
     // {
     //     path: '/admin',

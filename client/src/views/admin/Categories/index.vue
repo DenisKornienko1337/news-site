@@ -4,8 +4,8 @@
       .col-lg-12
         h1
           | Categories
+        AddButton(class="mb-4" text="Add Category" path="AddCategory")
         section.panel.panel-success( v-if="allUserCategories.length" )
-          AddButton(text="Add Category" path="AddCategory")
           table.table.table-striped
             tr
               th Index
