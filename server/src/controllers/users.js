@@ -89,14 +89,24 @@ exports.addUser = (req, res) => {
 
         })   
         .then(() => {
-            req.session.isLoggedIn = true
-            req.session.user = user._id
-            req.session.username = user.name
-            res.cookie('isLoggedIn', 'true')
-            res.sendStatus(200)
+            User.find({'name': req.body.name})
+            .then(user => {
+                console.log(user)
+                req.session.isLoggedIn = true
+                req.session.user = user[0]._id
+                req.session.username = user[0].name
+                res.cookie('isLoggedIn', 'true')
+                res.sendStatus(200)
+            })
+            .catch(err => {
+                res.sendStatus(500)
+            })
         })
         .catch(err => {
-            if(err) res.sendStatus(500)
+            if(err) {
+                console.log(err)
+                res.sendStatus(500)
+            }
         })
       });
 }
