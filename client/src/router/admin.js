@@ -29,7 +29,7 @@ const routes = [
     },
     {
         path: '/admin/categories',
-        name: 'Admin',
+        name: 'AdminCategories',
         component: Categories,
         meta: {
             layout: 'logged'

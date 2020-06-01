@@ -31,6 +31,7 @@ class Category {
         const response = await Services.deleteCategories({
             id: this._id
         })  
+        
         if(response){
             return true
         }

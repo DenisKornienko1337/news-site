@@ -48,5 +48,8 @@ export default {
   },
   getUserCategories() {
     return api().get('/categories/user')
+  },
+  getUsers(){
+    return api().get('/users/')
   }
 }

@@ -61,23 +61,25 @@
     },
     methods: {
     //   ...mapActions(['fetchCategories', 'removeCategory']),
-    ...mapActions(['fetchUserCategories']),
-    //   async deleteCategory(index) {
-    //     const category = {
-    //       _id: this.allCategories[index]._id,
-    //       index: index
-    //     }
-    //     this.removeCategory(category)
-    //   },
-    //   deleteOnConfirm(index) {
-    //     let self = this
-    //     this.$dialog
-    //       .confirm('Do you want delete this category?')
-    //       .then(function() {
-    //         self.deleteCategory(index)
-    //         self.$helper.notify('Notification', 'Category have been deleted!', 'error')
-    //       })
-    //   }
+    ...mapActions(['fetchUserCategories', 'removeUserCategory']),
+      async deleteCategory(index) {
+        const category = {
+          _id: this.allUserCategories[index]._id,
+          index: index
+        }
+        console.log('vue', category);
+        
+        this.removeUserCategory(category)
+      },
+      deleteOnConfirm(index) {
+        let self = this
+        this.$dialog
+          .confirm('Do you want delete this category?')
+          .then(function() {            
+            self.deleteCategory(index)
+            self.$helper.notify('Notification', 'Category have been deleted!', 'error')
+          })
+      }
     },
     created() {
       this.fetchUserCategories()
@@ -85,9 +87,9 @@
     // computed: {
     //   allCategories: function(){
     //     // this.$forceUpdate();
-    //     return this.$store.state.category.categories
+    //     return this.$store.state.user.userCategories
     //   }
-    // }
+    // },
     computed:mapGetters(['allUserCategories'])
   }
 </script>

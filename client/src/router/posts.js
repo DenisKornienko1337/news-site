@@ -13,13 +13,19 @@ const postsRoutes = [
         path: '/posts/new',
         name: 'NewPost',
         component: UpdatePost,
-        props: true
+        props: true,
+        meta: {
+            layout: 'logged'
+        }
       },
       {
         path: '/posts/update/:id',
         name: 'UpdatePost',
         component: UpdatePost,
-        props: true
+        props: true,
+        meta: {
+            layout: 'logged'
+        }
       },
       {
         path: '/posts/:id',

@@ -1,6 +1,7 @@
 import User from '../controllers/user'
 import Post from '../controllers/post'
 import helpers from '@/helpers/checkCat'
+import Category from '../controllers/categories'
 
 export default {
     actions: {
@@ -46,8 +47,19 @@ export default {
 
             ctx.commit('userRemovePostItem', post)
         },
+        async removeUserCategory(ctx, category){
+            console.log('category', category);
+            
+            const newCategory = new Category(category)
+            await newCategory.remove()
+
+            ctx.commit('removeUserCategory', category)
+        }
     },
     mutations: {
+        removeUserCategory(state, category){     
+            state.userCategories.splice(category.index,1)
+        },
         updateUsersPosts(state, posts){            
             state.userPosts = posts
         },

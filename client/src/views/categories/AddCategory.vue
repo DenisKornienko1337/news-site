@@ -30,7 +30,7 @@
         .then(() => {
           if (!this.errors.any()) {  
             this.updateSingleCategory(this.categoryItem).then(() => {
-              this.$router.push({ name: 'Categories' })
+              this.$router.push({ name: 'AdminCategories' })
               this.$helper.notify('Notification', 'Category have been updated!', 'warn')
             })
           }
@@ -41,14 +41,14 @@
         .then(() => {
           if (!this.errors.any()) { 
             this.createCategory(this.categoryItem).then(() => {
-              this.$router.push({ name: 'Categories' })
+              this.$router.push({ name: 'AdminCategories' })
               this.$helper.notify('Notification', 'Category have been added!', 'success')
             })
           }
         })        
       },
       goBack () {
-        this.$router.push({ name: 'Categories' })
+        this.$router.push({ name: 'AdminCategories' })
       }
     },
     mounted() { 

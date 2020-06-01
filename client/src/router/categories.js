@@ -19,13 +19,19 @@ const categoriesRoutes = [
         path: '/categories/add-category',
         name: 'AddCategory',
         component: AddCategory,
-        props: true
+        props: true,
+        meta: {
+            layout: 'logged'
+        }
       },
       {
         path: '/categories/update-category/:id',
         name: 'UpdateCategory',
         component: AddCategory,
-        props: true
+        props: true,
+        meta: {
+            layout: 'logged'
+        }
       },
 ]
 
