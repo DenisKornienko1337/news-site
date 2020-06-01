@@ -1,7 +1,6 @@
 const Category = require('../models/category')
 const Post = require('../models/post')
 const User = require('../models/user')
-
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
@@ -97,16 +96,10 @@ exports.postDestroy = (req, res, next) => {
       .catch(err => console.log(err))
     Category.findById(catId)
     .then(category => {
-      console.log('|||||||||||||||||||||||||||||||')
-      console.log(category.articles.items)
-      console.log('|||||||||||||||||||||||||||||||')
       category.articles.items.map(item => {
         Post.findById(item.articleId)
         .then(post => {
           if(post.categories.items.length<=1){
-            // console.log('|||||||||||||||||||||||||||||||')
-            // console.log(post.categories.items.length)
-            // console.log('|||||||||||||||||||||||||||||||')
             Post.deleteOne({_id: post._id})
           }
         })
