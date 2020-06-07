@@ -51,5 +51,8 @@ export default {
   },
   getUsers(){
     return api().get('/users/')
+  },
+  getChatIndex(){
+    return api().get('/chat')
   }
 }

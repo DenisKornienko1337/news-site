@@ -12,6 +12,9 @@
                     router-link(:to="{path: '/admin/categories'}")
                         | Categories
                 li
+                router-link(:to="{path: '/chat'}")
+                        | Chat
+                li
                     span( class="link" @click.prevent="logOut")
                         | Log out
         router-view

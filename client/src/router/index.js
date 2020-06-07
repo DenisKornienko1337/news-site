@@ -6,6 +6,7 @@ import posts from './posts.js'
 import categories from './categories.js'
 import login from './login.js'
 import admin from './admin.js'
+import chat from './chat.js'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,7 @@ Vue.use(VueRouter)
   ...categories,
   ...login,
   ...admin,
+  ...chat,
   {
     path: '/',
     name: 'Home',

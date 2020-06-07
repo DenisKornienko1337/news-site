@@ -1,4 +1,5 @@
 const express = require('express')
+const enableWs = require('express-ws')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -10,6 +11,7 @@ const cookieParser = require('cookie-parser')
 const MongoDBStore = require('connect-mongodb-session')(session)
 const path = require('path')
 
+enableWs(app)
 
 const store = new MongoDBStore({
   uri: config.dbURL,
@@ -19,10 +21,21 @@ app.use(cors({
   origin: config.clientHost,
   credentials: true
 }))
+// app.use(function(req, res, next) {
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+//   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+//   res.setHeader('Access-Control-Allow-Credentials', 'true')
+//   next();
+// });
+// Routes
+//app.use(cookieParser)
 
 const postRoutes = require('./routes/posts')
 const categoryRoutes = require('./routes/category')
 const usersRoutes = require('./routes/users')
+const chatRoutes = require('./routes/chat')
+
 // test task Routes
 // const userRoutes = require('./routes/maks/users')
 // const projectRoutes = require('./routes/maks/projects')
@@ -44,6 +57,7 @@ app.use('/public', express.static(path.resolve(__dirname+'/public').replace(/\\/
 app.use('/posts', postRoutes)
 app.use('/categories', categoryRoutes)
 app.use('/users', usersRoutes)
+app.use('/chat', chatRoutes)
 
 
 // test task Set Routes

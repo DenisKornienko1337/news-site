@@ -8,6 +8,16 @@ const uuidv4 = require('uuid/v4')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
+getRandomInt = (min, max) =>  Math.floor(Math.random() * (max-min+1)+min)
+
+getRandomColor = () => {
+    let color = [0,0,0,0,0,0]
+    for(let i=0; i<color.length; ++i) {
+        color[i] = getRandomInt(0, 15).toString(16)
+    }
+    return '#'+color.join('').toUpperCase()
+}
+
 exports.fetchUsers = (req, res) => {
     User.find()
     .then(users => {
@@ -95,6 +105,7 @@ exports.addUser = (req, res) => {
                 req.session.isLoggedIn = true
                 req.session.user = user[0]._id
                 req.session.username = user[0].name
+                req.session.color = getRandomColor()
                 res.cookie('isLoggedIn', 'true')
                 res.sendStatus(200)
             })
@@ -123,6 +134,9 @@ exports.removeUser = (req, res) => {
 }
 
 exports.logIn = (req, res, next) => {
+    console.log(111111111111111111)
+    console.log(getRandomColor())
+    console.log(11111111111111111)
     User.findOne({name: req.body.name})
         .then(user => {
             if(user!==null) {
@@ -132,6 +146,7 @@ exports.logIn = (req, res, next) => {
                         req.session.isLoggedIn = true
                         req.session.user = user._id
                         req.session.username = user.name
+                        req.session.color = getRandomColor()
                         res.cookie('isLoggedIn', 'true')
                         res.sendStatus(200)
                     } else {
