@@ -2,6 +2,7 @@ module.exports = {
   /*
   ** Headers of the page
   */
+  plugins: ['~plugins/VeeValidate', '~plugins/VueDialog'],
   head: {
     title: 'nuxt-exemple',
     meta: [
