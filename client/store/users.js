@@ -1,6 +1,6 @@
-import User from '~/actions/user'
-import Category from '~/actions/category'
-import Post from '~/actions/post'
+import User from '~/middleware/actions/user'
+import Category from '~/middleware/actions/category'
+import Post from '~/middleware/actions/post'
 import helpers from '~/helpers/checkCat'
 
 export const state = () => ({
