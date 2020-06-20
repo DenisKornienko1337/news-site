@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "vuejs-dialog": "^1.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
