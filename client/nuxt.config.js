@@ -2,7 +2,13 @@ module.exports = {
   /*
   ** Headers of the page
   */
-  plugins: ['~plugins/VeeValidate', '~plugins/VueDialog'],
+  //plugins: ['~plugins/VueDialog'],
+  css: [
+    '@/assets/app.scss' // use our build, as entered via app.scss
+  ],
+  modules: [
+    ['@nuxtjs/bootstrap-vue', { css: true }],
+  ],
   head: {
     title: 'nuxt-exemple',
     meta: [
