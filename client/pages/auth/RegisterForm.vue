@@ -28,10 +28,14 @@ export default {
     },
     methods: {
         async register(){
+            console.log('dasdasdad');
+            
             // this.$validator.validateAll()        
             // .then( 
-                async () => {
-                // if (!this.errors.any()) {                      
+                // async () => {
+                // if (!this.errors.any()) {              
+                    console.log('fasfds');
+                            
                     const user = {
                         name: this.name, 
                         password: this.password
@@ -43,7 +47,7 @@ export default {
                     //     .alert('Cant find save user try other username')
                     
                 // }
-            } //)
+             //)
         }
     }
 }

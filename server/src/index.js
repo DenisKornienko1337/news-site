@@ -17,17 +17,17 @@ const store = new MongoDBStore({
   uri: config.dbURL,
 });
 
-app.use(cors({
-  origin: config.clientHost,
-  credentials: true
-}))
-// app.use(function(req, res, next) {
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-//   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
-//   res.setHeader('Access-Control-Allow-Credentials', 'true')
-//   next();
-// });
+// app.use(cors({
+//   origin: config.clientHost,
+//   credentials: true
+// }))
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
+  next();
+});
 // Routes
 //app.use(cookieParser)
 

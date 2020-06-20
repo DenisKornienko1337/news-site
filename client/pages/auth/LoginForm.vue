@@ -26,11 +26,11 @@ export default {
             password: ''
         }
     },
-    //methods: {
+    methods: {
         async logIn() {
             // this.$validator.validateAll()        
             // .then( 
-                async () => {
+                // async () => {
                // if (!this.errors.any()) {
                     const user = {
                         name: this.name, 
@@ -42,9 +42,9 @@ export default {
                     // else this.
                     //     $dialog.alert('Cant find user or failed password')
                // }
-            } //)
+            // } )
         }
-   // }
+   }
 }
 </script>
 
