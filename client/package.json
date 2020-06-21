@@ -20,6 +20,7 @@
     "nuxt": "^2.0.0",
     "vee-validate": "^3.3.5",
     "vue": "^2.6.11",
+    "vue-feather-icons": "^5.0.0",
     "vuejs-dialog": "^1.4.1"
   },
   "devDependencies": {
