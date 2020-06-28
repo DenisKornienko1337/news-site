@@ -32,5 +32,6 @@ $RECYCLE.BIN/
 
 node_modules
 */node_modules
+/node_modules
 # Database config
 /server/src/config
