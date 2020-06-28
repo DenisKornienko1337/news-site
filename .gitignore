@@ -29,3 +29,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/windows
+
+# Database config
+/server/src/config
+# node modules
+node_modules
