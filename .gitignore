@@ -31,6 +31,3 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/windows
 
 node_modules
-/node_modules
-# Database config
-/server/src/config
