@@ -30,7 +30,11 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/windows
 
+<<<<<<< HEAD
 # node modules
+=======
+# node_modules
+>>>>>>> bdd66eff96b576ef916959d542362f8f60b0cd58
 node_modules
 # vsconfig
 .vscode
