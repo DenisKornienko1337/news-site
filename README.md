@@ -1,4 +1,3 @@
-# news-site
 <h1>News site - MEVN stack</h1>
 <h2>Live site - http://mevn.cr59594.tmweb.ru</h2>
 <h2>Server</h2>
